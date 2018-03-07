@@ -1,4 +1,5 @@
-# acksio YCP CS320 Joel Horne, Andrew Georgiou, Alaska Kiley, Christian Waldemar
+# acksio 
+YCP CS320 Joel Horne, Andrew Georgiou, Alaska Kiley, Christian Waldemar
 Team Project
 CS320-102: Software Engineering, Spring Semester 2018
 
