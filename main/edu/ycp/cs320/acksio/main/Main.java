@@ -15,7 +15,7 @@ public class Main {
 		
 		// get a server for port 8081
 		System.out.println("CREATING: web server on port 8081");
-		Server server = launcher.launch(true, 8081, warFile.getAbsolutePath(), "/dkiley");
+		Server server = launcher.launch(true, 8081, warFile.getAbsolutePath(), "/acksio");
 
         // Start things up!		
 		System.out.println("STARTING: web server on port 8081");
