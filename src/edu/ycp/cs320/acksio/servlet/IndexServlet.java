@@ -25,8 +25,8 @@ public class IndexServlet extends HttpServlet {
 		
 		System.out.println("Index Servlet: doPost");
 		
-		if(req.getParameter("logIn") != null){
-			resp.sendRedirect("/acksio/logIn");
+		if(req.getParameter("login") != null){
+			resp.sendRedirect("/acksio/login");
 		}
 		else if(req.getParameter("dispatcher") != null){
 			resp.sendRedirect("/acksio/dispatcher");
@@ -43,7 +43,7 @@ public class IndexServlet extends HttpServlet {
 }
 
 /*	
- * <input type="Submit" name="logIn" value="Log In">
+ * <input type="Submit" name="login" value="Log In">
  * <input type="Submit" name="dispatcher" value="Dispatcher">
  * <input type="Submit" name="courier" value="Courier">
  * <input type="Submit" name="createJob" value="Create Job">
