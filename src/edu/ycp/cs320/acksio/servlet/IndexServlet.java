@@ -25,16 +25,26 @@ public class IndexServlet extends HttpServlet {
 		
 		System.out.println("Index Servlet: doPost");
 		
-		if(req.getParameter("mult") != null){
-			resp.sendRedirect("/acksio/multiplyNumbers");
+		if(req.getParameter("logIn") != null){
+			resp.sendRedirect("/acksio/logIn");
 		}
-		else if(req.getParameter("add") != null){
-			resp.sendRedirect("/acksio/addNumbers");
+		else if(req.getParameter("dispatcher") != null){
+			resp.sendRedirect("/acksio/dispatcher");
 		} 
-		else if(req.getParameter("guess") != null){
-			resp.sendRedirect("/acksio/guessingGame");
+		else if(req.getParameter("courier") != null){
+			resp.sendRedirect("/acksio/courier");
+		}
+		else if(req.getParameter("createJob") != null){
+			resp.sendRedirect("/acksio/createJob");
 		}
 		
 		req.getRequestDispatcher("/_view/index.jsp").forward(req, resp);
 	}
 }
+
+/*	
+ * <input type="Submit" name="logIn" value="Log In">
+ * <input type="Submit" name="dispatcher" value="Dispatcher">
+ * <input type="Submit" name="courier" value="Courier">
+ * <input type="Submit" name="createJob" value="Create Job">
+ */
