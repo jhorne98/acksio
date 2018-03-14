@@ -1,4 +1,4 @@
- package edu.ycp.cs320.acksio.servlet;
+package edu.ycp.cs320.acksio.servlet;
 
 import java.io.IOException;
 
