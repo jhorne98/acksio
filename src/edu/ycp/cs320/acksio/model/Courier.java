@@ -1,8 +1,6 @@
 package edu.ycp.cs320.acksio.model;
 
-import edu.ycp.cs320.acksio.controller.DataController;
-
-public class Courier implements DataController{
+public class Courier extends UserAccount{
 
 	@Override
 	public void populate(String id) {
