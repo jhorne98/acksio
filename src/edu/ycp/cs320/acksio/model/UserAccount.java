@@ -1,6 +1,8 @@
 package edu.ycp.cs320.acksio.model;
 
-public class Dispatcher extends UserAccount{
+import edu.ycp.cs320.acksio.controller.DataController;
+
+public class UserAccount implements DataController{
 
 	@Override
 	public void populate(String id) {
