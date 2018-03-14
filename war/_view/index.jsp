@@ -9,9 +9,10 @@
 
 	<body>
 		<form action="${pageContext.servletContext.contextPath}/index" method="post">
-			<input type="Submit" name="mult" value="Multiply Numbers!">
-			<input type="Submit" name="add" value="Add Numbers!">
-			<input type="Submit" name="guess" value="Guessing Numbers!">
+			<input type="Submit" name="login" value="Log In">
+			<input type="Submit" name="dispatcher" value="Dispatcher">
+			<input type="Submit" name="courier" value="Courier">
+			<input type="Submit" name="createJob" value="Create Job">
 		</form>
 	</body>
 </html>
