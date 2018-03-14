@@ -26,7 +26,7 @@
 
 		<div id=main_body>
 				
-			<form action="${pageContext.servletContext.contextPath}/dispatch" method="post">
+			<form action="${pageContext.servletContext.contextPath}/dispatcher" method="post">
 				
 				Vehicle Type<br>
 				<select name="vehicleType">
