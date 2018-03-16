@@ -3,6 +3,7 @@ package edu.ycp.cs320.acksio.model;
 public class Dispatcher extends UserAccount{
 	private String vehicleType;
 	private Boolean tsaCert;
+	private Job testJob; //To test Queue() 
 	
 	public Dispatcher() {
 		save(); 
@@ -21,6 +22,21 @@ public class Dispatcher extends UserAccount{
 	
 	public void Queue() {
 		//TODO: Implement
+		testJob = new Job();
+		testJob.setActualTime(time);
+		testJob.setCourierPaid(paid);
+		testJob.setDeststinationAddress(address);
+		testJob.setDistanceMi(distance);
+		testJob.setDropOffTime(time);
+		testJob.setPayActualForJob(pay);
+		testJob.setPayEstimateForJob(pay);
+		testJob.setPickUpTime(time);
+		testJob.setPayActualForJob(pay);
+		testJob.setPickUpTime(time);
+		testJob.setRecipentName(name);
+		testJob.setRecipentPhone(phone);
+		testJob.setTsaVerified(tsa);
+		testJob.setVehicleType(vehicle);
 	}
 	
 	public void pay (String userName) {
