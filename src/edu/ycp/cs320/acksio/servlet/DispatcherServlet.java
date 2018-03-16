@@ -7,8 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.ycp.cs320.acksio.model.Dispatcher;
 import edu.ycp.cs320.acksio.model.UserAccount;
 
+// servlet based on Lab02 servlets
 public class DispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -16,22 +18,24 @@ public class DispatcherServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		System.out.println("Empty Servlet: doGet");	
+		System.out.println("Dispatcher Servlet: doGet");	
 		
 		// call JSP to generate empty form
-		req.getRequestDispatcher("/_view/empty.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/dispatcher.jsp").forward(req, resp);
 	}
 	
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) //TODO: Implement 
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("Empty Servlet: doPost");
+		System.out.println("Dispatcher Servlet: doPost");
 
 		// holds the error message text, if there is any
 		String errorMessage = null;
 		
-		UserAccount model = new UserAccount();
+		Dispatcher model = new Dispatcher(req.getParameter("vehicleType"), true);
+		
+		System.out.println(model.getVehicleType());
 		
 		// Add parameters as request attributes
 		req.setAttribute("model", model);
@@ -41,6 +45,6 @@ public class DispatcherServlet extends HttpServlet {
 		req.setAttribute("errorMessage", errorMessage);
 		
 		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/empty.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/dispatcher.jsp").forward(req, resp);
 	}
 }

@@ -1,7 +1,22 @@
 package edu.ycp.cs320.acksio.model;
 
 public class Dispatcher extends UserAccount{
-
+	private String vehicleType;
+	private Boolean tsaCert;
+	
+	public Dispatcher() {
+		
+	}
+	
+	public Dispatcher(String vehicleType, Boolean tsaCert) {
+		this.vehicleType = vehicleType;
+		this.tsaCert = tsaCert;
+	}
+	
+	public String getVehicleType() {
+		return vehicleType;
+	}
+	
 	@Override
 	public void populate(String id) {
 		// TODO Auto-generated method stub

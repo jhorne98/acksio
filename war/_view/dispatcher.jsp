@@ -30,11 +30,11 @@
 				
 				Vehicle Type<br>
 				<select name="vehicleType">
-					<option value="car">Class C Automobile</option>
+					<option value="${model.vehicleType}">Class C Automobile</option>
 				</select>
 				<br><br>
 
-				<input type="checkbox" name="tsaCertified" value="tsaCert"> TSA certified driver needed<br><br>
+				<input type="checkbox" name="tsaCertified" value="${model.tsaCert}"> TSA certified driver needed<br><br>
 
 				<input type="submit" name="submit" value="Create Job">
 			</form>	

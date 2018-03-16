@@ -21,6 +21,10 @@
     <servlet-name>GuessingGameServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.acksio.servlet.GuessingGameServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>DispatcherServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.acksio.servlet.DispatcherServlet</servlet-class>
+  </servlet>
 
   <!-- Servlet mappings -->
   <servlet-mapping>
@@ -38,5 +42,9 @@
   <servlet-mapping>
     <servlet-name>GuessingGameServlet</servlet-name>
     <url-pattern>/guessingGame</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DispatcherServlet</servlet-name>
+    <url-pattern>/dispatcher</url-pattern>
   </servlet-mapping>
 </web-app>
