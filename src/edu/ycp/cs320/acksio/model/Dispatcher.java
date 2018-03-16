@@ -5,16 +5,26 @@ public class Dispatcher extends UserAccount{
 	private Boolean tsaCert;
 	
 	public Dispatcher() {
-		
+		save(); 
 	}
 	
 	public Dispatcher(String vehicleType, Boolean tsaCert) {
 		this.vehicleType = vehicleType;
 		this.tsaCert = tsaCert;
+		// Not going to remove this yet... but what is this for? - Andrew
 	}
 	
 	public String getVehicleType() {
 		return vehicleType;
+		// same here... 
+	}
+	
+	public void Queue() {
+		//TODO: Implement
+	}
+	
+	public void pay (String userName) {
+		//TODO: Implement
 	}
 	
 	@Override
