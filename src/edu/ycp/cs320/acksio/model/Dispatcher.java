@@ -17,6 +17,10 @@ public class Dispatcher extends UserAccount{
 		return vehicleType;
 	}
 	
+	public Boolean getTsaCert() {
+		return tsaCert;
+	}
+	
 	@Override
 	public void populate(String id) {
 		// TODO Auto-generated method stub
