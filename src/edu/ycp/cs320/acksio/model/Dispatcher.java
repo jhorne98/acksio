@@ -16,6 +16,7 @@ public class Dispatcher extends UserAccount{
 	public String getVehicleType() {
 		return vehicleType;
 	}
+	/*
 	public void Queue() {
 		//TODO: Implement
 		testJob = new Job();
@@ -34,6 +35,7 @@ public class Dispatcher extends UserAccount{
 		testJob.setTsaVerified(tsa);
 		testJob.setVehicleType(vehicle);
 	}
+	*/
   
 	public Boolean getTsaCert() {
 		return tsaCert;
