@@ -16,7 +16,25 @@ public class Dispatcher extends UserAccount{
 	public String getVehicleType() {
 		return vehicleType;
 	}
-	
+	public void Queue() {
+		//TODO: Implement
+		testJob = new Job();
+		testJob.setActualTime(time);
+		testJob.setCourierPaid(paid);
+		testJob.setDeststinationAddress(address);
+		testJob.setDistanceMi(distance);
+		testJob.setDropOffTime(time);
+		testJob.setPayActualForJob(pay);
+		testJob.setPayEstimateForJob(pay);
+		testJob.setPickUpTime(time);
+		testJob.setPayActualForJob(pay);
+		testJob.setPickUpTime(time);
+		testJob.setRecipentName(name);
+		testJob.setRecipentPhone(phone);
+		testJob.setTsaVerified(tsa);
+		testJob.setVehicleType(vehicle);
+	}
+  
 	public Boolean getTsaCert() {
 		return tsaCert;
 	}
