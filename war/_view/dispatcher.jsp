@@ -10,7 +10,7 @@
 		<meta name="desc" content="ACKSIO dispatch draft updated 3/6/18">
 
 		<title>Acksio: Dispatcher Solutions</title>
-		<link rel="stylesheet" type="text/css" href="default.css" title="default"/>
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_view/default.css" title="default"/>
 	</head>
 
 	<body>
@@ -30,13 +30,15 @@
 				
 				Vehicle Type<br>
 				<select name="vehicleType">
-					<option value="${model.vehicleType}">Class C Automobile</option>
+					<option value="car">Class C Automobile</option>
 				</select>
 				<br><br>
 
 				<input type="checkbox" name="tsaCertified" value="${model.tsaCert}"> TSA certified driver needed<br><br>
 
 				<input type="submit" name="submit" value="Create Job">
+				
+				<p>${model.vehicleType}</p>
 			</form>	
 		</div>
 
