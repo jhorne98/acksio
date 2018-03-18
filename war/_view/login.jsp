@@ -14,9 +14,6 @@
 	</head>
 
 	<body>
-		<c:if test="${! empty errorMessage}">
-			<div class="error">${errorMessage}</div>
-		</c:if>
 		
 		<div id=header>
 
@@ -24,22 +21,24 @@
 			<h2>ACKSIO</h2>
 		</div>
 
+		<c:if test="${! empty errorMessage}">
+			<div class="error">${errorMessage}</div>
+		</c:if>
+
 		<div id=main_body>
-				
-			<form action="${pageContext.servletContext.contextPath}/dispatcher" method="post">
-				
-				Vehicle Type<br>
-				<select name="vehicleType">
-					<option value="car">Class C Automobile</option>
-				</select>
+
+			<form action="${pageContext.servletContext.contextPath}/login" method="post">
+
+				Login:<br>
+				<input type="text" name="username" value="${model.username}" method="post">
+				<br>
+
+				Password:<br>
+				<input type="password" name="password" value="${model.password}" method="post">
 				<br><br>
-
-				<input type="checkbox" name="tsaCertified" value="${model.tsaCert}"> TSA certified driver needed<br><br>
-
-				<input type="submit" name="submit" value="Create Job">
 				
-				<p>${model.vehicleType}</p>
-			</form>	
+				<input type="submit" name="submit" value="Log in">
+			</form>
 		</div>
 
 		<!--

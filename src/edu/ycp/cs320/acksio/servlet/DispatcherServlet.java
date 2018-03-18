@@ -33,9 +33,13 @@ public class DispatcherServlet extends HttpServlet {
 		// holds the error message text, if there is any
 		String errorMessage = null;
 		
-		Dispatcher model = new Dispatcher(req.getParameter("vehicleType"), true);
+		String[] typeValues = req.getParameterValues("vehicleType");
 		
-		System.out.println(model.getVehicleType());
+		for(int i = 0; i < typeValues.length; i++) {
+			System.out.println(typeValues[i]);
+		}
+		
+		Dispatcher model = new Dispatcher(req.getParameter("vehicleType"), true);
 		
 		// Add parameters as request attributes
 		req.setAttribute("model", model);
@@ -46,5 +50,7 @@ public class DispatcherServlet extends HttpServlet {
 		
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/dispatcher.jsp").forward(req, resp);
+		
+		
 	}
 }

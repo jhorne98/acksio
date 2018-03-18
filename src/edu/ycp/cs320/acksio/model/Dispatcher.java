@@ -3,23 +3,19 @@ package edu.ycp.cs320.acksio.model;
 public class Dispatcher extends UserAccount{
 	private String vehicleType;
 	private Boolean tsaCert;
-	private Job testJob; //To test Queue() 
 	
 	public Dispatcher() {
-		save(); 
+		
 	}
 	
 	public Dispatcher(String vehicleType, Boolean tsaCert) {
 		this.vehicleType = vehicleType;
 		this.tsaCert = tsaCert;
-		// Not going to remove this yet... but what is this for? - Andrew
 	}
 	
 	public String getVehicleType() {
 		return vehicleType;
-		// same here... 
 	}
-	
 	public void Queue() {
 		//TODO: Implement
 		testJob = new Job();
@@ -38,9 +34,9 @@ public class Dispatcher extends UserAccount{
 		testJob.setTsaVerified(tsa);
 		testJob.setVehicleType(vehicle);
 	}
-	
-	public void pay (String userName) {
-		//TODO: Implement
+  
+	public Boolean getTsaCert() {
+		return tsaCert;
 	}
 	
 	@Override
