@@ -63,7 +63,7 @@ public class Job implements DataController{
 	public String getVehicleType () {
 		return vehicleType; 
 	}
-	public Boolean setTsaVerified () {
+	public Boolean getTsaVerified () {
 		return tsaVerified; 
 	}
 	public int getRecipentName () {
