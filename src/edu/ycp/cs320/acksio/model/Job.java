@@ -129,5 +129,10 @@ public class Job implements DataController{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public void Queue() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
