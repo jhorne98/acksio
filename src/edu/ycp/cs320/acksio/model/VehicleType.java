@@ -1,7 +1,13 @@
 package edu.ycp.cs320.acksio.model;
 
 public enum VehicleType {
+	BICYCLE,
+	MOTORCYCLE,
 	CAR,
-	TRUCK; //IDK what actually goes here.
+	SUV,
+	VAN,
+	PICKUP,
+	SPRINTER,
+	SEMI; //IDK what actually goes here.
 	//TODO: write this out
 }

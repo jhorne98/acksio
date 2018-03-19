@@ -130,4 +130,10 @@ public class Job implements DataController{
 		
 	
 	}
+	
+	public boolean approvedOnInvoice() {
+		// TODO this needs to be implemented. It needs to check if the courier has approved this job on their invoice
+		return false;
+	}
+
 }
