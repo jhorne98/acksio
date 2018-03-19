@@ -7,7 +7,7 @@ public class Job implements DataController{
 	private String destinationAddress;
 	private String vehicleType;
 	private Boolean tsaVerified;
-	private int recipentName;
+	private String recipentName;
 	private int recipentPhone;
 	private int distanceMi;
 	private int payEstimateForJob;
@@ -27,7 +27,7 @@ public class Job implements DataController{
 	public void setTsaVerified (Boolean tsa) {
 		this.tsaVerified = tsa; 
 	}
-	public void setRecipentName (int name) {
+	public void setRecipentName (String name) {
 		this.recipentName = name; 
 	}
 	public void setRecipentPhone (int phone) {
@@ -66,7 +66,7 @@ public class Job implements DataController{
 	public Boolean setTsaVerified () {
 		return tsaVerified; 
 	}
-	public int getRecipentName () {
+	public String getRecipentName () {
 		return recipentName; 
 	}
 	public int getRecipentPhone () {
@@ -128,6 +128,6 @@ public class Job implements DataController{
 	public void save() {
 		// TODO Auto-generated method stub
 		
+	
 	}
-
 }
