@@ -1,5 +1,7 @@
 package edu.ycp.cs320.acksio.model;
 
+import java.util.ArrayList;
+
 public class Courier extends UserAccount{
 	
 	private int driverNumber;
@@ -40,6 +42,32 @@ public class Courier extends UserAccount{
 	public void save() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public boolean acceptInvoice(ArrayList<Job> jobs) {
+		
+		int count=0;
+		for(Job job : jobs) {
+			boolean accepted = job.approvedOnInvoice();
+			if(accepted=true) {
+				count++;
+			}
+		}
+		if(count==jobs.size()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+	
+	public double calculateTotalPayment(ArrayList<Job> jobs) {
+		double total = 0;
+		for(Job job : jobs) {
+			total+=job.getPayActualForJob();
+		}
+		return total;
 	}
 	
 }
