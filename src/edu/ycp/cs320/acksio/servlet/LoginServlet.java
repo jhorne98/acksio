@@ -65,9 +65,10 @@ public class LoginServlet extends HttpServlet {
 			// else, inform the user of their error
 			// TODO: refactor UserAccount for user type, currently redirects to dispatcher.jsp only
 			if(model.getValidity()) {
+				
 				HttpSession session = req.getSession(true);	    
 		        session.setAttribute("currentSessionUser", model); 
-				
+
 				resp.sendRedirect("dispatcher");
 			} else {
 				errorMessage = "Please input a valid user name and password.";

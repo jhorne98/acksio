@@ -2,6 +2,9 @@ package edu.ycp.cs320.acksio.model;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
+import org.junit.Test;
+
 public class UserAccountTest {
 	private UserAccount model;
 	
@@ -15,31 +18,33 @@ public class UserAccountTest {
 		
 	}
 	
+	@Test
 	public void testSets() {
 		
 	}
 	
-	public void testLogin() {
-		
-	}
-	
+	@Test
 	public void testLogout() {
 		
 	}
 	
+	@Test
 	public void testVerifyLogin() {
 		
 	}
 	
+	@Test
 	public void testEdit() {
 		
 	}
 	
+	@Test
 	public void testAddVehicle() {
     
 	}
-  
-  public void testSetUserId() {
+
+	@Test
+	public void testSetUserId() {
 		model.setUserId(1);
 		assertEquals(model.getUserId(), 1);
 	}
@@ -65,4 +70,5 @@ public class UserAccountTest {
 		model.login();
 		
 		assertEquals(model.getValidity(), true);
+	}
 }
