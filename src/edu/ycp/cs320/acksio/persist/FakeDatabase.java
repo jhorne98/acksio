@@ -94,8 +94,10 @@ public class FakeDatabase implements IDatabase{
 	}
 	@Override
 	public Boolean verifyLogin(String username, String password) {
-		// TODO Auto-generated method stub
-		return null;
+		for(UserAccount user : userList)
+			if(user.getUsername() == username && user.getPassword() == password)
+				return true;
+		return false;
 	}
 	@Override
 	public List<Vehicle> vehiclesFromCourierID(String id) {
