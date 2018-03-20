@@ -10,6 +10,7 @@ import edu.ycp.cs320.acksio.model.UserAccount;
 import edu.ycp.cs320.acksio.model.Courier;
 import edu.ycp.cs320.acksio.model.Dispatcher;
 import edu.ycp.cs320.acksio.model.Vehicle;
+import edu.ycp.cs320.acksio.persist.InitialData;
 
 public class FakeDatabase implements IDatabase{
 	private List<Job> jobList;
@@ -17,6 +18,27 @@ public class FakeDatabase implements IDatabase{
 	private List<Courier> courierList;
 	private List<Dispatcher> dispatcherList;
 	private List<Vehicle> vehicleList;
+	
+	public FakeDatabase() {
+		jobList = new ArrayList<Job>();
+		userList = new ArrayList<UserAccount>();
+		courierList = new ArrayList<Courier>();
+		dispatcherList = new ArrayList<Dispatcher>();
+		vehicleList = new ArrayList<Vehicle>();
+		
+		readInitialData();
+		
+		System.out.println(userList.size() + " users");
+	}
+	
+	public void readInitialData() {
+		try {
+			userList.addAll(InitialData.getUsers());
+		} catch (IOException e) {
+			throw new IllegalStateException("Couldn't read initial data", e);
+		}
+	}
+	
 	@Override
 	public Boolean insert(Job job) {
 		// TODO Auto-generated method stub
