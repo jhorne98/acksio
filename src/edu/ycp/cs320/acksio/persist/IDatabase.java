@@ -1,5 +1,7 @@
 package edu.ycp.cs320.acksio.persist;
 
+import java.util.List;
+
 import edu.ycp.cs320.acksio.model.Courier;
 import edu.ycp.cs320.acksio.model.Dispatcher;
 import edu.ycp.cs320.acksio.model.Job;
@@ -28,4 +30,8 @@ public interface IDatabase {
 	public Vehicle vehicleFromID(String id);
 	
 	public Boolean verifyLogin(String username, String password);
-}
+	public List<Vehicle> vehiclesFromCourierID(String id);
+	public List<Job> jobsFromCourierID(String id);
+	public List<Job> jobsFromDispatcherID(String id);
+	public List<Courier> couriersFromDispatcherID(String id);
+} 
