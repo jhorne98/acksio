@@ -41,33 +41,45 @@ public class FakeDatabase implements IDatabase{
 	
 	@Override
 	public Boolean insert(Job job) {
-		// TODO Auto-generated method stub
-		return null;
+		if(jobList.add(job))
+			return true;
+		return false;
 	}
 	@Override
 	public Boolean insert(Courier courier) {
-		// TODO Auto-generated method stub
-		return null;
+		if(courierList.add(courier))
+			return true;
+		return false;
 	}
 	@Override
 	public Boolean insert(Dispatcher dispatcher) {
-		// TODO Auto-generated method stub
-		return null;
+		if(dispatcherList.add(dispatcher))
+			return true;
+		return false;
 	}
 	@Override
 	public Boolean insert(UserAccount user) {
-		// TODO Auto-generated method stub
-		return null;
+		if(userList.add(user))
+			return true;
+		return false;
 	}
 	@Override
 	public Boolean insert(Vehicle vehicle) {
-		// TODO Auto-generated method stub
-		return null;
+		if(vehicleList.add(vehicle))
+			return true;
+		return false;
 	}
 	@Override
 	public Boolean update(Job job) {
-		// TODO Auto-generated method stub
-		return null;
+		int i = 0;
+		while(i < jobList.size() && !jobList.get(i).getId().equals(job.getId()))
+			i++;
+		if(jobList.get(i).getId().equals(job.getId())) {
+			jobList.add(i, job);
+			jobList.remove(i+1);
+			return true;
+		}
+		return false;
 	}
 	@Override
 	public Boolean update(Courier courier) {

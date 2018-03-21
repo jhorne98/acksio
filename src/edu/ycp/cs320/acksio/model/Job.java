@@ -17,6 +17,7 @@ public class Job implements DataController{
 	private int dropOffTime;
 	private int actualTime;
 	private Boolean signed; 
+	private String id;
 	
 	public void setDeststinationAddress (String address) {
 		this.destinationAddress = address;
@@ -95,6 +96,13 @@ public class Job implements DataController{
 	}
 	public Boolean getSigned () {
 		return signed; 
+	}
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	public void signOff() {
