@@ -57,7 +57,7 @@ public class Courier extends UserAccount{
 		
 		int count=0;
 		for(Job job : jobs) {
-			boolean accepted = job.approvedOnInvoice();
+			boolean accepted = job.getApproved();
 			if(accepted=true) {
 				count++;
 			}

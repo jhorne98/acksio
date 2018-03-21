@@ -5,10 +5,10 @@ import edu.ycp.cs320.acksio.controller.DataController;
 public class Job implements DataController{
 	
 	private String destinationAddress;
-	private String vehicleType;
+	private VehicleType vehicleType;
 	private Boolean tsaVerified;
-	private int recipentName;
-	private int recipentPhone;
+	private int recipientName;
+	private int recipientPhone;
 	private int distanceMi;
 	private int payEstimateForJob;
 	private int payActualForJob;
@@ -16,7 +16,29 @@ public class Job implements DataController{
 	private int pickUpTime;
 	private int dropOffTime;
 	private int actualTime;
-	private Boolean signed; 
+	private Boolean signed;
+	private Boolean approved;
+	
+	public Job(String destinationAddress, VehicleType vehicleType, boolean tsaVerified, 
+				int recipientName, int recipientPhone, int distanceMi, 
+				int payEstimateForJob, int payActualForJob, boolean courierPaid, 
+				int pickUpTime, int dropOffTime, int actualTime, 
+				boolean signed, boolean approved) {
+		this.destinationAddress=destinationAddress;
+		this.vehicleType=vehicleType;
+		this.tsaVerified=tsaVerified;
+		this.recipientName=recipientName;
+		this.recipientPhone=recipientPhone;
+		this.distanceMi=distanceMi;
+		this.payEstimateForJob=payEstimateForJob;
+		this.payActualForJob=payActualForJob;
+		this.courierPaid=courierPaid;
+		this.pickUpTime=pickUpTime;
+		this.dropOffTime=dropOffTime;
+		this.actualTime=actualTime;
+		this.signed=signed;
+		this.approved=approved;
+	}
 	
 	public void setDeststinationAddress (String address) {
 		this.destinationAddress = address;
@@ -129,9 +151,9 @@ public class Job implements DataController{
 		// TODO Auto-generated method stub
 		
 	}
-	public boolean approvedOnInvoice() {
+	public boolean getApproved() {
 		// TODO this needs to be implemented. It needs to check if the courier has approved this job on their invoice
-		return false;
+		return approved;
 	}
 
 }
