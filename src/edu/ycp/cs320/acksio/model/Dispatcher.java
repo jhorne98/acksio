@@ -1,38 +1,25 @@
 package edu.ycp.cs320.acksio.model;
 
 public class Dispatcher extends UserAccount{
-	private String vehicleType;
+	private VehicleType vehicleType;
 	private Boolean tsaCert;
 	
 	public Dispatcher() {
 		
 	}
 	
-	public Dispatcher(String vehicleType, Boolean tsaCert) {
+	public Dispatcher(VehicleType vehicleType, Boolean tsaCert) {
 		this.vehicleType = vehicleType;
 		this.tsaCert = tsaCert;
 	}
 	
-	public String getVehicleType() {
+	public VehicleType getVehicleType() {
 		return vehicleType;
 	}
 	public void Queue() {
 		//TODO: Implement
-		testJob = new Job();
-		testJob.setActualTime(time);
-		testJob.setCourierPaid(paid);
-		testJob.setDeststinationAddress(address);
-		testJob.setDistanceMi(distance);
-		testJob.setDropOffTime(time);
-		testJob.setPayActualForJob(pay);
-		testJob.setPayEstimateForJob(pay);
-		testJob.setPickUpTime(time);
-		testJob.setPayActualForJob(pay);
-		testJob.setPickUpTime(time);
-		testJob.setRecipentName(name);
-		testJob.setRecipentPhone(phone);
-		testJob.setTsaVerified(tsa);
-		testJob.setVehicleType(vehicle);
+		Job testJob = new Job("118 oak drive", vehicleType.CAR, true, "Don Hake", 7175555555L, 64.9, 53.7, 53.7, 1430, 1730);
+		
 	}
   
 	public Boolean getTsaCert() {

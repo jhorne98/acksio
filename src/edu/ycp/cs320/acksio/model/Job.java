@@ -7,11 +7,11 @@ public class Job implements DataController{
 	private String destinationAddress;
 	private VehicleType vehicleType;
 	private Boolean tsaVerified;
-	private int recipientName;
-	private int recipientPhone;
-	private int distanceMi;
-	private int payEstimateForJob;
-	private int payActualForJob;
+	private String recipientName;
+	private long recipientPhone;
+	private double distanceMi;
+	private double payEstimateForJob;
+	private double payActualForJob;
 	private Boolean courierPaid;
 	private int pickUpTime;
 	private int dropOffTime;
@@ -20,10 +20,9 @@ public class Job implements DataController{
 	private Boolean approved;
 	
 	public Job(String destinationAddress, VehicleType vehicleType, boolean tsaVerified, 
-				int recipientName, int recipientPhone, int distanceMi, 
-				int payEstimateForJob, int payActualForJob, boolean courierPaid, 
-				int pickUpTime, int dropOffTime, int actualTime, 
-				boolean signed, boolean approved) {
+				String recipientName, long recipientPhone, double distanceMi, 
+				double payEstimateForJob, double payActualForJob, 
+				int pickUpTime, int dropOffTime) {
 		this.destinationAddress=destinationAddress;
 		this.vehicleType=vehicleType;
 		this.tsaVerified=tsaVerified;
@@ -32,36 +31,33 @@ public class Job implements DataController{
 		this.distanceMi=distanceMi;
 		this.payEstimateForJob=payEstimateForJob;
 		this.payActualForJob=payActualForJob;
-		this.courierPaid=courierPaid;
 		this.pickUpTime=pickUpTime;
 		this.dropOffTime=dropOffTime;
-		this.actualTime=actualTime;
-		this.signed=signed;
-		this.approved=approved;
+		approved=false;
 	}
 	
 	public void setDeststinationAddress (String address) {
 		this.destinationAddress = address;
 	}
-	public void setVehicleType (String vehicle) {
+	public void setVehicleType (VehicleType vehicle) {
 		this.vehicleType = vehicle; 
 	}
 	public void setTsaVerified (Boolean tsa) {
 		this.tsaVerified = tsa; 
 	}
-	public void setRecipentName (int name) {
-		this.recipentName = name; 
+	public void setRecipientName (String name) {
+		this.recipientName = name; 
 	}
-	public void setRecipentPhone (int phone) {
-		this.recipentPhone = phone;
+	public void setRecipientPhone (long phone) {
+		this.recipientPhone = phone;
 	}
-	public void setDistanceMi (int distance) {
+	public void setDistanceMi (double distance) {
 		this.distanceMi = distance;
 	}
-	public void setPayEstimateForJob (int pay) {
+	public void setPayEstimateForJob (double pay) {
 		this.payEstimateForJob = pay;
 	}
-	public void setPayActualForJob (int pay) {
+	public void setPayActualForJob (double pay) {
 		this.payActualForJob = pay; 
 	}
 	public void setCourierPaid  (Boolean paid) {
@@ -82,25 +78,25 @@ public class Job implements DataController{
 	public String getDeststinationAddress () {
 		return destinationAddress;
 	}
-	public String getVehicleType () {
+	public VehicleType getVehicleType () {
 		return vehicleType; 
 	}
 	public Boolean setTsaVerified () {
 		return tsaVerified; 
 	}
-	public int getRecipentName () {
-		return recipentName; 
+	public String getRecipientName () {
+		return recipientName; 
 	}
-	public int getRecipentPhone () {
-		return recipentPhone;
+	public long getRecipientPhone () {
+		return recipientPhone;
 	}
-	public int getDistanceMi () {
+	public double getDistanceMi () {
 		return distanceMi;
 	}
-	public int getPayEstimateForJob () {
+	public double getPayEstimateForJob () {
 		return payEstimateForJob;
 	}
-	public int getPayActualForJob () {
+	public double getPayActualForJob () {
 		return payActualForJob; 
 	}
 	public Boolean getCourierPaid  () {
