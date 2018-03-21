@@ -65,13 +65,24 @@ public class LoginServlet extends HttpServlet {
 			// else, inform the user of their error
 			// TODO: refactor UserAccount for user type, currently redirects to dispatcher.jsp only
 			if(model.getValidity()) {
-				
 				HttpSession session = req.getSession(true);	    
-		        session.setAttribute("currentSessionUser", model); 
+		        session.setAttribute("user", model); 
 
 				resp.sendRedirect("dispatcher");
+				
+				//req.getRequestDispatcher("/_view/dispatcher.jsp").forward(req, resp);
 			} else {
 				errorMessage = "Please input a valid user name and password.";
+				
+				// Add parameters as request attributes
+				req.setAttribute("model", model);
+				
+				// add result objects as attributes
+				// this adds the errorMessage text and the result to the response
+				req.setAttribute("errorMessage", errorMessage);
+				
+				// Forward to view to render the result HTML document
+				req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 			}
 		} catch(IOException e) {
 			errorMessage = "Exception";
@@ -81,7 +92,7 @@ public class LoginServlet extends HttpServlet {
 		if(!model.getValidity()) {
 			errorMessage = "NA";
 		}
-		*/
+		
 		
 		// Add parameters as request attributes
 		req.setAttribute("model", model);
@@ -92,5 +103,6 @@ public class LoginServlet extends HttpServlet {
 		
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
+		*/
 	}
 }
