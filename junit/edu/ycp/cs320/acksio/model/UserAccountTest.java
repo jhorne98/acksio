@@ -19,31 +19,30 @@ public class UserAccountTest {
 		assertEquals(model.getUsername(), "username");
 	}
 	
-	public void testSets() {
-		model.setPassword("pwd");
-		assertEquals(model.getPassword(), "pwd");
-		model.setUsername("user");
-		assertEquals(model.getUsername(), "user");
-		model.setUserId(1);
-		assertEquals(model.getUserId(), 1);
-		model.setValidity(false);
-		assertEquals(model.getValidity(), false);
-	}
-	
+	@Test
 	public void testLogout() {
 		
 	}
 	
+	@Test
 	public void testVerifyLogin() {
 		
 	}
 	
+	@Test
 	public void testEdit() {
 		
 	}
 	
+	@Test
 	public void testAddVehicle() {
     
+	}
+
+	@Test
+	public void testSetUserId() {
+		model.setUserId(1);
+		assertEquals(model.getUserId(), 1);
 	}
 	
 	public void testLogin() {
@@ -54,12 +53,5 @@ public class UserAccountTest {
 		model.login();
 		
 		assertEquals(model.getValidity(), true);
-		
-		model.setUsername("joel");
-		model.setPassword("wrong");
-		
-		model.login();
-		
-		assertEquals(model.getValidity(), false);
 	}
 }

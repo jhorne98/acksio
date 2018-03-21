@@ -5,9 +5,6 @@ import java.io.File;
 import org.eclipse.jetty.server.Server;
 
 public class Main {
-	
-	//IDK if this is working anymore but thats probably just my computer.
-	
 	public static void main(String[] args) throws Exception {
 		String webappCodeBase = "./war";
 		File warFile = new File(webappCodeBase);

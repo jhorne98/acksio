@@ -30,11 +30,11 @@
 			<form action="${pageContext.servletContext.contextPath}/login" method="post">
 
 				Login:<br>
-				<input type="text" name="username" value="${model.username}" method="post">
+				<input type="text" name="username" value="${model.username}">
 				<br>
 
 				Password:<br>
-				<input type="password" name="password" value="${model.password}" method="post">
+				<input type="password" name="password" value="${model.password}">
 				<br><br>
 				
 				<input type="submit" name="submit" value="Log in">

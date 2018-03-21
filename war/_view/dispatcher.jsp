@@ -28,13 +28,13 @@
 				
 			Target Address: 
 				<input type="text" name="destinationAddress" value="${model.address}" method="post">
-				<br>
+				<br><br>
 				
 				Recipient Name: <input type = "text" name="recipientName" value="${model.name}" method="post">
-				<br>
+				<br><br>
 				
-				Recipient Phone #: : <input type = "text" name="recipientPhone" value="${model.phone}" method="post">
-				<br>
+				Recipient Phone #: <input type = "text" name="recipientPhone" value="${model.phone}" method="post">
+				<br><br>
 				
 				Vehicle Type<br>
 				<select name="vehicleType">
@@ -43,7 +43,7 @@
 				<br><br>
 
 				<input type="checkbox" name="tsaCertified" value="${model.tsaCert}"> TSA certified driver needed<br><br>
-				<input type="
+
 				<input type="submit" name="submit" value="Create Job">
 				
 				<p>${model.vehicleType}</p>
