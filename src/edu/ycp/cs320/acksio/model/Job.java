@@ -137,6 +137,10 @@ public class Job implements DataController{
 		return payment;
 		
 	}
+	
+	public boolean getApproved() {
+		return approved;
+	}
 	@Override
 	public void populate(String id) {
 		// TODO Auto-generated method stub
