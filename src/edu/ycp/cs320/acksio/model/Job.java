@@ -7,19 +7,11 @@ public class Job implements DataController{
 	private String destinationAddress;
 	private VehicleType vehicleType;
 	private Boolean tsaVerified;
-<<<<<<< HEAD
 	private String recipientName;
 	private long recipientPhone;
 	private double distanceMi;
 	private double payEstimateForJob;
 	private double payActualForJob;
-=======
-	private String recipentName;
-	private int recipentPhone;
-	private int distanceMi;
-	private int payEstimateForJob;
-	private int payActualForJob;
->>>>>>> refs/heads/master
 	private Boolean courierPaid;
 	private int pickUpTime;
 	private int dropOffTime;
@@ -53,14 +45,10 @@ public class Job implements DataController{
 	public void setTsaVerified (Boolean tsa) {
 		this.tsaVerified = tsa; 
 	}
-<<<<<<< HEAD
 	public void setRecipientName (String name) {
 		this.recipientName = name; 
-=======
-	public void setRecipentName (String name) {
-		this.recipentName = name; 
->>>>>>> refs/heads/master
 	}
+
 	public void setRecipientPhone (long phone) {
 		this.recipientPhone = phone;
 	}
@@ -97,13 +85,8 @@ public class Job implements DataController{
 	public Boolean getTsaVerified () {
 		return tsaVerified; 
 	}
-<<<<<<< HEAD
 	public String getRecipientName () {
 		return recipientName; 
-=======
-	public String getRecipentName () {
-		return recipentName; 
->>>>>>> refs/heads/master
 	}
 	public long getRecipientPhone () {
 		return recipientPhone;
@@ -166,12 +149,8 @@ public class Job implements DataController{
 		
 	
 	}
-<<<<<<< HEAD
-	public boolean getApproved() {
-=======
-	
+
 	public boolean approvedOnInvoice() {
->>>>>>> refs/heads/master
 		// TODO this needs to be implemented. It needs to check if the courier has approved this job on their invoice
 		return approved;
 	}
