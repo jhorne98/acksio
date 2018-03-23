@@ -29,6 +29,38 @@ public class Dispatcher extends UserAccount{
 		return tsaCert;
 	}
 	
+	public Job getTestJob() {
+		return testJob;
+	}
+
+	public void setTestJob(Job testJob) {
+		this.testJob = testJob;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getPhone() {
+		return phone;
+	}
+
+	public void setPhone(int phone) {
+		this.phone = phone;
+	}
+	
 	@Override
 	public void populate(String id) {
 		// TODO Auto-generated method stub
