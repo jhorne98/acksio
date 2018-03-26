@@ -48,14 +48,14 @@ public class JobTest {
 		model.setPayActualForJob(integers[3]);
 		model.setPayEstimateForJob(integers[4]);
 		model.setPickUpTime(integers[5]);
-		model.setRecipentPhone(integers[6]);
+		//model.setRecipentPhone(integers[6]);
 		assertEquals(model.getActualTime(),integers[0]);
 		assertEquals(model.getDistanceMi(),integers[1]);
 		assertEquals(model.getDropOffTime(),integers[2]);
 		assertEquals(model.getPayActualForJob(),integers[3]);
 		assertEquals(model.getPayEstimateForJob(),integers[4]);
 		assertEquals(model.getPickUpTime(),integers[5]);
-		assertEquals(model.getRecipentPhone(),integers[6]);
+		//assertEquals(model.getRecipentPhone(),integers[6]);
 		
 		//BOOLEANS
 		model.setCourierPaid(bools[0]);
@@ -65,7 +65,7 @@ public class JobTest {
 		
 		//STRINGS
 		model.setDeststinationAddress(strings[0]);
-		model.setVehicleType(strings[1]);
+		//model.setVehicleType(strings[1]);
 		assertEquals(model.getDeststinationAddress(), strings[0]);
 		assertEquals(model.getVehicleType(), strings[1]);
 	}
