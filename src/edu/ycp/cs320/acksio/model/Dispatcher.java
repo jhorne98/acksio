@@ -2,6 +2,7 @@
 package edu.ycp.cs320.acksio.model;
 
 public class Dispatcher extends UserAccount{
+	private int dispatcherID;
 	private VehicleType vehicleType;
 	private Boolean tsaCert;
 	private Job testJob; //will go to database when implemented 
@@ -21,7 +22,7 @@ public class Dispatcher extends UserAccount{
 		
 	}
 	
-	public Dispatcher(String id) {
+	public Dispatcher(int id) {
 		populate(id);
 	}
 	
@@ -74,7 +75,7 @@ public class Dispatcher extends UserAccount{
 	}
 	
 	@Override
-	public void populate(String id) {
+	public void populate(int id) {
 		// TODO Auto-generated method stub
 		
 	}

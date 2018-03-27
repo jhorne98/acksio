@@ -102,54 +102,66 @@ public class FakeDatabase implements IDatabase{
 		return null;
 	}
 	@Override
-	public Job jobFromID(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Courier courierFromID(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Dispatcher dispatcherFromID(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public UserAccount userAccountFromID(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Vehicle vehicleFromID(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
 	public Boolean verifyLogin(String username, String password) {
 		for(UserAccount user : userList)
 			if(user.getUsername() == username && user.getPassword() == password)
 				return true;
 		return false;
 	}
+
 	@Override
-	public List<Vehicle> vehiclesFromCourierID(String id) {
+	public Job jobFromID(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
-	public List<Job> jobsFromCourierID(String id) {
+	public Courier courierFromID(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
-	public List<Job> jobsFromDispatcherID(String id) {
+	public Dispatcher dispatcherFromID(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
-	public List<Courier> couriersFromDispatcherID(String id) {
+	public UserAccount userAccountFromID(int id) {
+		for(int i = 0; i < 0; i++) {
+			if(userList.get(i).getUserId() == id)
+				return userList.get(i);
+		}
+		return null;
+	}
+
+	@Override
+	public Vehicle vehicleFromID(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Vehicle> vehiclesFromCourierID(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Job> jobsFromCourierID(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Job> jobsFromDispatcherID(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Courier> couriersFromDispatcherID(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

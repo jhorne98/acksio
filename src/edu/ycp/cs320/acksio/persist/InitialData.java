@@ -42,7 +42,7 @@ public class InitialData {
 		ReadCSV readUsers = new ReadCSV("dispatchers.csv");
 		try {
 			// auto-generated primary key for authors table
-			Integer userId = 1;
+			Integer dispatcherId = 1;
 			while (true) {
 				List<String> tuple = readUsers.next();
 				if (tuple == null) {
@@ -50,8 +50,9 @@ public class InitialData {
 				}
 				Iterator<String> i = tuple.iterator();
 				Dispatcher user = new Dispatcher();
+				
+				user.setUserId(dispatcherId++);				
 				/*
-				user.setUserId(userId++);				
 				user.setUsername(i.next());
 				user.setPassword(i.next());
 				*/

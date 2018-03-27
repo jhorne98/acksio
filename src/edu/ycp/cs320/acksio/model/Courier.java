@@ -48,14 +48,14 @@ public class Courier extends UserAccount{
 		
 	}
 	
-	public Courier(String id) {
+	public Courier(int id) {
 		populate(id);
 	}
 
 		
 	//METHODS
 	@Override
-	public void populate(String id) {
+	public void populate(int id) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -16,13 +16,13 @@ public class Vehicle implements DataController{
 		
 	}
 	
-	public Vehicle(String id) {
+	public Vehicle(int id) {
 		populate(id);
 	}
 	
 	//METHODS
 	@Override
-	public void populate(String id) {
+	public void populate(int id) {
 		// TODO Auto-generated method stub
 		
 	}

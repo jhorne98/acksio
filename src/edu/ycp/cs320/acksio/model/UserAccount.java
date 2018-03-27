@@ -2,8 +2,7 @@ package edu.ycp.cs320.acksio.model;
 
 import edu.ycp.cs320.acksio.controller.DataController;
 //import edu.ycp.cs320.acksio.persist.DatabaseProvider;
-import edu.ycp.cs320.acksio.persist.DerbyDatabase;
-
+import edu.ycp.cs320.acksio.persist.*;
 import java.sql.*;
 
 public class UserAccount implements DataController{
@@ -24,8 +23,9 @@ public class UserAccount implements DataController{
 		//save();
 	}
 	
-	public UserAccount(String id) {
-		//populate(id);
+	public UserAccount(int id) {
+		userId = id;
+		populate(id);
 	}
 
 	public int getUserId() {
@@ -62,9 +62,12 @@ public class UserAccount implements DataController{
 	
 	
 	@Override
-	public void populate(String id) {
-		// TODO Auto-generated method stub
-		
+	public void populate(int id) {
+		IDatabase db = new FakeDatabase();
+		UserAccount hold = db.userAccountFromID(id);
+		setUsername(hold.getUsername());
+		setPassword(hold.getPassword());
+		login();
 	}
 
 	@Override

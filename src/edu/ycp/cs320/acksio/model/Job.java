@@ -41,7 +41,7 @@ public class Job implements DataController{
 		
 	}
 	
-	public Job(String id) {
+	public Job(int id) {
 		populate(id);
 	}
 	
@@ -158,7 +158,7 @@ public class Job implements DataController{
 		return approved;
 	}
 	@Override
-	public void populate(String id) {
+	public void populate(int id) {
 		// TODO Auto-generated method stub
 		
 	}
