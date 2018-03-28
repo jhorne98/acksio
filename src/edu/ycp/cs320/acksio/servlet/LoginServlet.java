@@ -71,6 +71,7 @@ public class LoginServlet extends HttpServlet {
 				resp.sendRedirect("dispatcher");
 				
 				//req.getRequestDispatcher("/_view/dispatcher.jsp").forward(req, resp);
+			// username | password is not in db
 			} else {
 				errorMessage = "Please input a valid user name and password.";
 				
@@ -85,7 +86,7 @@ public class LoginServlet extends HttpServlet {
 				req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 			}
 		} catch(IOException e) {
-			errorMessage = "Exception";
+			errorMessage = "Exception: something happened.";
 		}
 		
 		/*

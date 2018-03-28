@@ -59,7 +59,7 @@ public class DerbyDatabase {
 					stmt.setString(2, password);
 					
 					resultSet = stmt.executeQuery();
-					
+
 					//System.out.println(resultSet.getRow());
 					
 					if (resultSet.next()) {
