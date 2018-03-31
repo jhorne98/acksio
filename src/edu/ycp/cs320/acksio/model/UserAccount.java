@@ -4,11 +4,12 @@ import edu.ycp.cs320.acksio.controller.DataController;
 //import edu.ycp.cs320.acksio.persist.DatabaseProvider;
 import edu.ycp.cs320.acksio.persist.DerbyDatabase;
 
-import java.sql.*;
+//import java.sql.*;
 
 public class UserAccount implements DataController{
 	private String username;
 	private String password;
+	private String email;
 	private int userId;
 	private Boolean isValid;
 	
@@ -17,9 +18,10 @@ public class UserAccount implements DataController{
 	}
 	
 	// constructor for UserAccount class, isValid is false on default
-	public UserAccount(String username, String password) {
+	public UserAccount(String username, String password, String email) {
 		this.username = username;
 		this.password = password;
+		this.email = email;
 		isValid = false;
 		//save();
 	}
@@ -50,6 +52,14 @@ public class UserAccount implements DataController{
 	
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	public Boolean getValidity() {
@@ -85,6 +95,18 @@ public class UserAccount implements DataController{
 		DerbyDatabase db = new DerbyDatabase();
 		
 		isValid = db.verifyLogin(username, password);
+	}
+	
+	public int signup() {
+		DerbyDatabase db = new DerbyDatabase();
+		
+		int signupFlag = db.createAccount(username, password, email);
+		
+		if(signupFlag == 0) {
+			isValid = true;
+		}
+		
+		return signupFlag;
 	}
 	
 	public void logout() {

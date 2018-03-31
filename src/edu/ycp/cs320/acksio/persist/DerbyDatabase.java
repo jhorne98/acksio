@@ -14,6 +14,7 @@ import edu.ycp.cs320.acksio.persist.PersistenceException;
 import edu.ycp.cs320.acksio.persist.DerbyDatabase;
 import edu.ycp.cs320.acksio.persist.InitialData;
 import edu.ycp.cs320.acksio.sqldemo.DBUtil;
+//import jdk.internal.util.xml.impl.Pair;
 
 // copied almost directly from lab06
 public class DerbyDatabase {
@@ -51,8 +52,8 @@ public class DerbyDatabase {
 					stmt = conn.prepareStatement(
 							"select users.user_id"
 							+ "	from users"
-							+ "	where users.username = ?"
-							+ "		and users.password = ?"
+							+ "	where users.username=?"
+							+ "		and users.password=?"
 					);
 					
 					stmt.setString(1, username);
@@ -73,6 +74,69 @@ public class DerbyDatabase {
 				} finally {
 					DBUtil.closeQuietly(resultSet);
 					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
+	// attempt to create a user by first checking if the user/password/email exists in the users db
+	// return error code based on user input matching field in db
+	// TODO: SUPER KLUDGY!! fix later
+	public Integer createAccount(String username, String password, String email) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement checkUser = null;
+				//PreparedStatement checkPassword = null;
+				//PreparedStatement checkEmail = null;
+				PreparedStatement insertNewUser = null;
+				ResultSet userSet = null;
+				//ResultSet passwordSet = null;
+				//ResultSet emailSet = null;
+				
+				try {
+					// determine if input credentials already exist in the database
+					checkUser = conn.prepareStatement(
+						"select *"
+							+ "	from users"
+							+ "	where users.username=?"
+							+ "		and users.password=?"
+							+ "		and users.email=?"
+					);
+					
+					checkUser.setString(1, username);
+					checkUser.setString(2, password);
+					checkUser.setString(3, email);
+					
+					userSet = checkUser.executeQuery();
+					
+					// test result set for identical username/password/email: return based on those params in that order
+					while(userSet.next()) {
+						if(userSet.getString(1) == username) {
+							return 1;
+						} else if(userSet.getString(2) == password) {
+							return 2;
+						} else if(userSet.getString(3) == email) {
+							return 3;
+						}
+					}
+					
+					// user does not already exist: insert into users
+					insertNewUser = conn.prepareStatement(
+						"insert into users (username, password, email)"
+						+ "	values (?, ?, ?)"	
+					);
+					
+					insertNewUser.setString(1, username);
+					insertNewUser.setString(2, password);
+					insertNewUser.setString(3, email);
+					
+					insertNewUser.executeUpdate();
+					
+					return 0;
+				} finally {
+					DBUtil.closeQuietly(userSet);
+					DBUtil.closeQuietly(checkUser);
 				}
 			}
 		});
@@ -144,7 +208,8 @@ public class DerbyDatabase {
 						"	user_id integer primary key " +
 						"		generated always as identity (start with 1, increment by 1), " +									
 						"	username varchar(40)," +
-						"	password varchar(40)" +
+						"	password varchar(40)," +
+						"	email varchar(40) " +
 						")"
 					);	
 					stmt1.executeUpdate();
@@ -192,11 +257,12 @@ public class DerbyDatabase {
 
 				try {
 					// populate users table
-					insertUser = conn.prepareStatement("insert into users (username, password) values (?, ?)");
+					insertUser = conn.prepareStatement("insert into users (username, password, email) values (?, ?, ?)");
 					for (UserAccount user : userList) {
 						//insertUser.setInt(1, author.getUserId());	// auto-generated primary key, don't insert this
 						insertUser.setString(1, user.getUsername());
 						insertUser.setString(2, user.getPassword());
+						insertUser.setString(3, user.getEmail());
 						insertUser.addBatch();
 					}
 					insertUser.executeBatch();

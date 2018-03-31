@@ -25,6 +25,7 @@ public class InitialData {
 				user.setUserId(userId++);				
 				user.setUsername(i.next());
 				user.setPassword(i.next());
+				user.setEmail(i.next());
 				userList.add(user);
 			}
 			return userList;
