@@ -1,9 +1,11 @@
 package edu.ycp.cs320.acksio.model;
 
 import edu.ycp.cs320.acksio.controller.DataController;
+import edu.ycp.cs320.acksio.persist.DatabaseProvider;
 
 public class Vehicle implements DataController{
 	//ATTRIBUTES
+	private int vehicleID;
 	private String licensePlate;
 	private int year;
 	private String make;
@@ -16,21 +18,22 @@ public class Vehicle implements DataController{
 		
 	}
 	
-	public Vehicle(int id) {
-		populate(id);
+	public Vehicle(DatabaseProvider provider, int id) {
+		setVehicleID(id);
+		populate(provider, id);
 	}
 	
 	//METHODS
 	@Override
-	public void populate(int id) {
-		// TODO Auto-generated method stub
-		
+	public void populate(DatabaseProvider provider, int id) {
+		Vehicle hold = provider.getInstance().vehicleFromID(id);
+		//TODO: Assign variables
 	}
 
 	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-		
+	public void save(DatabaseProvider provider) {
+		if(!provider.getInstance().update(this)) 
+			provider.getInstance().insert(this);
 	}
 	
 	//SETTERS AND GETTERS
@@ -80,5 +83,13 @@ public class Vehicle implements DataController{
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public int getVehicleID() {
+		return vehicleID;
+	}
+
+	public void setVehicleID(int vehicleID) {
+		this.vehicleID = vehicleID;
 	}
 }

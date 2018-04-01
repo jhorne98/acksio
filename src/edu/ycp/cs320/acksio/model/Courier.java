@@ -2,10 +2,13 @@ package edu.ycp.cs320.acksio.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.ycp.cs320.acksio.persist.DatabaseProvider;
 import javafx.util.Pair;
 
 public class Courier extends UserAccount{
 	
+	private int courierID;
 	private int driverNumber;
 	private String name;
 	private Boolean availability;
@@ -48,22 +51,23 @@ public class Courier extends UserAccount{
 		
 	}
 	
-	public Courier(int id) {
-		populate(id);
+	public Courier(DatabaseProvider provider, int id) {
+		setCourierID(id);
+		populate(provider, id);
 	}
 
 		
 	//METHODS
 	@Override
-	public void populate(int id) {
-		// TODO Auto-generated method stub
-		
+	public void populate(DatabaseProvider provider, int id) {
+		Courier hold = provider.getInstance().courierFromID(id);
+		//TODO: Assign variables
 	}
 
 	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-		
+	public void save(DatabaseProvider provider) {
+		if(!provider.getInstance().update(this)) 
+			provider.getInstance().insert(this);
 	}
 	
 	public void addVehicle() {
@@ -288,5 +292,13 @@ public class Courier extends UserAccount{
 
 	public void setAvailability(Boolean availability) {
 		this.availability = availability;
+	}
+
+	public int getCourierID() {
+		return courierID;
+	}
+
+	public void setCourierID(int courierID) {
+		this.courierID = courierID;
 	}
 }

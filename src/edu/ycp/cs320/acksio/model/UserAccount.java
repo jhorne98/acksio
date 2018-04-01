@@ -23,9 +23,9 @@ public class UserAccount implements DataController{
 		//save();
 	}
 	
-	public UserAccount(int id) {
-		userId = id;
-		populate(id);
+	public UserAccount(DatabaseProvider provider, int id) {
+		setUserId(id);
+		populate(provider, id);
 	}
 
 	public int getUserId() {
@@ -62,18 +62,17 @@ public class UserAccount implements DataController{
 	
 	
 	@Override
-	public void populate(int id) {
-		IDatabase db = new FakeDatabase();
-		UserAccount hold = db.userAccountFromID(id);
+	public void populate(DatabaseProvider provider, int id) {
+		UserAccount hold = provider.getInstance().userAccountFromID(id);
 		setUsername(hold.getUsername());
 		setPassword(hold.getPassword());
 		login();
 	}
 
 	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-		
+	public void save(DatabaseProvider provider) {
+		if(!provider.getInstance().update(this)) 
+			provider.getInstance().insert(this);
 	}
 	
 	/*

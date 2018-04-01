@@ -111,19 +111,28 @@ public class FakeDatabase implements IDatabase{
 
 	@Override
 	public Job jobFromID(int id) {
-		// TODO Auto-generated method stub
+		for(int i = 0; i < 0; i++) {
+			if(jobList.get(i).getJobID() == id)
+				return jobList.get(i);
+		}
 		return null;
 	}
 
 	@Override
 	public Courier courierFromID(int id) {
-		// TODO Auto-generated method stub
+		for(int i = 0; i < 0; i++) {
+			if(courierList.get(i).getCourierID() == id)
+				return courierList.get(i);
+		}
 		return null;
 	}
 
 	@Override
 	public Dispatcher dispatcherFromID(int id) {
-		// TODO Auto-generated method stub
+		for(int i = 0; i < 0; i++) {
+			if(dispatcherList.get(i).getDispatcherID() == id)
+				return dispatcherList.get(i);
+		}
 		return null;
 	}
 
@@ -138,7 +147,10 @@ public class FakeDatabase implements IDatabase{
 
 	@Override
 	public Vehicle vehicleFromID(int id) {
-		// TODO Auto-generated method stub
+		for(int i = 0; i < 0; i++) {
+			if(vehicleList.get(i).getVehicleID() == id)
+				return vehicleList.get(i);
+		}
 		return null;
 	}
 

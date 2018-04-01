@@ -1,9 +1,11 @@
 package edu.ycp.cs320.acksio.model;
 
 import edu.ycp.cs320.acksio.controller.DataController;
+import edu.ycp.cs320.acksio.persist.DatabaseProvider;
 
 public class Job implements DataController{
 	
+	private int jobID;
 	private String destinationAddress;
 	private VehicleType vehicleType;
 	private Boolean tsaVerified;
@@ -41,8 +43,9 @@ public class Job implements DataController{
 		
 	}
 	
-	public Job(int id) {
-		populate(id);
+	public Job(DatabaseProvider provider, int id) {
+		setJobID(id);
+		populate(provider, id);
 	}
 	
 	public void setDeststinationAddress (String address) {
@@ -158,21 +161,28 @@ public class Job implements DataController{
 		return approved;
 	}
 	@Override
-	public void populate(int id) {
-		// TODO Auto-generated method stub
-		
+	public void populate(DatabaseProvider provider, int id) {
+		Job hold = provider.getInstance().jobFromID(id);
+		//TODO: Assign variables
 	}
 
 	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-		
-	
+	public void save(DatabaseProvider provider) {
+		if(!provider.getInstance().update(this)) 
+			provider.getInstance().insert(this);
 	}
 
 	public boolean approvedOnInvoice() {
 		// TODO this needs to be implemented. It needs to check if the courier has approved this job on their invoice
 		return approved;
+	}
+
+	public int getJobID() {
+		return jobID;
+	}
+
+	public void setJobID(int jobID) {
+		this.jobID = jobID;
 	}
 
 }

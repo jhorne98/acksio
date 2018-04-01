@@ -1,7 +1,10 @@
 
 package edu.ycp.cs320.acksio.model;
 
+import edu.ycp.cs320.acksio.persist.DatabaseProvider;
+
 public class Dispatcher extends UserAccount{
+	
 	private int dispatcherID;
 	private VehicleType vehicleType;
 	private Boolean tsaCert;
@@ -22,8 +25,9 @@ public class Dispatcher extends UserAccount{
 		
 	}
 	
-	public Dispatcher(int id) {
-		populate(id);
+	public Dispatcher(DatabaseProvider provider, int id) {
+		setDispatcherID(id);
+		populate(provider, id);
 	}
 	
 	public Dispatcher(String parameter, boolean tsaCert2, String parameter2, String parameter3, int intFromParameter) {
@@ -75,15 +79,23 @@ public class Dispatcher extends UserAccount{
 	}
 	
 	@Override
-	public void populate(int id) {
-		// TODO Auto-generated method stub
-		
+	public void populate(DatabaseProvider provider, int id) {
+		Dispatcher hold = provider.getInstance().dispatcherFromID(id);
+		//TODO: Assign variables
 	}
 
 	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-		
+	public void save(DatabaseProvider provider) {
+		if(!provider.getInstance().update(this)) 
+			provider.getInstance().insert(this);
+	}
+
+	public int getDispatcherID() {
+		return dispatcherID;
+	}
+
+	public void setDispatcherID(int dispatcherID) {
+		this.dispatcherID = dispatcherID;
 	}
 
 }
