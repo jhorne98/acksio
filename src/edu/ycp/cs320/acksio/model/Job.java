@@ -5,6 +5,8 @@ import edu.ycp.cs320.acksio.persist.DatabaseProvider;
 
 public class Job implements DataController{
 	
+	private int courierID;
+	private int dispatcherID;
 	private int jobID;
 	private String destinationAddress;
 	private VehicleType vehicleType;
@@ -183,6 +185,22 @@ public class Job implements DataController{
 
 	public void setJobID(int jobID) {
 		this.jobID = jobID;
+	}
+
+	public int getCourierID() {
+		return courierID;
+	}
+
+	public void setCourierID(int courierID) {
+		this.courierID = courierID;
+	}
+
+	public int getDispatcherID() {
+		return dispatcherID;
+	}
+
+	public void setDispatcherID(int dispatcherID) {
+		this.dispatcherID = dispatcherID;
 	}
 
 }

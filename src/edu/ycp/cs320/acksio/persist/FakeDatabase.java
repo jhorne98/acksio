@@ -72,9 +72,9 @@ public class FakeDatabase implements IDatabase{
 	@Override
 	public Boolean update(Job job) {
 		int i = 0;
-		while(i < jobList.size() && !jobList.get(i).getId().equals(job.getId()))
+		while(i < jobList.size() && !(jobList.get(i).getJobID() == job.getJobID()))
 			i++;
-		if(jobList.get(i).getId().equals(job.getId())) {
+		if(jobList.get(i).getJobID() == job.getJobID()) {
 			jobList.add(i, job);
 			jobList.remove(i+1);
 			return true;
@@ -83,23 +83,51 @@ public class FakeDatabase implements IDatabase{
 	}
 	@Override
 	public Boolean update(Courier courier) {
-		// TODO Auto-generated method stub
-		return null;
+		int i = 0;
+		while(i < courierList.size() && !(courierList.get(i).getCourierID() == courier.getCourierID()))
+			i++;
+		if(courierList.get(i).getCourierID() == courier.getCourierID()) {
+			courierList.add(i, courier);
+			courierList.remove(i+1);
+			return true;
+		}
+		return false;
 	}
 	@Override
 	public Boolean update(Dispatcher dispatcher) {
-		// TODO Auto-generated method stub
-		return null;
+		int i = 0;
+		while(i < dispatcherList.size() && !(dispatcherList.get(i).getDispatcherID() == dispatcher.getDispatcherID()))
+			i++;
+		if(dispatcherList.get(i).getDispatcherID() == dispatcher.getDispatcherID()) {
+			dispatcherList.add(i, dispatcher);
+			dispatcherList.remove(i+1);
+			return true;
+		}
+		return false;
 	}
 	@Override
 	public Boolean update(UserAccount user) {
-		// TODO Auto-generated method stub
-		return null;
+		int i = 0;
+		while(i < userList.size() && !(userList.get(i).getUserId() == user.getUserId()))
+			i++;
+		if(userList.get(i).getUserId() == user.getUserId()) {
+			userList.add(i, user);
+			userList.remove(i+1);
+			return true;
+		}
+		return false;
 	}
 	@Override
 	public Boolean update(Vehicle vehicle) {
-		// TODO Auto-generated method stub
-		return null;
+		int i = 0;
+		while(i < vehicleList.size() && !(vehicleList.get(i).getVehicleID() == vehicle.getVehicleID()))
+			i++;
+		if(vehicleList.get(i).getVehicleID() == vehicle.getVehicleID()) {
+			vehicleList.add(i, vehicle);
+			vehicleList.remove(i+1);
+			return true;
+		}
+		return false;
 	}
 	@Override
 	public Boolean verifyLogin(String username, String password) {
@@ -156,25 +184,46 @@ public class FakeDatabase implements IDatabase{
 
 	@Override
 	public List<Vehicle> vehiclesFromCourierID(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Vehicle> list = new ArrayList<Vehicle>();
+		
+		for(Vehicle vehicle : vehicleList) 
+			if(vehicle.getCourierID() == id)
+				list.add(vehicle);
+		
+		return list;
 	}
 
 	@Override
 	public List<Job> jobsFromCourierID(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Job> list = new ArrayList<Job>();
+		
+		for(Job job : jobList) 
+			if(job.getCourierID() == id)
+				list.add(job);
+		
+		
+		return list;
 	}
 
 	@Override
 	public List<Job> jobsFromDispatcherID(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Job> list = new ArrayList<Job>();
+		
+		for(Job job : jobList) 
+			if(job.getDispatcherID() == id)
+				list.add(job);
+		
+		return list;
 	}
 
 	@Override
 	public List<Courier> couriersFromDispatcherID(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Courier> list = new ArrayList<Courier>();
+		
+		for(Courier courier : courierList) 
+			if(courier.getDispatcherID() == id)
+				list.add(courier);
+		
+		return list;
 	}
 }

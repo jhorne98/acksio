@@ -5,6 +5,7 @@ import edu.ycp.cs320.acksio.persist.DatabaseProvider;
 
 public class Vehicle implements DataController{
 	//ATTRIBUTES
+	private int courierID;
 	private int vehicleID;
 	private String licensePlate;
 	private int year;
@@ -91,5 +92,13 @@ public class Vehicle implements DataController{
 
 	public void setVehicleID(int vehicleID) {
 		this.vehicleID = vehicleID;
+	}
+
+	public int getCourierID() {
+		return courierID;
+	}
+
+	public void setCourierID(int courierID) {
+		this.courierID = courierID;
 	}
 }

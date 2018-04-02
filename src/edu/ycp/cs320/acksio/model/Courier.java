@@ -9,6 +9,7 @@ import javafx.util.Pair;
 public class Courier extends UserAccount{
 	
 	private int courierID;
+	private int dispatcherID;
 	private int driverNumber;
 	private String name;
 	private Boolean availability;
@@ -300,5 +301,13 @@ public class Courier extends UserAccount{
 
 	public void setCourierID(int courierID) {
 		this.courierID = courierID;
+	}
+
+	public int getDispatcherID() {
+		return dispatcherID;
+	}
+
+	public void setDispatcherID(int dispatcherID) {
+		this.dispatcherID = dispatcherID;
 	}
 }
