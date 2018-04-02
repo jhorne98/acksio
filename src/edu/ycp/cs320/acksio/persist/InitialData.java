@@ -39,106 +39,127 @@ public class InitialData {
 	
  	public static List<Dispatcher> getDispatchers() throws IOException {
 		List<Dispatcher> dispatcherList = new ArrayList<Dispatcher>();
-		ReadCSV readUsers = new ReadCSV("dispatchers.csv");
+		ReadCSV readDispatchers = new ReadCSV("dispatchers.csv");
 		try {
 			// auto-generated primary key for authors table
 			Integer dispatcherId = 1;
 			while (true) {
-				List<String> tuple = readUsers.next();
+				List<String> tuple = readDispatchers.next();
 				if (tuple == null) {
 					break;
 				}
 				Iterator<String> i = tuple.iterator();
 				Dispatcher user = new Dispatcher();
 				
-				user.setUserId(dispatcherId++);				
-				/*
-				user.setUsername(i.next());
-				user.setPassword(i.next());
-				*/
+				user.setDispatcherID(dispatcherId++);
+				//UserID
+				//Name
+				//Address
+				//Phone
+				
 				dispatcherList.add(user);
 			}
 			return dispatcherList;
 		} finally {
-			readUsers.close();
+			readDispatchers.close();
 		}
 	}
 	
  	public static List<Courier> getCouriers() throws IOException {
 		List<Courier> courierList = new ArrayList<Courier>();
-		ReadCSV readUsers = new ReadCSV("couriers.csv");
+		ReadCSV readCouriers = new ReadCSV("couriers.csv");
 		try {
 			// auto-generated primary key for authors table
-			Integer userId = 1;
+			Integer courierId = 1;
 			while (true) {
-				List<String> tuple = readUsers.next();
+				List<String> tuple = readCouriers.next();
 				if (tuple == null) {
 					break;
 				}
 				Iterator<String> i = tuple.iterator();
 				Courier user = new Courier();
-				/*
-				user.setUserId(userId++);				
-				user.setUsername(i.next());
-				user.setPassword(i.next());
-				*/
+				
+				user.setCourierID(courierId);
+				//DispatcherID (Company ID functionally)
+				//Name
+				//TSA Verified
+				//Long
+				//Lat
+				//Balance
+				//Availability
+				
 				courierList.add(user);
 			}
 			return courierList;
 		} finally {
-			readUsers.close();
+			readCouriers.close();
 		}
 	}
 	
  	public static List<Job> getJobs() throws IOException {
 		List<Job> jobList = new ArrayList<Job>();
-		ReadCSV readUsers = new ReadCSV("jobs.csv");
+		ReadCSV readJobs = new ReadCSV("jobs.csv");
 		try {
 			// auto-generated primary key for authors table
-			Integer userId = 1;
+			Integer jobId = 1;
 			while (true) {
-				List<String> tuple = readUsers.next();
+				List<String> tuple = readJobs.next();
 				if (tuple == null) {
 					break;
 				}
 				Iterator<String> i = tuple.iterator();
-				Job user = new Job();
-				/*
-				user.setUserId(userId++);				
-				user.setUsername(i.next());
-				user.setPassword(i.next());
-				jobList.add(user);
-				*/
+				Job job = new Job();
+				job.setJobID(jobId);
+				//CourierID
+				//DispatcherID
+				//Destination
+				//VehicleType
+				//TSACert
+				//RecipientName
+				//RecipientPhone
+				//Distance
+				//CourierPaid
+				//PickUpTime
+				//DropOffTime
+				//TimeForJob
+				//PackageSignedFor
+				//InvoiceApproved
+				
+				jobList.add(job);
 			}
 			return jobList;
 		} finally {
-			readUsers.close();
+			readJobs.close();
 		}
 	}
  	
  	public static List<Vehicle> getVehicles() throws IOException {
 		List<Vehicle> vehicleList = new ArrayList<Vehicle>();
-		ReadCSV readUsers = new ReadCSV("vehicles.csv");
+		ReadCSV readVehicles = new ReadCSV("vehicles.csv");
 		try {
 			// auto-generated primary key for authors table
-			Integer userId = 1;
+			Integer vehicleId = 1;
 			while (true) {
-				List<String> tuple = readUsers.next();
+				List<String> tuple = readVehicles.next();
 				if (tuple == null) {
 					break;
 				}
 				Iterator<String> i = tuple.iterator();
-				Vehicle user = new Vehicle();
-				/*
-				user.setUserId(userId++);				
-				user.setUsername(i.next());
-				user.setPassword(i.next());
-				*/
-				vehicleList.add(user);
+				Vehicle vehicle = new Vehicle();
+				vehicle.setVehicleID(vehicleId);
+				//CourierID
+				//VehicleType
+				//LicensePlate
+				//Make
+				//Model
+				//Year
+				//Active
+				
+				vehicleList.add(vehicle);
 			}
 			return vehicleList;
 		} finally {
-			readUsers.close();
+			readVehicles.close();
 		}
 	}
 }
