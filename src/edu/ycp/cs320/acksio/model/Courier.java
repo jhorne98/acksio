@@ -62,7 +62,11 @@ public class Courier extends UserAccount{
 	@Override
 	public void populate(DatabaseProvider provider, int id) {
 		Courier hold = provider.getInstance().courierFromID(id);
+		if(hold != null) {
 		//TODO: Assign variables
+		} else {
+			
+		}
 	}
 
 	@Override

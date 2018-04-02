@@ -165,7 +165,11 @@ public class Job implements DataController{
 	@Override
 	public void populate(DatabaseProvider provider, int id) {
 		Job hold = provider.getInstance().jobFromID(id);
+		if(hold != null) {
 		//TODO: Assign variables
+		} else {
+			
+		}
 	}
 
 	@Override

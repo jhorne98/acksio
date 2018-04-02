@@ -64,9 +64,13 @@ public class UserAccount implements DataController{
 	@Override
 	public void populate(DatabaseProvider provider, int id) {
 		UserAccount hold = provider.getInstance().userAccountFromID(id);
-		setUsername(hold.getUsername());
-		setPassword(hold.getPassword());
-		login();
+		if(hold != null) {
+			setUsername(hold.getUsername());
+			setPassword(hold.getPassword());
+			login();
+		} else {
+			
+		}
 	}
 
 	@Override

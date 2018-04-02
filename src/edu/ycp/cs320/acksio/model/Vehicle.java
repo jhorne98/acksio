@@ -28,7 +28,11 @@ public class Vehicle implements DataController{
 	@Override
 	public void populate(DatabaseProvider provider, int id) {
 		Vehicle hold = provider.getInstance().vehicleFromID(id);
+		if(hold != null) {
 		//TODO: Assign variables
+		} else {
+			
+		}
 	}
 
 	@Override

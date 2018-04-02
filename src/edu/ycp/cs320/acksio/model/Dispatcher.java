@@ -81,7 +81,11 @@ public class Dispatcher extends UserAccount{
 	@Override
 	public void populate(DatabaseProvider provider, int id) {
 		Dispatcher hold = provider.getInstance().dispatcherFromID(id);
+		if(hold != null) {
 		//TODO: Assign variables
+		} else {
+			
+		}
 	}
 
 	@Override

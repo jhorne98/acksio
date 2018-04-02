@@ -66,7 +66,7 @@ public class InitialData {
 	
  	public static List<Courier> getCouriers() throws IOException {
 		List<Courier> courierList = new ArrayList<Courier>();
-		ReadCSV readUsers = new ReadCSV("dispatchers.csv");
+		ReadCSV readUsers = new ReadCSV("couriers.csv");
 		try {
 			// auto-generated primary key for authors table
 			Integer userId = 1;
