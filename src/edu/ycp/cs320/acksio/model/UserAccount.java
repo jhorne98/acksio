@@ -10,6 +10,7 @@ public class UserAccount implements DataController{
 	private String password;
 	private int userId;
 	private Boolean isValid;
+	private String name;
 	
 	public UserAccount() {
 		//TODO: Implement?

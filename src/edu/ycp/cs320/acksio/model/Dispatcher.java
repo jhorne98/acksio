@@ -10,15 +10,13 @@ public class Dispatcher extends UserAccount{
 	private Boolean tsaCert;
 	private Job testJob; //will go to database when implemented 
 	private String address;
-	private String name;
 	private int phone;
 	
-	public Dispatcher(VehicleType vehicleType, Boolean tsaCert, String address, String name, int phone) {
+	public Dispatcher(VehicleType vehicleType, Boolean tsaCert, String address, int phone) {
 		this.vehicleType = vehicleType;
 		this.tsaCert = tsaCert;
 		this.address = address;
 		this.phone = phone;
-		this.name = name; 
 	}
 	
 	public Dispatcher() {
@@ -60,14 +58,6 @@ public class Dispatcher extends UserAccount{
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public int getPhone() {

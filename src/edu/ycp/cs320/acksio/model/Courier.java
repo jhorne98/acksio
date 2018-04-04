@@ -10,8 +10,6 @@ public class Courier extends UserAccount{
 	
 	private int courierID;
 	private int dispatcherID;
-	private int driverNumber;
-	private String name;
 	private Boolean availability;
 	private int licenseID;
 	private String licenseExpiration;
@@ -22,11 +20,11 @@ public class Courier extends UserAccount{
 	private double payHistory;
 	private double payEstimate;
 	private double balance;
-	ArrayList<VehicleType> vehicles;
 	private double latitude;
 	private double longitude;
-	List<Vehicle> vehicle;
+	List<Vehicle> vehicles;
 
+	/* 
 	public Courier(int driverNumber, String name, boolean availability, 
 					int licenseID, String licenseExp, boolean insured, 
 					int[] insuranceCoverage, boolean tsaVerified, double payHistory, 
@@ -47,6 +45,7 @@ public class Courier extends UserAccount{
 		this.latitude=latitude;
 		this.longitude=longitude;
 	}
+	*/
 	
 	public Courier() {
 		
@@ -121,7 +120,7 @@ public class Courier extends UserAccount{
 
 	//SETTERS AND GETTERS
 	
-	public void addVehicle(VehicleType vehicle) {
+	public void addVehicle(Vehicle vehicle) {
 		vehicles.add(vehicle);
 	}
 	
@@ -133,14 +132,6 @@ public class Courier extends UserAccount{
 	public Pair<Double, Double> getLocation(){
 		Pair<Double, Double> pair = new Pair<Double, Double>(latitude, longitude);
 		return pair;
-	}
-	
-	public int getDriverNumber() {
-		return driverNumber;
-	}
-
-	public void setDriverNumber(int driverNumber) {
-		this.driverNumber = driverNumber;
 	}
 
 	public boolean isAvailability() {
@@ -275,20 +266,12 @@ public class Courier extends UserAccount{
 		this.balance = balance;
 	}
 
-	public ArrayList<VehicleType> getVehicles() {
+	public List<Vehicle> getVehicles() {
 		return vehicles;
 	}
 
-	public void setVehicles(ArrayList<VehicleType> vehicles) {
+	public void setVehicles(ArrayList<Vehicle> vehicles) {
 		this.vehicles = vehicles;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public Boolean getAvailability() {
