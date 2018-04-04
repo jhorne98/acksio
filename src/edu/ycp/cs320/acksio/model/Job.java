@@ -42,7 +42,7 @@ public class Job implements DataController{
 	}
 	
 	public Job() {
-		
+		//Purposefully empty
 	}
 	
 	public Job(DatabaseProvider provider, int id) {

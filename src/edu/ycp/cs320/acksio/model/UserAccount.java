@@ -11,9 +11,10 @@ public class UserAccount implements DataController{
 	private int userId;
 	private Boolean isValid;
 	private String name;
+	private String email;
 	
 	public UserAccount() {
-		//TODO: Implement?
+		//Purposefully empty
 	}
 	
 	// constructor for UserAccount class, isValid is false on default
@@ -60,8 +61,24 @@ public class UserAccount implements DataController{
 	public void setValidity(Boolean isValid) {
 		this.isValid = isValid;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Override
 	public void populate(DatabaseProvider provider, int id) {
 		UserAccount hold = provider.getInstance().userAccountFromID(id);
@@ -95,11 +112,10 @@ public class UserAccount implements DataController{
 	}
 	
 	public void logout() {
-		//TODO: Implement 
+		isValid = false; 
 	}
 	
 	public boolean isLoggedIn() {
-		//TODO: Implement 
-		return false;
+		return isValid;
 	}
 }

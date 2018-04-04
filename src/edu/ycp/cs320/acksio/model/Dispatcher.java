@@ -20,7 +20,7 @@ public class Dispatcher extends UserAccount{
 	}
 	
 	public Dispatcher() {
-		
+		//Purposefully empty
 	}
 	
 	public Dispatcher(DatabaseProvider provider, int id) {

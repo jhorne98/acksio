@@ -20,10 +20,10 @@ public class FakeDatabase implements IDatabase{
 	private List<Vehicle> vehicleList;
 	
 	public FakeDatabase() {
-		jobList = new ArrayList<Job>();
 		userList = new ArrayList<UserAccount>();
 		courierList = new ArrayList<Courier>();
 		dispatcherList = new ArrayList<Dispatcher>();
+		jobList = new ArrayList<Job>();
 		vehicleList = new ArrayList<Vehicle>();
 		
 		readInitialData();
@@ -34,6 +34,10 @@ public class FakeDatabase implements IDatabase{
 	public void readInitialData() {
 		try {
 			userList.addAll(InitialData.getUsers());
+			courierList.addAll(InitialData.getCouriers());
+			dispatcherList.addAll(InitialData.getDispatchers());
+			jobList.addAll(InitialData.getJobs());
+			vehicleList.addAll(InitialData.getVehicles());
 		} catch (IOException e) {
 			throw new IllegalStateException("Couldn't read initial data", e);
 		}
@@ -139,7 +143,7 @@ public class FakeDatabase implements IDatabase{
 
 	@Override
 	public Job jobFromID(int id) {
-		for(int i = 0; i < 0; i++) {
+		for(int i = 0; i < jobList.size(); i++) {
 			if(jobList.get(i).getJobID() == id)
 				return jobList.get(i);
 		}
@@ -148,25 +152,47 @@ public class FakeDatabase implements IDatabase{
 
 	@Override
 	public Courier courierFromID(int id) {
-		for(int i = 0; i < 0; i++) {
-			if(courierList.get(i).getCourierID() == id)
-				return courierList.get(i);
+		int i = 0;
+		while(i < courierList.size() && courierList.get(i).getCourierID() != id) {
+			i++;
 		}
+		
+		if(courierList.get(i).getCourierID() == id) {
+			Courier hold = courierList.get(i);
+			UserAccount user = userAccountFromID(hold.getUserId());
+			hold.setName(user.getName());
+			hold.setEmail(user.getEmail());
+			hold.setUsername(user.getUsername());
+			hold.setPassword(user.getPassword());
+			return hold;
+		}
+		
 		return null;
 	}
 
 	@Override
 	public Dispatcher dispatcherFromID(int id) {
-		for(int i = 0; i < 0; i++) {
-			if(dispatcherList.get(i).getDispatcherID() == id)
-				return dispatcherList.get(i);
+		int i = 0;
+		while(i < dispatcherList.size() && dispatcherList.get(i).getDispatcherID() != id) {
+			i++;
 		}
+		
+		if(dispatcherList.get(i).getDispatcherID() == id) {
+			Dispatcher hold = dispatcherList.get(i);
+			UserAccount user = userAccountFromID(hold.getUserId());
+			hold.setName(user.getName());
+			hold.setEmail(user.getEmail());
+			hold.setUsername(user.getUsername());
+			hold.setPassword(user.getPassword());
+			return hold;
+		}
+		
 		return null;
 	}
 
 	@Override
 	public UserAccount userAccountFromID(int id) {
-		for(int i = 0; i < 0; i++) {
+		for(int i = 0; i < userList.size(); i++) {
 			if(userList.get(i).getUserId() == id)
 				return userList.get(i);
 		}
@@ -175,7 +201,7 @@ public class FakeDatabase implements IDatabase{
 
 	@Override
 	public Vehicle vehicleFromID(int id) {
-		for(int i = 0; i < 0; i++) {
+		for(int i = 0; i < vehicleList.size(); i++) {
 			if(vehicleList.get(i).getVehicleID() == id)
 				return vehicleList.get(i);
 		}

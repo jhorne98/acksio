@@ -29,6 +29,8 @@ public class InitialData {
 				user.setUserId(userId++);				
 				user.setUsername(i.next());
 				user.setPassword(i.next());
+				user.setEmail(i.next());
+				user.setName(i.next());
 				userList.add(user);
 			}
 			return userList;
@@ -52,10 +54,9 @@ public class InitialData {
 				Dispatcher user = new Dispatcher();
 				
 				user.setDispatcherID(dispatcherId++);
-				//UserID
-				//Name
-				//Address
-				//Phone
+				user.setUserId(Integer.parseInt(i.next()));
+				user.setAddress(i.next());
+				user.setPhone(Integer.parseInt(i.next()));
 				
 				dispatcherList.add(user);
 			}
@@ -79,14 +80,16 @@ public class InitialData {
 				Iterator<String> i = tuple.iterator();
 				Courier user = new Courier();
 				
-				user.setCourierID(courierId);
-				//DispatcherID (Company ID functionally)
-				//Name
-				//TSA Verified
-				//Long
-				//Lat
-				//Balance
-				//Availability
+				user.setCourierID(courierId++);
+				user.setUserId(Integer.parseInt(i.next()));
+				user.setDispatcherID(Integer.parseInt(i.next()));
+				user.setTsaVerified(Boolean.parseBoolean(i.next()));
+				user.setLongitude(Double.parseDouble(i.next()));
+				user.setLatitude(Double.parseDouble(i.next()));
+				user.setBalance(Double.parseDouble(i.next()));
+				user.setPayEstimate(Double.parseDouble(i.next()));
+				user.setPayHistory(Double.parseDouble(i.next()));
+				user.setAvailability(Boolean.parseBoolean(i.next()));
 				
 				courierList.add(user);
 			}
@@ -109,10 +112,11 @@ public class InitialData {
 				}
 				Iterator<String> i = tuple.iterator();
 				Job job = new Job();
-				job.setJobID(jobId);
+				job.setJobID(jobId++);
 				//CourierID
 				//DispatcherID
-				//Destination
+				//DestLat
+				//DestLong
 				//VehicleType
 				//TSACert
 				//RecipientName
@@ -146,7 +150,7 @@ public class InitialData {
 				}
 				Iterator<String> i = tuple.iterator();
 				Vehicle vehicle = new Vehicle();
-				vehicle.setVehicleID(vehicleId);
+				vehicle.setVehicleID(vehicleId++);
 				//CourierID
 				//VehicleType
 				//LicensePlate

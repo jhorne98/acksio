@@ -48,7 +48,7 @@ public class Courier extends UserAccount{
 	*/
 	
 	public Courier() {
-		
+		//Purposefully empty
 	}
 	
 	public Courier(DatabaseProvider provider, int id) {
@@ -74,30 +74,16 @@ public class Courier extends UserAccount{
 			provider.getInstance().insert(this);
 	}
 	
-	public void addVehicle() {
-		//TODO: Implement
-	}
-	
 	public Boolean acceptJob(Job job) {
 		//TODO: Implement
 		return false;
-	}
-	
-	public void updateLocation() {
-		//TODO: Implement
-	}
-	
-	public double calculateTotalPayment() {
-		//TODO: Implement
-		return 0.0;
 	}
 	
 	public boolean acceptInvoice(ArrayList<Job> jobs) {
 		
 		int count=0;
 		for(Job job : jobs) {
-			boolean accepted = job.getApproved();
-			if(accepted=true) {
+			if(job.getApproved()) {
 				count++;
 			}
 		}
@@ -110,7 +96,11 @@ public class Courier extends UserAccount{
 		
 	}
 	
-	public double calculateTotalPayment(ArrayList<Job> jobs) {
+	public double calculateTotalPayment(DatabaseProvider provider) {
+		return calculateTotalPayment(provider.getInstance().jobsFromCourierID(courierID));
+	}
+	
+	public double calculateTotalPayment(List<Job> jobs) {
 		double total = 0;
 		for(Job job : jobs) {
 			total+=job.getPayActualForJob();
@@ -129,69 +119,48 @@ public class Courier extends UserAccount{
 		this.longitude=longitude;
 	}
 	
-	public Pair<Double, Double> getLocation(){
-		Pair<Double, Double> pair = new Pair<Double, Double>(latitude, longitude);
-		return pair;
-	}
-
-	public boolean isAvailability() {
-		return availability;
-	}
-
-	public void setAvailability(boolean availability) {
-		this.availability = availability;
-	}
-
-	public String getLicenseExp() {
-		return licenseExpiration;
-	}
-
-	public void setLicenseExp(String licenseExpiration) {
-		this.licenseExpiration = licenseExpiration;
-	}
-
-	public boolean isInsured() {
-		return insured;
-	}
-
-	public void setInsured(boolean insured) {
-		this.insured = insured;
-	}
-
-	public boolean isTsaVerified() {
-		return tsaVerified;
-	}
-
-	public void setTsaVerified(boolean tsaVerified) {
-		this.tsaVerified = tsaVerified;
-	}
-
-	public void setPayHistory(double payHistory) {
-		this.payHistory = payHistory;
-	}
-
-	public void setPayEstimate(double payEstimate) {
-		this.payEstimate = payEstimate;
-	}
-
-	public void setBalance(double balance) {
-		this.balance = balance;
-	}
-
-	public double getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
 	public double getLongitude() {
 		return longitude;
 	}
-
+	
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
+	}
+	
+	public double getLatitude() {
+		return latitude;
+	}
+	
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+	
+	public Pair<Double, Double> getLocation(){
+		return new Pair<Double, Double>(latitude, longitude);
+	}
+	
+	public int getCourierID() {
+		return courierID;
+	}
+	
+	public void setCourierID(int courierID) {
+		this.courierID = courierID;
+	}
+
+	public int getDispatcherID() {
+		return dispatcherID;
+	}
+
+	public void setDispatcherID(int dispatcherID) {
+		this.dispatcherID = dispatcherID;
+	}
+
+	public Boolean getAvailability() {
+		return availability;
+	}
+
+	public void setAvailability(Boolean availability) {
+		this.availability = availability;
 	}
 
 	public int getLicenseID() {
@@ -234,67 +203,37 @@ public class Courier extends UserAccount{
 		this.insuranceCoverage = insuranceCoverage;
 	}
 
-	public Boolean getTsaVerified() {
+	public boolean isTsaVerified() {
 		return tsaVerified;
 	}
 
-	public void setTsaVerified(Boolean tsaVerified) {
+	public void setTsaVerified(boolean tsaVerified) {
 		this.tsaVerified = tsaVerified;
 	}
 
-	public Double getPayHistory() {
+	public double getPayHistory() {
 		return payHistory;
 	}
 
-	public void setPayHistory(Double payHistory) {
+	public void setPayHistory(double payHistory) {
 		this.payHistory = payHistory;
 	}
 
-	public Double getPayEstimate() {
+	public double getPayEstimate() {
 		return payEstimate;
 	}
 
-	public void setPayEstimate(Double payEstimate) {
+	public void setPayEstimate(double payEstimate) {
 		this.payEstimate = payEstimate;
 	}
 
-	public Double getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(Double balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 
-	public List<Vehicle> getVehicles() {
-		return vehicles;
-	}
-
-	public void setVehicles(ArrayList<Vehicle> vehicles) {
-		this.vehicles = vehicles;
-	}
-
-	public Boolean getAvailability() {
-		return availability;
-	}
-
-	public void setAvailability(Boolean availability) {
-		this.availability = availability;
-	}
-
-	public int getCourierID() {
-		return courierID;
-	}
-
-	public void setCourierID(int courierID) {
-		this.courierID = courierID;
-	}
-
-	public int getDispatcherID() {
-		return dispatcherID;
-	}
-
-	public void setDispatcherID(int dispatcherID) {
-		this.dispatcherID = dispatcherID;
-	}
+	
 }

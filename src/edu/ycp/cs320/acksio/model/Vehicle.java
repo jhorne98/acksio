@@ -16,7 +16,7 @@ public class Vehicle implements DataController{
 	
 	//CONSTRUCTORS
 	public Vehicle() {
-		
+		//Purposefully empty
 	}
 	
 	public Vehicle(DatabaseProvider provider, int id) {
