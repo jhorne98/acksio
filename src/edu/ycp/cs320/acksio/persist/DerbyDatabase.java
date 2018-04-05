@@ -295,7 +295,8 @@ public class DerbyDatabase {
 	public static void main(String[] args) throws IOException {
 		System.out.println("Creating tables...");
 		DerbyDatabase db = new DerbyDatabase();
-		//db.createTables();
+		// TODO: fix createTables() to check if dbs already in schema
+		db.createTables();
 		
 		System.out.println("Loading initial data...");
 		db.loadInitialData();
