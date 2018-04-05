@@ -62,9 +62,21 @@ public class Courier extends UserAccount{
 	public void populate(DatabaseProvider provider, int id) {
 		Courier hold = provider.getInstance().courierFromID(id);
 		if(hold != null) {
-		//TODO: Assign variables
+			setUserId(hold.getUserId());
+			setDispatcherID(hold.getDispatcherID());
+			setTsaVerified(hold.isTsaVerified());
+			setLongitude(hold.getLongitude());
+			setLatitude(hold.getLatitude());
+			setBalance(hold.getBalance());
+			setPayEstimate(hold.getPayEstimate());
+			setPayHistory(hold.getPayHistory());
+			setAvailability(hold.getAvailability());
+			setName(hold.getName());
+			setEmail(hold.getEmail());
+			setUsername(hold.getUsername());
+			setPassword(hold.getPassword());
 		} else {
-			
+			throw new NullPointerException();
 		}
 	}
 

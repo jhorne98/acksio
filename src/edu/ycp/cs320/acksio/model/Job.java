@@ -23,6 +23,8 @@ public class Job implements DataController{
 	private Boolean signed; 
 	private String id;
 	private Boolean approved;
+	private double destLat;
+	private double destLong;
 	
 	public Job(String destinationAddress, VehicleType vehicleType, boolean tsaVerified, 
 				String recipientName, long recipientPhone, double distanceMi, 
@@ -55,6 +57,27 @@ public class Job implements DataController{
 	}
 	public void setVehicleType (VehicleType vehicle) {
 		this.vehicleType = vehicle; 
+	}
+	public void setVehicleType (String vehicle) {
+		if(vehicle.equals("Bicycle")) {
+			vehicleType = VehicleType.BICYCLE;
+		} else if(vehicle.equals("Motorcycle")) {
+			vehicleType = VehicleType.MOTORCYCLE;
+		} else if(vehicle.equals("Car")) {
+			vehicleType = VehicleType.CAR;
+		} else if(vehicle.equals("SUV")) {
+			vehicleType = VehicleType.SUV;
+		} else if(vehicle.equals("Van")) {
+			vehicleType = VehicleType.VAN;
+		} else if(vehicle.equals("Pickup")) {
+			vehicleType = VehicleType.PICKUP;
+		} else if(vehicle.equals("Sprinter")) {
+			vehicleType = VehicleType.SPRINTER;
+		} else if(vehicle.equals("Semi")) {
+			vehicleType = VehicleType.SEMI;
+		} else {
+			vehicleType = null;
+		}
 	}
 	public void setTsaVerified (Boolean tsa) {
 		this.tsaVerified = tsa; 
@@ -130,6 +153,10 @@ public class Job implements DataController{
 		return signed; 
 	}
 	
+	public void setSigned(boolean signed) {
+		this.signed = signed;
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -137,45 +164,12 @@ public class Job implements DataController{
 		this.id = id;
 	}
 	
-	public void signOff() {
-		// TODO: Implement
-	}
-	public void close(){
-		
-	}
-	public void findRoute() {
-		// TODO: Implement (Need Google Maps API)
-	}
-	public Courier findNearestCourier() {
-		// TODO: Implement (Need Google Maps API)
-		
-		return null;
-		
-	}
-	public double calculatePayment(double payment) {
-		// TODO: Impelment
-		
-		return payment;
-		
-	}
-	
 	public boolean getApproved() {
 		return approved;
 	}
-	@Override
-	public void populate(DatabaseProvider provider, int id) {
-		Job hold = provider.getInstance().jobFromID(id);
-		if(hold != null) {
-		//TODO: Assign variables
-		} else {
-			
-		}
-	}
-
-	@Override
-	public void save(DatabaseProvider provider) {
-		if(!provider.getInstance().update(this)) 
-			provider.getInstance().insert(this);
+	
+	public void setApproved(boolean approved) {
+		this.approved = approved;
 	}
 
 	public boolean approvedOnInvoice() {
@@ -205,6 +199,74 @@ public class Job implements DataController{
 
 	public void setDispatcherID(int dispatcherID) {
 		this.dispatcherID = dispatcherID;
+	}
+
+	public double getDestLat() {
+		return destLat;
+	}
+
+	public void setDestLat(double destLat) {
+		this.destLat = destLat;
+	}
+
+	public double getDestLong() {
+		return destLong;
+	}
+
+	public void setDestLong(double destLong) {
+		this.destLong = destLong;
+	}
+	
+	@Override
+	public void populate(DatabaseProvider provider, int id) {
+		Job hold = provider.getInstance().jobFromID(id);
+		if(hold != null) {
+			setCourierID(hold.getCourierID());
+			setDispatcherID(hold.getDispatcherID());
+			setDestLat(hold.getDestLat());
+			setDestLong(hold.getDestLong());
+			setVehicleType(hold.getVehicleType());//VehicleType
+			setTsaVerified(hold.getTsaVerified());
+			setRecipientName(hold.getRecipientName());
+			setRecipientPhone(hold.getRecipientPhone());
+			setDistanceMi(hold.getDistanceMi()); //Distance
+			setCourierPaid(hold.getCourierPaid()); //CourierPaid
+			setPickUpTime(hold.getPickUpTime()); //PickUpTime
+			setDropOffTime(hold.getDropOffTime()); //DropOffTime
+			setActualTime(hold.getActualTime()); //TimeForJob
+			setSigned(hold.getSigned()); //PackageSignedFor
+			setApproved(hold.getApproved()); //InvoiceApproved
+		} else {
+			throw new NullPointerException();
+		}
+	}
+
+	@Override
+	public void save(DatabaseProvider provider) {
+		if(!provider.getInstance().update(this)) 
+			provider.getInstance().insert(this);
+	}
+	
+	public void signOff() {
+		// TODO: Implement
+	}
+	public void close(){
+		
+	}
+	public void findRoute() {
+		// TODO: Implement (Need Google Maps API)
+	}
+	public Courier findNearestCourier() {
+		// TODO: Implement (Need Google Maps API)
+		
+		return null;
+		
+	}
+	public double calculatePayment(double payment) {
+		// TODO: Implement
+		
+		return payment;
+		
 	}
 
 }

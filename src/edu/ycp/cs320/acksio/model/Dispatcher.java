@@ -75,9 +75,15 @@ public class Dispatcher extends UserAccount{
 	public void populate(DatabaseProvider provider, int id) {
 		Dispatcher hold = provider.getInstance().dispatcherFromID(id);
 		if(hold != null) {
-		//TODO: Assign variables
+			setUserId(hold.getUserId());
+			setAddress(hold.getAddress());
+			setPhone(hold.getPhone());
+			setName(hold.getName());
+			setEmail(hold.getEmail());
+			setUsername(hold.getUsername());
+			setPassword(hold.getPassword());
 		} else {
-			
+			throw new NullPointerException();
 		}
 	}
 

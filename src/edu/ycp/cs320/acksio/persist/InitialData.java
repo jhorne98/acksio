@@ -113,21 +113,21 @@ public class InitialData {
 				Iterator<String> i = tuple.iterator();
 				Job job = new Job();
 				job.setJobID(jobId++);
-				//CourierID
-				//DispatcherID
-				//DestLat
-				//DestLong
-				//VehicleType
-				//TSACert
-				//RecipientName
-				//RecipientPhone
-				//Distance
-				//CourierPaid
-				//PickUpTime
-				//DropOffTime
-				//TimeForJob
-				//PackageSignedFor
-				//InvoiceApproved
+				job.setCourierID(Integer.parseInt(i.next()));
+				job.setDispatcherID(Integer.parseInt(i.next()));
+				job.setDestLat(Double.parseDouble(i.next()));
+				job.setDestLong(Double.parseDouble(i.next()));
+				job.setVehicleType(i.next());//VehicleType
+				job.setTsaVerified(Boolean.parseBoolean(i.next()));
+				job.setRecipientName(i.next());
+				job.setRecipientPhone(Long.parseLong(i.next()));
+				job.setDistanceMi(Double.parseDouble(i.next())); //Distance
+				job.setCourierPaid(Boolean.parseBoolean(i.next())); //CourierPaid
+				job.setPickUpTime(Integer.parseInt(i.next())); //PickUpTime
+				job.setDropOffTime(Integer.parseInt(i.next())); //DropOffTime
+				job.setActualTime(Integer.parseInt(i.next())); //TimeForJob
+				job.setSigned(Boolean.parseBoolean(i.next())); //PackageSignedFor
+				job.setApproved(Boolean.parseBoolean(i.next())); //InvoiceApproved
 				
 				jobList.add(job);
 			}
@@ -151,13 +151,13 @@ public class InitialData {
 				Iterator<String> i = tuple.iterator();
 				Vehicle vehicle = new Vehicle();
 				vehicle.setVehicleID(vehicleId++);
-				//CourierID
-				//VehicleType
-				//LicensePlate
-				//Make
-				//Model
-				//Year
-				//Active
+				vehicle.setCourierID(Integer.parseInt(i.next()));//CourierID
+				vehicle.setType(i.next());
+				vehicle.setLicensePlate(i.next());//LicensePlate
+				vehicle.setMake(i.next());//Make
+				vehicle.setModel(i.next());//Model
+				vehicle.setYear(Integer.parseInt(i.next()));//Year
+				vehicle.setActive(Boolean.parseBoolean(i.next()));//Active
 				
 				vehicleList.add(vehicle);
 			}

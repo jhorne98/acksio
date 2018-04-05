@@ -29,9 +29,15 @@ public class Vehicle implements DataController{
 	public void populate(DatabaseProvider provider, int id) {
 		Vehicle hold = provider.getInstance().vehicleFromID(id);
 		if(hold != null) {
-		//TODO: Assign variables
+			setCourierID(hold.getCourierID());//CourierID
+			setType(hold.getType());
+			setLicensePlate(hold.getLicensePlate());//LicensePlate
+			setMake(hold.getMake());//Make
+			setModel(hold.getModel());//Model
+			setYear(hold.getYear());//Year
+			setActive(hold.isActive());//Active
 		} else {
-			
+			throw new NullPointerException();
 		}
 	}
 
@@ -80,6 +86,28 @@ public class Vehicle implements DataController{
 
 	public void setType(VehicleType type) {
 		this.type = type;
+	}
+	
+	public void setType (String vehicle) {
+		if(vehicle.equals("Bicycle")) {
+			type = VehicleType.BICYCLE;
+		} else if(vehicle.equals("Motorcycle")) {
+			type = VehicleType.MOTORCYCLE;
+		} else if(vehicle.equals("Car")) {
+			type = VehicleType.CAR;
+		} else if(vehicle.equals("SUV")) {
+			type = VehicleType.SUV;
+		} else if(vehicle.equals("Van")) {
+			type = VehicleType.VAN;
+		} else if(vehicle.equals("Pickup")) {
+			type = VehicleType.PICKUP;
+		} else if(vehicle.equals("Sprinter")) {
+			type = VehicleType.SPRINTER;
+		} else if(vehicle.equals("Semi")) {
+			type = VehicleType.SEMI;
+		} else {
+			type = null;
+		}
 	}
 
 	public boolean isActive() {

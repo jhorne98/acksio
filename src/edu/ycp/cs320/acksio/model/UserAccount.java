@@ -83,11 +83,13 @@ public class UserAccount implements DataController{
 	public void populate(DatabaseProvider provider, int id) {
 		UserAccount hold = provider.getInstance().userAccountFromID(id);
 		if(hold != null) {
+			setName(hold.getName());
+			setEmail(hold.getEmail());
 			setUsername(hold.getUsername());
 			setPassword(hold.getPassword());
 			login();
 		} else {
-			
+			throw new NullPointerException();
 		}
 	}
 
