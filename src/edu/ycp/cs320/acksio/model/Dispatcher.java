@@ -27,9 +27,12 @@ public class Dispatcher extends UserAccount{
 		setDispatcherID(id);
 		populate(provider, id);
 	}
-	
-	public Dispatcher(String parameter, boolean tsaCert2, String parameter2, String parameter3, int intFromParameter) {
-		// TODO Auto-generated constructor stub
+
+	public Dispatcher(boolean tsaCert, String address, String name, int phone) {
+		this.tsaCert = tsaCert;
+		this.address = address;
+		setName(name);
+		this.phone = phone;
 	}
 
 	public VehicleType getVehicleType() {
