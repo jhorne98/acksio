@@ -17,6 +17,7 @@ public class Job implements DataController{
 	private int dropOffTime;
 	private int actualTime;
 	private Boolean signed; 
+	private String id;
 	
 	public void setDeststinationAddress (String address) {
 		this.destinationAddress = address;
@@ -63,7 +64,7 @@ public class Job implements DataController{
 	public String getVehicleType () {
 		return vehicleType; 
 	}
-	public Boolean setTsaVerified () {
+	public Boolean getTsaVerified () {
 		return tsaVerified; 
 	}
 	public String getRecipentName () {
@@ -95,6 +96,13 @@ public class Job implements DataController{
 	}
 	public Boolean getSigned () {
 		return signed; 
+	}
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	public void signOff() {
@@ -130,4 +138,10 @@ public class Job implements DataController{
 		
 	
 	}
+	
+	public boolean approvedOnInvoice() {
+		// TODO this needs to be implemented. It needs to check if the courier has approved this job on their invoice
+		return false;
+	}
+
 }
