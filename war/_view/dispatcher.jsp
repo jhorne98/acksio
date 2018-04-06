@@ -68,13 +68,13 @@
 				
 			Target Address: 
 				<input type="text" name="destinationAddress" value="${model.address}" method="post">
-				<br>
+				<br><br>
 				
 				Recipient Name: <input type = "text" name="recipientName" value="${model.name}" method="post">
-				<br>
+				<br><br>
 				
-				Recipient Phone #: : <input type = "text" name="recipientPhone" value="${model.phone}" method="post">
-				<br>
+				Recipient Phone #: <input type = "text" name="recipientPhone" value="${model.phone}" method="post">
+				<br><br>
 				
 				Vehicle Type<br>
 				<select name="vehicleType">
@@ -83,6 +83,7 @@
 				<br><br>
 
 				<input type="checkbox" name="tsaCertified" value="${model.tsaCert}"> TSA certified driver needed<br><br>
+<<<<<<< HEAD
 				<input type="
 
 				<label for="start">Start: </label>
@@ -97,12 +98,13 @@
 				<p><label for="distance">Distance (km): </label>
 				<input type="text" name="distance" id="distance" readonly="true" value = "${model.distance}"/></p>
 				<input type="submit" value="Create Job">				
+=======
+>>>>>>> refs/remotes/origin/master
 
 				<input type="submit" name="submit" value="Create Job">
 
 				
 				<p>${model.vehicleType}</p>
-			</form>	
 		</div>
 		<div id="map_canvas"></div>
 	</body>

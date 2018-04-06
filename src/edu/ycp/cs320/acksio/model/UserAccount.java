@@ -2,8 +2,7 @@ package edu.ycp.cs320.acksio.model;
 
 import edu.ycp.cs320.acksio.controller.DataController;
 //import edu.ycp.cs320.acksio.persist.DatabaseProvider;
-import edu.ycp.cs320.acksio.persist.DerbyDatabase;
-
+import edu.ycp.cs320.acksio.persist.*;
 import java.sql.*;
 
 public class UserAccount implements DataController{
@@ -11,9 +10,11 @@ public class UserAccount implements DataController{
 	private String password;
 	private int userId;
 	private Boolean isValid;
+	private String name;
+	private String email;
 	
 	public UserAccount() {
-		//TODO: Implement?
+		//Purposefully empty
 	}
 	
 	// constructor for UserAccount class, isValid is false on default
@@ -24,8 +25,17 @@ public class UserAccount implements DataController{
 		//save();
 	}
 	
-	public UserAccount(String id) {
-		//populate(id);
+	public UserAccount(String username, String password, String email) {
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		isValid = false;
+		//save();
+	}
+	
+	public UserAccount(DatabaseProvider provider, int id) {
+		setUserId(id);
+		populate(provider, id);
 	}
 
 	public int getUserId() {
@@ -59,18 +69,50 @@ public class UserAccount implements DataController{
 	public void setValidity(Boolean isValid) {
 		this.isValid = isValid;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 	
-	@Override
-	public void populate(String id) {
-		// TODO Auto-generated method stub
-		
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-		
+	public void populate(DatabaseProvider provider, int id) {
+		UserAccount hold = provider.getInstance().userAccountFromID(id);
+		if(hold != null) {
+			setName(hold.getName());
+			setEmail(hold.getEmail());
+			setUsername(hold.getUsername());
+			setPassword(hold.getPassword());
+			login();
+		} else {
+			throw new NullPointerException();
+		}
+	}
+
+	@Override
+	public void save(DatabaseProvider provider) {
+		if(!provider.getInstance().update(this)) 
+			provider.getInstance().insert(this);
+	}
+	
+	public void logout() {
+		isValid = false; 
+	}
+	
+	public boolean isLoggedIn() {
+		return isValid;
 	}
 	
 	/*
@@ -87,12 +129,15 @@ public class UserAccount implements DataController{
 		isValid = db.verifyLogin(username, password);
 	}
 	
-	public void logout() {
-		//TODO: Implement 
-	}
-	
-	public boolean isLoggedIn() {
-		//TODO: Implement 
-		return false;
+	public int signup() {
+		DerbyDatabase db = new DerbyDatabase();
+		
+		int signupFlag = db.createAccount(username, password, email);
+		
+		if(signupFlag == 0) {
+			isValid = true;
+		}
+		
+		return signupFlag;
 	}
 }

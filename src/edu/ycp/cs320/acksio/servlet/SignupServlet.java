@@ -13,14 +13,14 @@ import edu.ycp.cs320.acksio.model.UserAccount;
 // servlet for the UserAccount class login page
 // this servlet and UserAccount.login() based directly on http://met.guc.edu.eg/OnlineTutorials/JSP%20-%20Servlets/Full%20Login%20Example.aspx
 
-public class LoginServlet extends HttpServlet {
+public class SignupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		System.out.println("Login Servlet: doGet");
+		System.out.println("Signup Servlet: doGet");
 		
 		/*
 		// holds the error message text, if there is any
@@ -38,57 +38,52 @@ public class LoginServlet extends HttpServlet {
 		*/
 		
 		// call JSP to generate empty form
-		req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/signup.jsp").forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) //TODO: Implement 
 			throws ServletException, IOException {
 		
-		System.out.println("Login Servlet: doPost");
+		System.out.println("Signup Servlet: doPost");
 
 		// holds the error message text, if there is any
 		String errorMessage = null;
 		
 		// create the UserAccount model for form input
-		UserAccount model = new UserAccount(req.getParameter("username"), req.getParameter("password"), null);
+		UserAccount model = new UserAccount(req.getParameter("username"), req.getParameter("password"), req.getParameter("email"));
 		
-		System.out.println(model.getUsername() + " " + model.getPassword());
+		System.out.println("Try: " + model.getUsername() + " " + model.getPassword() + " " + model.getEmail());
 		
 		try {
-			// test the input for validity in database
-			model.login();
-			
-			System.out.println(model.getValidity());
-			
-			if(req.getParameter("signup") != null) {
-				resp.sendRedirect("signup");
-			}
-			
-			// if user inputs correct login info, move to page corresponding to user type
-			// else, inform the user of their error
-			// TODO: refactor UserAccount for user type, currently redirects to dispatcher.jsp only
-			if(model.getValidity()) {
-				//HttpSession session = req.getSession(true);	    
-		        //session.setAttribute("user", model); 
-
-				resp.sendRedirect("dispatcher");
-				
-				//req.getRequestDispatcher("/_view/dispatcher.jsp").forward(req, resp);
-			// username | password is not in db
+			if(model.getEmail().isEmpty() || model.getUsername().isEmpty() || model.getPassword().isEmpty()) {
+				errorMessage = "One or more fields are blank";
 			} else {
-				errorMessage = "Please input a valid user name and password.";
+			
+				// TODO: find a better way to this; error codes are disgusting
+				int signupFlag = model.signup();
 				
-				// Add parameters as request attributes
-				req.setAttribute("model", model);
-				
-				// add result objects as attributes
-				// this adds the errorMessage text and the result to the response
-				req.setAttribute("errorMessage", errorMessage);
-				
-				// Forward to view to render the result HTML document
-				req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
+				if(signupFlag == 0) {
+					errorMessage = "Successful account creation!";
+					System.out.println("Account created: " + model.getUsername() + " " + model.getPassword() + " " + model.getEmail());
+				} else if(signupFlag == 1) {
+					errorMessage = "Username is already taken.";
+				} else if(signupFlag == 2) {
+					errorMessage = "Password is already taken.";
+				} else if(signupFlag == 3) {
+					errorMessage = "Email address is already taken.";
+				}
 			}
+			
+			// Add parameters as request attributes
+			req.setAttribute("model", model);
+			
+			// add result objects as attributes
+			// this adds the errorMessage text and the result to the response
+			req.setAttribute("errorMessage", errorMessage);
+			
+			// Forward to view to render the result HTML document
+			req.getRequestDispatcher("/_view/signup.jsp").forward(req, resp);
 		} catch(IOException e) {
 			errorMessage = "Exception: something happened.";
 		}
