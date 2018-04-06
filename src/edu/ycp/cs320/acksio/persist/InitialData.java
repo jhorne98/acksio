@@ -30,6 +30,7 @@ public class InitialData {
 				user.setUsername(i.next());
 				user.setPassword(i.next());
 				user.setEmail(i.next());
+				user.setName(i.next());
 				userList.add(user);
 			}
 			return userList;
@@ -40,105 +41,153 @@ public class InitialData {
 	
  	public static List<Dispatcher> getDispatchers() throws IOException {
 		List<Dispatcher> dispatcherList = new ArrayList<Dispatcher>();
-		ReadCSV readUsers = new ReadCSV("dispatchers.csv");
+		List<UserAccount> userList = getUsers();
+		ReadCSV readDispatchers = new ReadCSV("dispatchers.csv");
 		try {
 			// auto-generated primary key for authors table
-			Integer userId = 1;
+			Integer dispatcherId = 1;
 			while (true) {
-				List<String> tuple = readUsers.next();
+				List<String> tuple = readDispatchers.next();
 				if (tuple == null) {
 					break;
 				}
 				Iterator<String> i = tuple.iterator();
 				Dispatcher user = new Dispatcher();
-				/*
-				user.setUserId(userId++);				
-				user.setUsername(i.next());
-				user.setPassword(i.next());
-				*/
+				
+				user.setDispatcherID(dispatcherId++);
+				user.setUserId(Integer.parseInt(i.next()));
+				user.setAddress(i.next());
+				user.setPhone(Integer.parseInt(i.next()));
+				
+				int userID = 0;
+				while(userList.get(userID).getUserId() != user.getUserId() && userID < userList.size()) {
+					userID++;
+				}
+				if(userID < userList.size()) {
+					user.setName(userList.get(userID).getName());
+					user.setEmail(userList.get(userID).getEmail());
+					user.setUsername(userList.get(userID).getUsername());
+					user.setPassword(userList.get(userID).getPassword());
+				}
+				
 				dispatcherList.add(user);
 			}
 			return dispatcherList;
 		} finally {
-			readUsers.close();
+			readDispatchers.close();
 		}
 	}
 	
  	public static List<Courier> getCouriers() throws IOException {
 		List<Courier> courierList = new ArrayList<Courier>();
-		ReadCSV readUsers = new ReadCSV("dispatchers.csv");
+		List<UserAccount> userList = getUsers();
+		ReadCSV readCouriers = new ReadCSV("couriers.csv");
 		try {
 			// auto-generated primary key for authors table
-			Integer userId = 1;
+			Integer courierId = 1;
 			while (true) {
-				List<String> tuple = readUsers.next();
+				List<String> tuple = readCouriers.next();
 				if (tuple == null) {
 					break;
 				}
 				Iterator<String> i = tuple.iterator();
 				Courier user = new Courier();
-				/*
-				user.setUserId(userId++);				
-				user.setUsername(i.next());
-				user.setPassword(i.next());
-				*/
+				
+				user.setCourierID(courierId++);
+				user.setUserId(Integer.parseInt(i.next()));
+				user.setDispatcherID(Integer.parseInt(i.next()));
+				user.setTsaVerified(Boolean.parseBoolean(i.next()));
+				user.setLongitude(Double.parseDouble(i.next()));
+				user.setLatitude(Double.parseDouble(i.next()));
+				user.setBalance(Double.parseDouble(i.next()));
+				user.setPayEstimate(Double.parseDouble(i.next()));
+				user.setPayHistory(Double.parseDouble(i.next()));
+				user.setAvailability(Boolean.parseBoolean(i.next()));
+				
+				int userID = 0;
+				while(userList.get(userID).getUserId() != user.getUserId() && userID < userList.size()) {
+					userID++;
+				}
+				if(userID < userList.size()) {
+					user.setName(userList.get(userID).getName());
+					user.setEmail(userList.get(userID).getEmail());
+					user.setUsername(userList.get(userID).getUsername());
+					user.setPassword(userList.get(userID).getPassword());
+				}
+				
 				courierList.add(user);
 			}
 			return courierList;
 		} finally {
-			readUsers.close();
+			readCouriers.close();
 		}
 	}
 	
  	public static List<Job> getJobs() throws IOException {
 		List<Job> jobList = new ArrayList<Job>();
-		ReadCSV readUsers = new ReadCSV("jobs.csv");
+		ReadCSV readJobs = new ReadCSV("jobs.csv");
 		try {
 			// auto-generated primary key for authors table
-			Integer userId = 1;
+			Integer jobId = 1;
 			while (true) {
-				List<String> tuple = readUsers.next();
+				List<String> tuple = readJobs.next();
 				if (tuple == null) {
 					break;
 				}
 				Iterator<String> i = tuple.iterator();
-				Job user = new Job();
-				/*
-				user.setUserId(userId++);				
-				user.setUsername(i.next());
-				user.setPassword(i.next());
-				jobList.add(user);
-				*/
+				Job job = new Job();
+				job.setJobID(jobId++);
+				job.setCourierID(Integer.parseInt(i.next()));
+				job.setDispatcherID(Integer.parseInt(i.next()));
+				job.setDestLat(Double.parseDouble(i.next()));
+				job.setDestLong(Double.parseDouble(i.next()));
+				job.setVehicleType(i.next());//VehicleType
+				job.setTsaVerified(Boolean.parseBoolean(i.next()));
+				job.setRecipientName(i.next());
+				job.setRecipientPhone(Long.parseLong(i.next()));
+				job.setDistanceMi(Double.parseDouble(i.next())); //Distance
+				job.setCourierPaid(Boolean.parseBoolean(i.next())); //CourierPaid
+				job.setPickUpTime(Integer.parseInt(i.next())); //PickUpTime
+				job.setDropOffTime(Integer.parseInt(i.next())); //DropOffTime
+				job.setActualTime(Integer.parseInt(i.next())); //TimeForJob
+				job.setSigned(Boolean.parseBoolean(i.next())); //PackageSignedFor
+				job.setApproved(Boolean.parseBoolean(i.next())); //InvoiceApproved
+				
+				jobList.add(job);
 			}
 			return jobList;
 		} finally {
-			readUsers.close();
+			readJobs.close();
 		}
 	}
  	
  	public static List<Vehicle> getVehicles() throws IOException {
 		List<Vehicle> vehicleList = new ArrayList<Vehicle>();
-		ReadCSV readUsers = new ReadCSV("vehicles.csv");
+		ReadCSV readVehicles = new ReadCSV("vehicles.csv");
 		try {
 			// auto-generated primary key for authors table
-			Integer userId = 1;
+			Integer vehicleId = 1;
 			while (true) {
-				List<String> tuple = readUsers.next();
+				List<String> tuple = readVehicles.next();
 				if (tuple == null) {
 					break;
 				}
 				Iterator<String> i = tuple.iterator();
-				Vehicle user = new Vehicle();
-				/*
-				user.setUserId(userId++);				
-				user.setUsername(i.next());
-				user.setPassword(i.next());
-				*/
-				vehicleList.add(user);
+				Vehicle vehicle = new Vehicle();
+				vehicle.setVehicleID(vehicleId++);
+				vehicle.setCourierID(Integer.parseInt(i.next()));//CourierID
+				vehicle.setType(i.next());
+				vehicle.setLicensePlate(i.next());//LicensePlate
+				vehicle.setMake(i.next());//Make
+				vehicle.setModel(i.next());//Model
+				vehicle.setYear(Integer.parseInt(i.next()));//Year
+				vehicle.setActive(Boolean.parseBoolean(i.next()));//Active
+				
+				vehicleList.add(vehicle);
 			}
 			return vehicleList;
 		} finally {
-			readUsers.close();
+			readVehicles.close();
 		}
 	}
 }

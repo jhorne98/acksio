@@ -1,22 +1,40 @@
 
 package edu.ycp.cs320.acksio.model;
 
+import edu.ycp.cs320.acksio.persist.DatabaseProvider;
+
 public class Dispatcher extends UserAccount{
+	
+	private int dispatcherID;
 	private VehicleType vehicleType;
 	private Boolean tsaCert;
 	private Job testJob; //will go to database when implemented 
 	private String address;
-	private String name;
 	private int phone;
 	
-	public Dispatcher(VehicleType vehicleType, Boolean tsaCert, String address, String name, int phone) {
+	public Dispatcher(VehicleType vehicleType, Boolean tsaCert, String address, int phone) {
 		this.vehicleType = vehicleType;
 		this.tsaCert = tsaCert;
 		this.address = address;
 		this.phone = phone;
-		this.name = name; 
 	}
 	
+	public Dispatcher() {
+		//Purposefully empty
+	}
+	
+	public Dispatcher(DatabaseProvider provider, int id) {
+		setDispatcherID(id);
+		populate(provider, id);
+	}
+
+	public Dispatcher(boolean tsaCert, String address, String name, int phone) {
+		this.tsaCert = tsaCert;
+		this.address = address;
+		setName(name);
+		this.phone = phone;
+	}
+
 	public VehicleType getVehicleType() {
 		return vehicleType;
 	}
@@ -45,14 +63,6 @@ public class Dispatcher extends UserAccount{
 		this.address = address;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public int getPhone() {
 		return phone;
 	}
@@ -62,15 +72,33 @@ public class Dispatcher extends UserAccount{
 	}
 	
 	@Override
-	public void populate(String id) {
-		// TODO Auto-generated method stub
-		
+	public void populate(DatabaseProvider provider, int id) {
+		Dispatcher hold = provider.getInstance().dispatcherFromID(id);
+		if(hold != null) {
+			setUserId(hold.getUserId());
+			setAddress(hold.getAddress());
+			setPhone(hold.getPhone());
+			setName(hold.getName());
+			setEmail(hold.getEmail());
+			setUsername(hold.getUsername());
+			setPassword(hold.getPassword());
+		} else {
+			throw new NullPointerException();
+		}
 	}
 
 	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-		
+	public void save(DatabaseProvider provider) {
+		if(!provider.getInstance().update(this)) 
+			provider.getInstance().insert(this);
+	}
+
+	public int getDispatcherID() {
+		return dispatcherID;
+	}
+
+	public void setDispatcherID(int dispatcherID) {
+		this.dispatcherID = dispatcherID;
 	}
 
 }

@@ -19,6 +19,7 @@ public class UserAccountTest {
 		assertEquals(model.getUsername(), "username");
 	}
 	
+	@Test
 	public void testSets() {
 		model.setPassword("pwd");
 		assertEquals(model.getPassword(), "pwd");
@@ -46,6 +47,11 @@ public class UserAccountTest {
     
 	}
 	
+	public void testSetUserId() {
+		model.setUserId(1);
+		assertEquals(model.getUserId(), 1);
+	}
+	
 	public void testLogin() {
 		// TODO: generate a new user and use testLogin() on it: requires creation of createUser() or similar for db
 		model.setUsername("joel");
@@ -54,7 +60,6 @@ public class UserAccountTest {
 		model.login();
 		
 		assertEquals(model.getValidity(), true);
-		
 		model.setUsername("joel");
 		model.setPassword("wrong");
 		

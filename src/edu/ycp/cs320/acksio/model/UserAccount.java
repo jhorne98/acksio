@@ -2,22 +2,29 @@ package edu.ycp.cs320.acksio.model;
 
 import edu.ycp.cs320.acksio.controller.DataController;
 //import edu.ycp.cs320.acksio.persist.DatabaseProvider;
-import edu.ycp.cs320.acksio.persist.DerbyDatabase;
-
-//import java.sql.*;
+import edu.ycp.cs320.acksio.persist.*;
+import java.sql.*;
 
 public class UserAccount implements DataController{
 	private String username;
 	private String password;
-	private String email;
 	private int userId;
 	private Boolean isValid;
+	private String name;
+	private String email;
 	
 	public UserAccount() {
-		//TODO: Implement?
+		//Purposefully empty
 	}
 	
 	// constructor for UserAccount class, isValid is false on default
+	public UserAccount(String username, String password) {
+		this.username = username;
+		this.password = password;
+		isValid = false;
+		//save();
+	}
+	
 	public UserAccount(String username, String password, String email) {
 		this.username = username;
 		this.password = password;
@@ -26,8 +33,9 @@ public class UserAccount implements DataController{
 		//save();
 	}
 	
-	public UserAccount(String id) {
-		//populate(id);
+	public UserAccount(DatabaseProvider provider, int id) {
+		setUserId(id);
+		populate(provider, id);
 	}
 
 	public int getUserId() {
@@ -54,14 +62,6 @@ public class UserAccount implements DataController{
 		this.password = password;
 	}
 	
-	public String getEmail() {
-		return email;
-	}
-	
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
 	public Boolean getValidity() {
 		return isValid;
 	}
@@ -69,18 +69,50 @@ public class UserAccount implements DataController{
 	public void setValidity(Boolean isValid) {
 		this.isValid = isValid;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 	
-	@Override
-	public void populate(String id) {
-		// TODO Auto-generated method stub
-		
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-		
+	public void populate(DatabaseProvider provider, int id) {
+		UserAccount hold = provider.getInstance().userAccountFromID(id);
+		if(hold != null) {
+			setName(hold.getName());
+			setEmail(hold.getEmail());
+			setUsername(hold.getUsername());
+			setPassword(hold.getPassword());
+			login();
+		} else {
+			throw new NullPointerException();
+		}
+	}
+
+	@Override
+	public void save(DatabaseProvider provider) {
+		if(!provider.getInstance().update(this)) 
+			provider.getInstance().insert(this);
+	}
+	
+	public void logout() {
+		isValid = false; 
+	}
+	
+	public boolean isLoggedIn() {
+		return isValid;
 	}
 	
 	/*
@@ -107,14 +139,5 @@ public class UserAccount implements DataController{
 		}
 		
 		return signupFlag;
-	}
-	
-	public void logout() {
-		//TODO: Implement 
-	}
-	
-	public boolean isLoggedIn() {
-		//TODO: Implement 
-		return false;
 	}
 }

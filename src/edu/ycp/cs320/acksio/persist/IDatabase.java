@@ -23,15 +23,19 @@ public interface IDatabase {
 	public Boolean update(UserAccount user);
 	public Boolean update(Vehicle vehicle);
 	
-	public Job jobFromID(String id);
-	public Courier courierFromID(String id);
-	public Dispatcher dispatcherFromID(String id);
-	public UserAccount userAccountFromID(String id);
-	public Vehicle vehicleFromID(String id);
+	public Job jobFromID(int id);
+	public Courier courierFromID(int id);
+	public Dispatcher dispatcherFromID(int id);
+	public UserAccount userAccountFromID(int id);
+	public Vehicle vehicleFromID(int id);
 	
 	public Boolean verifyLogin(String username, String password);
-	public List<Vehicle> vehiclesFromCourierID(String id);
-	public List<Job> jobsFromCourierID(String id);
-	public List<Job> jobsFromDispatcherID(String id);
-	public List<Courier> couriersFromDispatcherID(String id);
+	public List<Vehicle> vehiclesFromCourierID(int id);
+	public List<Job> jobsFromCourierID(int id);
+	public List<Job> jobsFromDispatcherID(int id);
+	public List<Courier> couriersFromDispatcherID(int id);
+	
+	public UserAccount userAccountFromUsername(String username);
+	public Courier courierFromUsername(String username);
+	public Dispatcher dispatcherFromUsername(String username);
 } 
