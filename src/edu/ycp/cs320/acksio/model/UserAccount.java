@@ -25,6 +25,14 @@ public class UserAccount implements DataController{
 		//save();
 	}
 	
+	public UserAccount(String username, String password, String email) {
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		isValid = false;
+		//save();
+	}
+	
 	public UserAccount(DatabaseProvider provider, int id) {
 		setUserId(id);
 		populate(provider, id);
@@ -99,6 +107,14 @@ public class UserAccount implements DataController{
 			provider.getInstance().insert(this);
 	}
 	
+	public void logout() {
+		isValid = false; 
+	}
+	
+	public boolean isLoggedIn() {
+		return isValid;
+	}
+	
 	/*
 	@Override
 	public Boolean verifyLogin(String username, String Password) {
@@ -113,11 +129,15 @@ public class UserAccount implements DataController{
 		isValid = db.verifyLogin(username, password);
 	}
 	
-	public void logout() {
-		isValid = false; 
-	}
-	
-	public boolean isLoggedIn() {
-		return isValid;
+	public int signup() {
+		DerbyDatabase db = new DerbyDatabase();
+		
+		int signupFlag = db.createAccount(username, password, email);
+		
+		if(signupFlag == 0) {
+			isValid = true;
+		}
+		
+		return signupFlag;
 	}
 }

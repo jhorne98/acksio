@@ -47,7 +47,6 @@
 				<input type="submit" name="submit" value="Create Job">
 				
 				<p>${model.vehicleType}</p>
-			</form>	
 		</div>
 
 		<!--

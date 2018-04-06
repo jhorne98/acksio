@@ -85,17 +85,16 @@ public class Job implements DataController{
 	public void setRecipientName (String name) {
 		this.recipientName = name; 
 	}
-
-	public void setRecipientPhone (long phone) {
-		this.recipientPhone = phone;
+	public void setRecipientPhone (long recipientPhone) {
+		this.recipientPhone = recipientPhone;
 	}
-	public void setDistanceMi (double distance) {
-		this.distanceMi = distance;
+	public void setDistanceMi (double distanceMi) {
+		this.distanceMi = distanceMi;
 	}
-	public void setPayEstimateForJob (double pay) {
+	public void setPayEstimateForJob (int pay) {
 		this.payEstimateForJob = pay;
 	}
-	public void setPayActualForJob (double pay) {
+	public void setPayActualForJob (int pay) {
 		this.payActualForJob = pay; 
 	}
 	public void setCourierPaid  (Boolean paid) {
@@ -170,11 +169,6 @@ public class Job implements DataController{
 	
 	public void setApproved(boolean approved) {
 		this.approved = approved;
-	}
-
-	public boolean approvedOnInvoice() {
-		// TODO this needs to be implemented. It needs to check if the courier has approved this job on their invoice
-		return approved;
 	}
 
 	public int getJobID() {
@@ -267,6 +261,11 @@ public class Job implements DataController{
 		
 		return payment;
 		
+	}
+	
+	public boolean approvedOnInvoice() {
+		// TODO this needs to be implemented. It needs to check if the courier has approved this job on their invoice
+		return false;
 	}
 
 }

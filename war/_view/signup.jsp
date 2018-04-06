@@ -27,18 +27,21 @@
 
 		<div id=main_body>
 
-			<form action="${pageContext.servletContext.contextPath}/login" method="post">
+			<form action="${pageContext.servletContext.contextPath}/signup" method="post">
 
-				Login:<br>
+				Enter an Email Address:<br>
+				<input type="text" name=email value="${model.email}">
+				<br>
+
+				Enter a User Name:<br>
 				<input type="text" name="username" value="${model.username}">
 				<br>
 
-				Password:<br>
+				Enter a Password:<br>
 				<input type="password" name="password" value="${model.password}">
 				<br><br>
 				
-				<input type="submit" name="submit" value="Log in">
-				<input type="submit" name="signup" value="Sign up">
+				<input type="submit" name="submit" value="Create Account">
 			</form>
 		</div>
 
