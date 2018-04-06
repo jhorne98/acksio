@@ -128,9 +128,11 @@ public class FakeDatabase implements IDatabase{
 	}
 	@Override
 	public Boolean verifyLogin(String username, String password) {
-		for(UserAccount user : userList)
-			if(user.getUsername() == username && user.getPassword() == password)
+		for(UserAccount user : userList) {
+			if(user.getUsername() == username && user.getPassword() == password) {
 				return true;
+			}
+		}
 		return false;
 	}
 	@Override

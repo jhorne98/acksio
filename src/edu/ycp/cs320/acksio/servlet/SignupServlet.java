@@ -53,7 +53,7 @@ public class SignupServlet extends HttpServlet {
 		// create the UserAccount model for form input
 		UserAccount model = new UserAccount(req.getParameter("username"), req.getParameter("password"), req.getParameter("email"));
 		
-		System.out.println(model.getUsername() + " " + model.getPassword() + " " + model.getEmail());
+		System.out.println("Try: " + model.getUsername() + " " + model.getPassword() + " " + model.getEmail());
 		
 		try {
 			if(model.getEmail().isEmpty() || model.getUsername().isEmpty() || model.getPassword().isEmpty()) {
@@ -65,6 +65,7 @@ public class SignupServlet extends HttpServlet {
 				
 				if(signupFlag == 0) {
 					errorMessage = "Successful account creation!";
+					System.out.println("Account created: " + model.getUsername() + " " + model.getPassword() + " " + model.getEmail());
 				} else if(signupFlag == 1) {
 					errorMessage = "Username is already taken.";
 				} else if(signupFlag == 2) {

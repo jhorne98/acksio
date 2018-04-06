@@ -100,8 +100,8 @@ public class DerbyDatabase {
 						"select *"
 							+ "	from users"
 							+ "	where users.username=?"
-							+ "		and users.password=?"
-							+ "		and users.email=?"
+							+ "		or users.password=?"
+							+ "		or users.email=?"
 					);
 					
 					checkUser.setString(1, username);
@@ -112,11 +112,17 @@ public class DerbyDatabase {
 					
 					// test result set for identical username/password/email: return based on those params in that order
 					while(userSet.next()) {
-						if(userSet.getString(1) == username) {
+						String takenUser = userSet.getString(2);
+						String takenPassword = userSet.getString(3);
+						String takenEmail = userSet.getString(4);
+						
+						//System.out.println(userSet.getString(2) + " " + userSet.getString(3) + " " + userSet.getString(4));
+						
+						if(takenUser.equals(username)) {
 							return 1;
-						} else if(userSet.getString(2) == password) {
+						} else if(takenPassword.equals(password)) {
 							return 2;
-						} else if(userSet.getString(3) == email) {
+						} else if(takenEmail.equals(email)) {
 							return 3;
 						}
 					}
