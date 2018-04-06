@@ -2,33 +2,33 @@ package edu.ycp.cs320.acksio.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.util.Pair;
 
 public class Courier extends UserAccount{
-	//ATTRIBUTES
-	private String name;
+	
 	private int driverNumber;
+	private String name;
 	private Boolean availability;
 	private int licenseID;
 	private String licenseExpiration;
 	private Boolean insured;
 	private int insuranceExpiration;
 	private int[] insuranceCoverage;
-	private Boolean tsaVerified;
-	private Double payHistory;
-	private Double payEstimate;
-	private Double balance;
-	private List<Vehicle> vehicles;	
+	private boolean tsaVerified;
+	private double payHistory;
+	private double payEstimate;
+	private double balance;
+	ArrayList<VehicleType> vehicles;
+	private double latitude;
+	private double longitude;
+	List<Vehicle> vehicle;
+
+	public Courier(int driverNumber, String name, boolean availability, 
+					int licenseID, String licenseExp, boolean insured, 
+					int[] insuranceCoverage, boolean tsaVerified, double payHistory, 
+					double payEstimate, double balance, ArrayList<VehicleType> vehicles,
+					double latitude, double longitude) {
 	
-	//CONSTRUCTORS
-	public Courier() {
-		
-	}
-	
-	public Courier(String id) {
-		populate(id);
-	}
-	
-	public Courier(int driverNumner, String name, boolean availability, int licenceID, String licenseExp, boolean insured, int[] insuranceCoverage, boolean tsaVeriflied, double payHistory, double payEstimate, double balance) {
 		this.driverNumber=driverNumber;
 		this.setName(name);
 		this.setAvailability(availability);
@@ -39,6 +39,9 @@ public class Courier extends UserAccount{
 		this.payHistory=payHistory;
 		this.payEstimate=payEstimate;
 		this.balance=balance;
+		this.vehicles=vehicles;
+		this.latitude=latitude;
+		this.longitude=longitude;
 	}
 
 		
@@ -77,7 +80,7 @@ public class Courier extends UserAccount{
 		
 		int count=0;
 		for(Job job : jobs) {
-			boolean accepted = job.approvedOnInvoice();
+			boolean accepted = job.getApproved();
 			if(accepted=true) {
 				count++;
 			}
@@ -101,6 +104,87 @@ public class Courier extends UserAccount{
 
 	//SETTERS AND GETTERS
 	
+	public void addVehicle(VehicleType vehicle) {
+		vehicles.add(vehicle);
+	}
+	
+	public void updateLocation(double latitude, double longitude) {
+		this.latitude=latitude;
+		this.longitude=longitude;
+	}
+	
+	public Pair<Double, Double> getLocation(){
+		Pair<Double, Double> pair = new Pair<Double, Double>(latitude, longitude);
+		return pair;
+	}
+	
+	public int getDriverNumber() {
+		return driverNumber;
+	}
+
+	public void setDriverNumber(int driverNumber) {
+		this.driverNumber = driverNumber;
+	}
+
+	public boolean isAvailability() {
+		return availability;
+	}
+
+	public void setAvailability(boolean availability) {
+		this.availability = availability;
+	}
+
+	public String getLicenseExp() {
+		return licenseExpiration;
+	}
+
+	public void setLicenseExp(String licenseExpiration) {
+		this.licenseExpiration = licenseExpiration;
+	}
+
+	public boolean isInsured() {
+		return insured;
+	}
+
+	public void setInsured(boolean insured) {
+		this.insured = insured;
+	}
+
+	public boolean isTsaVerified() {
+		return tsaVerified;
+	}
+
+	public void setTsaVerified(boolean tsaVerified) {
+		this.tsaVerified = tsaVerified;
+	}
+
+	public void setPayHistory(double payHistory) {
+		this.payHistory = payHistory;
+	}
+
+	public void setPayEstimate(double payEstimate) {
+		this.payEstimate = payEstimate;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
 
 	public int getLicenseID() {
 		return licenseID;
@@ -174,11 +258,11 @@ public class Courier extends UserAccount{
 		this.balance = balance;
 	}
 
-	public List<Vehicle> getVehicles() {
+	public ArrayList<VehicleType> getVehicles() {
 		return vehicles;
 	}
 
-	public void setVehicles(List<Vehicle> vehicles) {
+	public void setVehicles(ArrayList<VehicleType> vehicles) {
 		this.vehicles = vehicles;
 	}
 
