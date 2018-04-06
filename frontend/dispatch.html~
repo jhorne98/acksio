@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+
+		<meta name="author" content="jhorne@ycp.edu">
+		<meta name="desc" content="ACKSIO dispatch draft updated 3/6/18">
+
+		<title>Acksio: Dispatcher Solutions</title>
+		<link rel="stylesheet" type="text/css" href="default.css" title="default"/>
+	</head>
+
+	<body>
+
+		<div id=header>
+
+			<!-- testing functionality of topbar, adjust for neatness later-->
+			<h2>ACKSIO</h2>
+		</div>
+
+		<div id=main_body>
+				
+				Target Address: 
+				<input type="text" name="destinationAddress"  method="post">
+				<br>
+				
+				Recipient Name: <input type = "text" name="recipientName"  method="post">
+				<br>
+				
+				Recipient Phone #: <input type = "text" name="recipientPhone"  method="post">
+				<br>
+				
+				
+				
+				Vehicle Type<br>
+				<select name="vehicleType">
+					<option value="car">Class C Automobile</option>
+				</select>
+				<br><br>
+				
+				
+				
+				<input type="checkbox" name="tsaCertified" value="tsaCert"> TSA certified driver needed<br><br>
+
+				<input type="submit" value="Create Job">
+			</form>	
+		</div>
+
+		<!--
+		<div id=link>
+
+			<a href='GoogleMapsTest.html'>GoogleMaps</a>
+		</div>
+		-->
+	</body>
+</html>

@@ -24,6 +24,9 @@ body {
 	color: #ffffff;
 	font-family: "Trebuchet MS", "Lucida Sans";
 }
+#map_canvas { 
+	height: 100%;
+}
 
 #main_body{
 	float: left;

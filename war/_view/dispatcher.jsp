@@ -49,10 +49,8 @@
 				<p>${model.vehicleType}</p>
 			</form>	
 		</div>
-
 		<!--
 		<div id=link>
-
 			<a href='GoogleMapsTest.html'>GoogleMaps</a>
 		</div>
 		-->
