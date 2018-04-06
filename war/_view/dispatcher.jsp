@@ -10,10 +10,50 @@
 		<meta name="desc" content="ACKSIO dispatch draft updated 3/6/18">
 
 		<title>Acksio: Dispatcher Solutions</title>
+		<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_view/default.css" title="default"/>
+
+		<script type="text/javascript">
+		var directionDisplay;
+		var directionsService = new google.maps.DirectionsService();
+		var map;
+		
+		function initialize() {
+			directionsDisplay = new google.maps.DirectionsRenderer();
+			var York = new google.maps.LatLng(39.9626, -76.7277);
+			var myOptions = {
+				zoom:12,
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+				center: York
+			}
+
+			map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+			directionsDisplay.setMap(map);
+		}
+
+		function calcRoute() {
+			var start = document.getElementById("start").value;
+			var end = document.getElementById("end").value;
+			var distanceInput = document.getElementById("distance");
+			
+			var request = {
+				origin:start, 
+				destination:end,
+				travelMode: google.maps.DirectionsTravelMode.DRIVING
+				
+			};
+			
+			directionsService.route(request, function(response, status) {
+				if (status == google.maps.DirectionsStatus.OK) {
+					directionsDisplay.setDirections(response);
+					distanceInput.value = response.routes[0].legs[0].distance.value / 1000;
+				}
+			});
+		}
+		</script>
 	</head>
 
-	<body>
+	<body onload="initialize()">
 		<c:if test="${! empty errorMessage}">
 			<div class="error">${errorMessage}</div>
 		</c:if>
@@ -44,15 +84,26 @@
 
 				<input type="checkbox" name="tsaCertified" value="${model.tsaCert}"> TSA certified driver needed<br><br>
 				<input type="
+
+				<label for="start">Start: </label>
+				<input type="text" name="start" id="start" />
+				
+				<label for="end">End: </label>
+				<input type="text" name="end" id="end" />
+				
+				<input type="submit" value="Calculate Route" onclick="calcRoute()" />
+
+				
+				<p><label for="distance">Distance (km): </label>
+				<input type="text" name="distance" id="distance" readonly="true" value = "${model.distance}"/></p>
+				<input type="submit" value="Create Job">				
+
 				<input type="submit" name="submit" value="Create Job">
+
 				
 				<p>${model.vehicleType}</p>
 			</form>	
 		</div>
-		<!--
-		<div id=link>
-			<a href='GoogleMapsTest.html'>GoogleMaps</a>
-		</div>
-		-->
+		<div id="map_canvas"></div>
 	</body>
 </html>
