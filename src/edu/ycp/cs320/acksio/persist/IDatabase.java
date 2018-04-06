@@ -34,4 +34,8 @@ public interface IDatabase {
 	public List<Job> jobsFromCourierID(int id);
 	public List<Job> jobsFromDispatcherID(int id);
 	public List<Courier> couriersFromDispatcherID(int id);
+	
+	public UserAccount userAccountFromUsername(String username);
+	public Courier courierFromUsername(String username);
+	public Dispatcher dispatcherFromUsername(String username);
 } 

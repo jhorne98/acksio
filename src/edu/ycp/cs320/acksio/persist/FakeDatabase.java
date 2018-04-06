@@ -154,19 +154,8 @@ public class FakeDatabase implements IDatabase{
 	public Courier courierFromID(int id) {
 		int i = 0;
 		while(i < courierList.size() && courierList.get(i).getCourierID() != id) {
-			i++;
+			return courierList.get(i);
 		}
-		
-		if(courierList.get(i).getCourierID() == id) {
-			Courier hold = courierList.get(i);
-			UserAccount user = userAccountFromID(hold.getUserId());
-			hold.setName(user.getName());
-			hold.setEmail(user.getEmail());
-			hold.setUsername(user.getUsername());
-			hold.setPassword(user.getPassword());
-			return hold;
-		}
-		
 		return null;
 	}
 
@@ -174,19 +163,8 @@ public class FakeDatabase implements IDatabase{
 	public Dispatcher dispatcherFromID(int id) {
 		int i = 0;
 		while(i < dispatcherList.size() && dispatcherList.get(i).getDispatcherID() != id) {
-			i++;
+			return dispatcherList.get(i);
 		}
-		
-		if(dispatcherList.get(i).getDispatcherID() == id) {
-			Dispatcher hold = dispatcherList.get(i);
-			UserAccount user = userAccountFromID(hold.getUserId());
-			hold.setName(user.getName());
-			hold.setEmail(user.getEmail());
-			hold.setUsername(user.getUsername());
-			hold.setPassword(user.getPassword());
-			return hold;
-		}
-		
 		return null;
 	}
 
@@ -251,5 +229,29 @@ public class FakeDatabase implements IDatabase{
 				list.add(courier);
 		
 		return list;
+	}
+
+	@Override
+	public UserAccount userAccountFromUsername(String username) {
+		for(UserAccount user : userList)
+			if(user.getUsername().equals(username))
+				return user;
+		return null;
+	}
+
+	@Override
+	public Courier courierFromUsername(String username) {
+		for(Courier user : courierList)
+			if(user.getUsername().equals(username))
+				return user;
+		return null;
+	}
+
+	@Override
+	public Dispatcher dispatcherFromUsername(String username) {
+		for(Dispatcher user : dispatcherList)
+			if(user.getUsername().equals(username))
+				return user;
+		return null;
 	}
 }

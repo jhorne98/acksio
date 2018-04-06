@@ -41,6 +41,7 @@ public class InitialData {
 	
  	public static List<Dispatcher> getDispatchers() throws IOException {
 		List<Dispatcher> dispatcherList = new ArrayList<Dispatcher>();
+		List<UserAccount> userList = getUsers();
 		ReadCSV readDispatchers = new ReadCSV("dispatchers.csv");
 		try {
 			// auto-generated primary key for authors table
@@ -58,6 +59,17 @@ public class InitialData {
 				user.setAddress(i.next());
 				user.setPhone(Integer.parseInt(i.next()));
 				
+				int userID = 0;
+				while(userList.get(userID).getUserId() != user.getUserId() && userID < userList.size()) {
+					userID++;
+				}
+				if(userID < userList.size()) {
+					user.setName(userList.get(userID).getName());
+					user.setEmail(userList.get(userID).getEmail());
+					user.setUsername(userList.get(userID).getUsername());
+					user.setPassword(userList.get(userID).getPassword());
+				}
+				
 				dispatcherList.add(user);
 			}
 			return dispatcherList;
@@ -68,6 +80,7 @@ public class InitialData {
 	
  	public static List<Courier> getCouriers() throws IOException {
 		List<Courier> courierList = new ArrayList<Courier>();
+		List<UserAccount> userList = getUsers();
 		ReadCSV readCouriers = new ReadCSV("couriers.csv");
 		try {
 			// auto-generated primary key for authors table
@@ -90,6 +103,17 @@ public class InitialData {
 				user.setPayEstimate(Double.parseDouble(i.next()));
 				user.setPayHistory(Double.parseDouble(i.next()));
 				user.setAvailability(Boolean.parseBoolean(i.next()));
+				
+				int userID = 0;
+				while(userList.get(userID).getUserId() != user.getUserId() && userID < userList.size()) {
+					userID++;
+				}
+				if(userID < userList.size()) {
+					user.setName(userList.get(userID).getName());
+					user.setEmail(userList.get(userID).getEmail());
+					user.setUsername(userList.get(userID).getUsername());
+					user.setPassword(userList.get(userID).getPassword());
+				}
 				
 				courierList.add(user);
 			}
