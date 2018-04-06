@@ -9,7 +9,7 @@ public class Job implements DataController{
 	private Boolean tsaVerified;
 	private String recipentName;
 	private int recipentPhone;
-	private int distanceMi;
+	private double distanceMi;
 	private int payEstimateForJob;
 	private int payActualForJob;
 	private Boolean courierPaid;
@@ -33,7 +33,7 @@ public class Job implements DataController{
 	public void setRecipentPhone (int phone) {
 		this.recipentPhone = phone;
 	}
-	public void setDistanceMi (int distance) {
+	public void setDistanceMi (double distance) {
 		this.distanceMi = distance;
 	}
 	public void setPayEstimateForJob (int pay) {
@@ -72,7 +72,7 @@ public class Job implements DataController{
 	public int getRecipentPhone () {
 		return recipentPhone;
 	}
-	public int getDistanceMi () {
+	public double getDistanceMi () {
 		return distanceMi;
 	}
 	public int getPayEstimateForJob () {

@@ -7,17 +7,19 @@ public class Dispatcher extends UserAccount{
 	private String address;
 	private String name;
 	private int phone;
+	private double distance;
 	
 	public Dispatcher() {
 		
 	}
 	
-	public Dispatcher(String vehicleType, Boolean tsaCert, String address, String name, int phone) {
+	public Dispatcher(String vehicleType, Boolean tsaCert, String address, String name, int phone, double distance) {
 		this.vehicleType = vehicleType;
 		this.tsaCert = tsaCert;
 		this.address = address;
 		this.phone = phone;
 		this.name = name; 
+		this.distance = distance;
 	}
 	
 	public String getVehicleType() {
@@ -29,7 +31,7 @@ public class Dispatcher extends UserAccount{
 		testJob.setActualTime(10); //Fixed number for testing
 		testJob.setCourierPaid(tsaCert);
 		testJob.setDeststinationAddress(address);
-		testJob.setDistanceMi(10); //Fixed number for testing
+		testJob.setDistanceMi(distance); //Fixed number for testing
 		testJob.setDropOffTime(10); //Fixed number for testing
 		testJob.setPayActualForJob(10); //Fixed number for testing
 		testJob.setPayEstimateForJob(10);//Fixed number for testing
