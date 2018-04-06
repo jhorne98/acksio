@@ -16,7 +16,8 @@ import edu.ycp.cs320.acksio.persist.InitialData;
 import edu.ycp.cs320.acksio.sqldemo.DBUtil;
 //import jdk.internal.util.xml.impl.Pair;
 
-// copied almost directly from lab06
+// copied almost directly from lab06, and modified
+// credit for all copied code goes to djhake and others respectively
 public class DerbyDatabase {
 	static {
 		try {
