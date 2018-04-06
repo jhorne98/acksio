@@ -41,45 +41,33 @@ public class FakeDatabase implements IDatabase{
 	
 	@Override
 	public Boolean insert(Job job) {
-		if(jobList.add(job))
-			return true;
-		return false;
+		// TODO Auto-generated method stub
+		return null;
 	}
 	@Override
 	public Boolean insert(Courier courier) {
-		if(courierList.add(courier))
-			return true;
-		return false;
+		// TODO Auto-generated method stub
+		return null;
 	}
 	@Override
 	public Boolean insert(Dispatcher dispatcher) {
-		if(dispatcherList.add(dispatcher))
-			return true;
-		return false;
+		// TODO Auto-generated method stub
+		return null;
 	}
 	@Override
 	public Boolean insert(UserAccount user) {
-		if(userList.add(user))
-			return true;
-		return false;
+		// TODO Auto-generated method stub
+		return null;
 	}
 	@Override
 	public Boolean insert(Vehicle vehicle) {
-		if(vehicleList.add(vehicle))
-			return true;
-		return false;
+		// TODO Auto-generated method stub
+		return null;
 	}
 	@Override
 	public Boolean update(Job job) {
-		int i = 0;
-		while(i < jobList.size() && !jobList.get(i).getId().equals(job.getId()))
-			i++;
-		if(jobList.get(i).getId().equals(job.getId())) {
-			jobList.add(i, job);
-			jobList.remove(i+1);
-			return true;
-		}
-		return false;
+		// TODO Auto-generated method stub
+		return null;
 	}
 	@Override
 	public Boolean update(Courier courier) {
@@ -128,11 +116,9 @@ public class FakeDatabase implements IDatabase{
 	}
 	@Override
 	public Boolean verifyLogin(String username, String password) {
-		for(UserAccount user : userList) {
-			if(user.getUsername() == username && user.getPassword() == password) {
+		for(UserAccount user : userList)
+			if(user.getUsername() == username && user.getPassword() == password)
 				return true;
-			}
-		}
 		return false;
 	}
 	@Override

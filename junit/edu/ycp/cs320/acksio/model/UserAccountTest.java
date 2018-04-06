@@ -19,14 +19,7 @@ public class UserAccountTest {
 		assertEquals(model.getUsername(), "username");
 	}
 	
-	@Test
 	public void testSets() {
-<<<<<<< HEAD
-		
-	}
-	
-	@Test
-=======
 		model.setPassword("pwd");
 		assertEquals(model.getPassword(), "pwd");
 		model.setUsername("user");
@@ -37,34 +30,21 @@ public class UserAccountTest {
 		assertEquals(model.getValidity(), false);
 	}
 	
->>>>>>> refs/remotes/origin/alaska
 	public void testLogout() {
 		
 	}
 	
-	@Test
 	public void testVerifyLogin() {
 		
 	}
 	
-	@Test
 	public void testEdit() {
 		
 	}
 	
-	@Test
 	public void testAddVehicle() {
     
 	}
-<<<<<<< HEAD
-
-	@Test
-	public void testSetUserId() {
-		model.setUserId(1);
-		assertEquals(model.getUserId(), 1);
-	}
-=======
->>>>>>> refs/remotes/origin/alaska
 	
 	public void testLogin() {
 		// TODO: generate a new user and use testLogin() on it: requires creation of createUser() or similar for db
@@ -74,8 +54,6 @@ public class UserAccountTest {
 		model.login();
 		
 		assertEquals(model.getValidity(), true);
-<<<<<<< HEAD
-=======
 		
 		model.setUsername("joel");
 		model.setPassword("wrong");
@@ -83,6 +61,5 @@ public class UserAccountTest {
 		model.login();
 		
 		assertEquals(model.getValidity(), false);
->>>>>>> refs/remotes/origin/alaska
 	}
 }
