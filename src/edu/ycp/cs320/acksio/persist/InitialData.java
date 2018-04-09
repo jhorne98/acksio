@@ -32,6 +32,8 @@ public class InitialData {
 				user.setEmail(i.next());
 				user.setName(i.next());
 				userList.add(user);
+				//Therefor, the data in the csv is presented as
+				//username|password|email|name
 			}
 			return userList;
 		} finally {
@@ -58,6 +60,8 @@ public class InitialData {
 				user.setUserId(Integer.parseInt(i.next()));
 				user.setAddress(i.next());
 				user.setPhone(Integer.parseInt(i.next()));
+				//Therefor, the data in the csv is presented as
+				//UserID|Address|Phone
 				
 				int userID = 0;
 				while(userList.get(userID).getUserId() != user.getUserId() && userID < userList.size()) {
@@ -103,6 +107,8 @@ public class InitialData {
 				user.setPayEstimate(Double.parseDouble(i.next()));
 				user.setPayHistory(Double.parseDouble(i.next()));
 				user.setAvailability(Boolean.parseBoolean(i.next()));
+				//Therefor, the data is presented in the csv as
+				//UserID|DispatcherID|TSA_Ver|Long|Lat|Balance|PayEstimate|PayHistory|Availability
 				
 				int userID = 0;
 				while(userList.get(userID).getUserId() != user.getUserId() && userID < userList.size()) {
@@ -139,8 +145,8 @@ public class InitialData {
 				job.setJobID(jobId++);
 				job.setCourierID(Integer.parseInt(i.next()));
 				job.setDispatcherID(Integer.parseInt(i.next()));
-				job.setDestLat(Double.parseDouble(i.next()));
 				job.setDestLong(Double.parseDouble(i.next()));
+				job.setDestLat(Double.parseDouble(i.next()));
 				job.setVehicleType(i.next());//VehicleType
 				job.setTsaVerified(Boolean.parseBoolean(i.next()));
 				job.setRecipientName(i.next());
@@ -152,6 +158,8 @@ public class InitialData {
 				job.setActualTime(Integer.parseInt(i.next())); //TimeForJob
 				job.setSigned(Boolean.parseBoolean(i.next())); //PackageSignedFor
 				job.setApproved(Boolean.parseBoolean(i.next())); //InvoiceApproved
+				//Therefor, the data is presented in the csv as
+				//CourierID|DispatcherID|Long|Lat|VehicleType|TSA_Ver|RecipientName|RecipientPhone|DistanceMi|CourierPaid|PickUpTime|DropOffTime|ActualTime|Signed|Approved
 				
 				jobList.add(job);
 			}
@@ -182,6 +190,8 @@ public class InitialData {
 				vehicle.setModel(i.next());//Model
 				vehicle.setYear(Integer.parseInt(i.next()));//Year
 				vehicle.setActive(Boolean.parseBoolean(i.next()));//Active
+				//Therefor, the data is presented in the csv as
+				//CourierID|Type|Plate|Make|Model|Year|Active
 				
 				vehicleList.add(vehicle);
 			}

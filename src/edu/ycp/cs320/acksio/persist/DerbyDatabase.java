@@ -8,8 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import edu.ycp.cs320.acksio.model.Courier;
+import edu.ycp.cs320.acksio.model.Dispatcher;
+import edu.ycp.cs320.acksio.model.Job;
 //import edu.ycp.cs320.acksio.controller.DataController;
 import edu.ycp.cs320.acksio.model.UserAccount;
+import edu.ycp.cs320.acksio.model.Vehicle;
 import edu.ycp.cs320.acksio.persist.PersistenceException;
 import edu.ycp.cs320.acksio.persist.DerbyDatabase;
 import edu.ycp.cs320.acksio.persist.InitialData;
@@ -18,7 +22,7 @@ import edu.ycp.cs320.acksio.sqldemo.DBUtil;
 
 // copied almost directly from lab06, and modified
 // credit for all copied code goes to djhake and others respectively
-public class DerbyDatabase {
+public class DerbyDatabase implements IDatabase{
 	static {
 		try {
 			Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
@@ -32,14 +36,6 @@ public class DerbyDatabase {
 	}
 
 	private static final int MAX_ATTEMPTS = 10;
-	
-	public void populate(String id) {
-		
-	}
-	
-	public void save() {
-		
-	}
 	
 	// pull users from database to verify that correct username and corresponding password has been input
 	public Boolean verifyLogin(String username, String password) {
@@ -309,5 +305,445 @@ public class DerbyDatabase {
 		db.loadInitialData();
 		
 		System.out.println("Success!");
+	}
+
+	@Override
+	public Boolean insert(Job job) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public Boolean insert(Courier courier) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public Boolean insert(Dispatcher dispatcher) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public Boolean insert(UserAccount user) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public Boolean insert(Vehicle vehicle) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public Boolean update(Job job) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public Boolean update(Courier courier) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public Boolean update(Dispatcher dispatcher) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public Boolean update(UserAccount user) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public Boolean update(Vehicle vehicle) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public Job jobFromID(int id) {
+		return executeTransaction(new Transaction<Job>() {
+			@Override
+			public Job execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public Courier courierFromID(int id) {
+		return executeTransaction(new Transaction<Courier>() {
+			@Override
+			public Courier execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public Dispatcher dispatcherFromID(int id) {
+		return executeTransaction(new Transaction<Dispatcher>() {
+			@Override
+			public Dispatcher execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public UserAccount userAccountFromID(int id) {
+		return executeTransaction(new Transaction<UserAccount>() {
+			@Override
+			public UserAccount execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public Vehicle vehicleFromID(int id) {
+		return executeTransaction(new Transaction<Vehicle>() {
+			@Override
+			public Vehicle execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public List<Vehicle> vehiclesFromCourierID(int id) {
+		return executeTransaction(new Transaction<List<Vehicle>>() {
+			@Override
+			public List<Vehicle> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public List<Job> jobsFromCourierID(int id) {
+		return executeTransaction(new Transaction<List<Job>>() {
+			@Override
+			public List<Job> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public List<Job> jobsFromDispatcherID(int id) {
+		return executeTransaction(new Transaction<List<Job>>() {
+			@Override
+			public List<Job> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public List<Courier> couriersFromDispatcherID(int id) {
+		return executeTransaction(new Transaction<List<Courier>>() {
+			@Override
+			public List<Courier> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public UserAccount userAccountFromUsername(String username) {
+		return executeTransaction(new Transaction<UserAccount>() {
+			@Override
+			public UserAccount execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public Courier courierFromUsername(String username) {
+		return executeTransaction(new Transaction<Courier>() {
+			@Override
+			public Courier execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public Dispatcher dispatcherFromUsername(String username) {
+		return executeTransaction(new Transaction<Dispatcher>() {
+			@Override
+			public Dispatcher execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				return null;
+			}
+		});
 	}
 }
