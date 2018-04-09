@@ -78,7 +78,6 @@ public class UserAccount implements DataController{
 		this.name = name;
 	}
 	
-	
 	public String getEmail() {
 		return email;
 	}

@@ -216,7 +216,7 @@ public class DerbyDatabase {
 						"		generated always as identity (start with 1, increment by 1), " +									
 						"	username varchar(40)," +
 						"	password varchar(40)," +
-						"	email varchar(40) " +
+						"	email varchar(40) " +	
 						")"
 					);	
 					stmt1.executeUpdate();
@@ -270,6 +270,7 @@ public class DerbyDatabase {
 						insertUser.setString(1, user.getUsername());
 						insertUser.setString(2, user.getPassword());
 						insertUser.setString(3, user.getEmail());
+						//insertUser.setString(4, user.getName());
 						insertUser.addBatch();
 					}
 					insertUser.executeBatch();
