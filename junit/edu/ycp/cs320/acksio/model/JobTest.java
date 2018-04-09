@@ -6,8 +6,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.ycp.cs320.acksio.model.Numbers;
-
 public class JobTest {
 	Job model;
 	Boolean[] bools;
