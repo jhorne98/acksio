@@ -313,16 +313,37 @@ public class DerbyDatabase implements IDatabase{
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
 				
 				try {
+					stmt = conn.prepareStatement(
+							  "insert into jobs (courier_id, dispatcher_id, longitude, latitude, vehicle_type, TSA_verified, recipient_name, recipient_phone, distance, paid, pick_up, drop_off, time, signed, invoice_approved) "
+							+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+									// 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15
 					
+					//CourierID|DispatcherID|Long|Lat|VehicleType|TSA_Ver|RecipientName|
+					//RecipientPhone|DistanceMi|CourierPaid|
+					//PickUpTime|DropOffTime|ActualTime|Signed|Approved
+					
+					stmt.setInt(1, job.getCourierID());
+					stmt.setInt(2, job.getDispatcherID());
+					stmt.setDouble(3, job.getDestLong());
+					stmt.setDouble(4, job.getDestLat());
+					stmt.setString(5, job.getVehicleType().toString());
+					stmt.setBoolean(6, job.getTsaVerified());
+					stmt.setString(7, job.getRecipientName());
+					stmt.setLong(8, job.getRecipientPhone());
+					stmt.setInt(9, job.getDispatcherID());
+					stmt.setBoolean(10, job.getCourierPaid());
+					stmt.setInt(11, job.getPickUpTime());
+					stmt.setInt(12, job.getDropOffTime());
+					stmt.setInt(13, job.getActualTime());
+					stmt.setBoolean(14, job.getSigned());
+					stmt.setBoolean(15, job.getApproved());
+					
+					return stmt.execute();
 				} finally {
 					DBUtil.closeQuietly(stmt);
-					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}
@@ -333,16 +354,27 @@ public class DerbyDatabase implements IDatabase{
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
 				
 				try {
+					stmt = conn.prepareStatement(
+							  "insert into couriers (user_id, dispatcher_id, TSA_verified, longitude, latitude, balance, pay_estimate, pay_history, availability) "
+							+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					//UserID|DispatcherID|TSA_Ver|Long|Lat|Balance|PayEstimate|PayHistory|Availability
 					
+					stmt.setInt(1, courier.getUserId());
+					stmt.setInt(2, courier.getDispatcherID());
+					stmt.setBoolean(3, courier.isTsaVerified());
+					stmt.setDouble(4, courier.getLongitude());
+					stmt.setDouble(5, courier.getLatitude());
+					stmt.setDouble(6, courier.getBalance());
+					stmt.setDouble(7, courier.getPayEstimate());
+					stmt.setDouble(8, courier.getPayHistory());
+					stmt.setBoolean(9, courier.getAvailability());
+					
+					return stmt.execute();
 				} finally {
 					DBUtil.closeQuietly(stmt);
-					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}
@@ -353,16 +385,20 @@ public class DerbyDatabase implements IDatabase{
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
 				
 				try {
+					stmt = conn.prepareStatement(
+							  "insert into dispatchers (user_id, address, phone)"
+							+ "values (?, ?, ?)");
 					
+					stmt.setInt(1, dispatcher.getUserId());
+					stmt.setString(2, dispatcher.getAddress());
+					stmt.setInt(3, dispatcher.getPhone());
+					
+					return stmt.execute();
 				} finally {
 					DBUtil.closeQuietly(stmt);
-					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}
@@ -373,16 +409,21 @@ public class DerbyDatabase implements IDatabase{
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
 				
 				try {
+					stmt = conn.prepareStatement(
+							  "insert into users (username, password, email, name) "
+							+ "values (?, ?, ?, ?)");
 					
+					stmt.setString(1, user.getUsername());
+					stmt.setString(2, user.getPassword());
+					stmt.setString(3, user.getEmail());
+					stmt.setString(4, user.getName());
+					
+					return stmt.execute();
 				} finally {
 					DBUtil.closeQuietly(stmt);
-					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}
@@ -393,16 +434,24 @@ public class DerbyDatabase implements IDatabase{
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
 				
 				try {
+					stmt = conn.prepareStatement(
+							  "insert into vehicles (courier_id, vehicle_type, plate, make, model, year, active)"
+							+ "values (?, ?, ?, ?, ?, ?, ?)");
 					
+					stmt.setInt(1, vehicle.getCourierID());
+					stmt.setString(2, vehicle.getType().toString());
+					stmt.setString(3, vehicle.getLicensePlate());
+					stmt.setString(4, vehicle.getMake());
+					stmt.setString(5, vehicle.getModel());
+					stmt.setInt(6, vehicle.getYear());
+					stmt.setBoolean(7, vehicle.isActive());
+					
+					return stmt.execute();
 				} finally {
 					DBUtil.closeQuietly(stmt);
-					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}

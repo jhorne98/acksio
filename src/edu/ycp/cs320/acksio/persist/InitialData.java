@@ -61,7 +61,7 @@ public class InitialData {
 				user.setAddress(i.next());
 				user.setPhone(Integer.parseInt(i.next()));
 				//Therefor, the data in the csv is presented as
-				//UserID|Address|Phone
+				//user_id|Address|Phone
 				
 				int userID = 0;
 				while(userList.get(userID).getUserId() != user.getUserId() && userID < userList.size()) {
