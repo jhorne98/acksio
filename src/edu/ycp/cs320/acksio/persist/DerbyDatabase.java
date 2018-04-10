@@ -130,13 +130,14 @@ public class DerbyDatabase {
 					
 					// user does not already exist: insert into users
 					insertNewUser = conn.prepareStatement(
-						"insert into users (username, password, email)"
-						+ "	values (?, ?, ?)"	
+						"insert into users (username, password, email, name)"
+						+ "	values (?, ?, ?, ?)"	
 					);
 					
 					insertNewUser.setString(1, username);
 					insertNewUser.setString(2, password);
 					insertNewUser.setString(3, email);
+					insertNewUser.setString(4, "");
 					
 					insertNewUser.executeUpdate();
 					
@@ -216,7 +217,8 @@ public class DerbyDatabase {
 						"		generated always as identity (start with 1, increment by 1), " +									
 						"	username varchar(40)," +
 						"	password varchar(40)," +
-						"	email varchar(40) " +	
+						"	email varchar(40)," +
+						"	name varchar(40) " +
 						")"
 					);	
 					stmt1.executeUpdate();
@@ -264,13 +266,13 @@ public class DerbyDatabase {
 
 				try {
 					// populate users table
-					insertUser = conn.prepareStatement("insert into users (username, password, email) values (?, ?, ?)");
+					insertUser = conn.prepareStatement("insert into users (username, password, email, name) values (?, ?, ?, ?)");
 					for (UserAccount user : userList) {
 						//insertUser.setInt(1, author.getUserId());	// auto-generated primary key, don't insert this
 						insertUser.setString(1, user.getUsername());
 						insertUser.setString(2, user.getPassword());
 						insertUser.setString(3, user.getEmail());
-						//insertUser.setString(4, user.getName());
+						insertUser.setString(4, user.getName());
 						insertUser.addBatch();
 					}
 					insertUser.executeBatch();

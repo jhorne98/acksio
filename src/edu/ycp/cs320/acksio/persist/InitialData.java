@@ -30,7 +30,7 @@ public class InitialData {
 				user.setUsername(i.next());
 				user.setPassword(i.next());
 				user.setEmail(i.next());
-				//user.setName(i.next());
+				user.setName(i.next());
 				userList.add(user);
 			}
 			return userList;

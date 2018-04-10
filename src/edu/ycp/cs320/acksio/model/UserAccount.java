@@ -3,7 +3,7 @@ package edu.ycp.cs320.acksio.model;
 import edu.ycp.cs320.acksio.controller.DataController;
 //import edu.ycp.cs320.acksio.persist.DatabaseProvider;
 import edu.ycp.cs320.acksio.persist.*;
-import java.sql.*;
+//import java.sql.*;
 
 public class UserAccount implements DataController{
 	private String username;
