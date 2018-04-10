@@ -83,7 +83,7 @@ public class DerbyDatabase {
 	// attempt to create a user by first checking if the user/password/email exists in the users db
 	// return error code based on user input matching field in db
 	// TODO: SUPER KLUDGY!! fix later
-	public Integer createAccount(String username, String password, String email) {
+	public Integer createAccount(String username, String password, String email, String accountType) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
@@ -130,14 +130,15 @@ public class DerbyDatabase {
 					
 					// user does not already exist: insert into users
 					insertNewUser = conn.prepareStatement(
-						"insert into users (username, password, email, name)"
-						+ "	values (?, ?, ?, ?)"	
+						"insert into users (username, password, email, name, accountType)"
+						+ "	values (?, ?, ?, ?, ?)"	
 					);
 					
 					insertNewUser.setString(1, username);
 					insertNewUser.setString(2, password);
 					insertNewUser.setString(3, email);
 					insertNewUser.setString(4, "");
+					insertNewUser.setString(5, accountType);
 					
 					insertNewUser.executeUpdate();
 					
@@ -218,7 +219,8 @@ public class DerbyDatabase {
 						"	username varchar(40)," +
 						"	password varchar(40)," +
 						"	email varchar(40)," +
-						"	name varchar(40) " +
+						"	name varchar(40), " +
+						"	accounttype varchar(10)" +
 						")"
 					);	
 					stmt1.executeUpdate();
@@ -266,13 +268,14 @@ public class DerbyDatabase {
 
 				try {
 					// populate users table
-					insertUser = conn.prepareStatement("insert into users (username, password, email, name) values (?, ?, ?, ?)");
+					insertUser = conn.prepareStatement("insert into users (username, password, email, name, accounttype) values (?, ?, ?, ?, ?)");
 					for (UserAccount user : userList) {
 						//insertUser.setInt(1, author.getUserId());	// auto-generated primary key, don't insert this
 						insertUser.setString(1, user.getUsername());
 						insertUser.setString(2, user.getPassword());
 						insertUser.setString(3, user.getEmail());
 						insertUser.setString(4, user.getName());
+						insertUser.setString(5, user.getAccountType());
 						insertUser.addBatch();
 					}
 					insertUser.executeBatch();

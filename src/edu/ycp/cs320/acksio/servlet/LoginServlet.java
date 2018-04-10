@@ -51,7 +51,7 @@ public class LoginServlet extends HttpServlet {
 		String errorMessage = null;
 		
 		// create the UserAccount model for form input
-		UserAccount model = new UserAccount(req.getParameter("username"), req.getParameter("password"), null);
+		UserAccount model = new UserAccount(req.getParameter("username"), req.getParameter("password"));
 		
 		System.out.println(model.getUsername() + " " + model.getPassword());
 		

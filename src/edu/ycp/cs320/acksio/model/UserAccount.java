@@ -12,6 +12,7 @@ public class UserAccount implements DataController{
 	private Boolean isValid;
 	private String name;
 	private String email;
+	private String accountType;
 	
 	public UserAccount() {
 		//Purposefully empty
@@ -25,10 +26,11 @@ public class UserAccount implements DataController{
 		//save();
 	}
 	
-	public UserAccount(String username, String password, String email) {
+	public UserAccount(String username, String password, String email, String accountType) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.accountType = accountType;
 		isValid = false;
 		//save();
 	}
@@ -38,6 +40,7 @@ public class UserAccount implements DataController{
 		populate(provider, id);
 	}
 
+	// getters and setters
 	public int getUserId() {
 		return userId;
 	}
@@ -85,6 +88,14 @@ public class UserAccount implements DataController{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getAccountType() {
+		return accountType;
+	}
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
 
 	@Override
 	public void populate(DatabaseProvider provider, int id) {
@@ -131,7 +142,7 @@ public class UserAccount implements DataController{
 	public int signup() {
 		DerbyDatabase db = new DerbyDatabase();
 		
-		int signupFlag = db.createAccount(username, password, email);
+		int signupFlag = db.createAccount(username, password, email, accountType);
 		
 		if(signupFlag == 0) {
 			isValid = true;
