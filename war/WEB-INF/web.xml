@@ -50,11 +50,11 @@
   <servlet-mapping>
     <servlet-name>GuessingGameServlet</servlet-name>
     <url-pattern>/guessingGame</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping>-->
   <servlet-mapping>
     <servlet-name>DispatcherServlet</servlet-name>
     <url-pattern>/dispatcher</url-pattern>
-  </servlet-mapping>-->
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/login</url-pattern>
