@@ -89,21 +89,21 @@ public class Vehicle implements DataController{
 	}
 	
 	public void setType (String vehicle) {
-		if(vehicle.equals("Bicycle")) {
+		if(vehicle.equals(VehicleType.BICYCLE.toString())) {
 			type = VehicleType.BICYCLE;
-		} else if(vehicle.equals("Motorcycle")) {
+		} else if(vehicle.equals(VehicleType.MOTORCYCLE.toString())) {
 			type = VehicleType.MOTORCYCLE;
-		} else if(vehicle.equals("Car")) {
+		} else if(vehicle.equals(VehicleType.CAR.toString())) {
 			type = VehicleType.CAR;
-		} else if(vehicle.equals("SUV")) {
+		} else if(vehicle.equals(VehicleType.SUV.toString())) {
 			type = VehicleType.SUV;
-		} else if(vehicle.equals("Van")) {
+		} else if(vehicle.equals(VehicleType.VAN.toString())) {
 			type = VehicleType.VAN;
-		} else if(vehicle.equals("Pickup")) {
+		} else if(vehicle.equals(VehicleType.PICKUP.toString())) {
 			type = VehicleType.PICKUP;
-		} else if(vehicle.equals("Sprinter")) {
+		} else if(vehicle.equals(VehicleType.SPRINTER.toString())) {
 			type = VehicleType.SPRINTER;
-		} else if(vehicle.equals("Semi")) {
+		} else if(vehicle.equals(VehicleType.SEMI.toString())) {
 			type = VehicleType.SEMI;
 		} else {
 			type = null;

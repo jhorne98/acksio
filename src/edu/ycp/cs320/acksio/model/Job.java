@@ -59,21 +59,21 @@ public class Job implements DataController{
 		this.vehicleType = vehicle; 
 	}
 	public void setVehicleType (String vehicle) {
-		if(vehicle.equals("Bicycle")) {
+		if(vehicle.equals(VehicleType.BICYCLE.toString())) {
 			vehicleType = VehicleType.BICYCLE;
-		} else if(vehicle.equals("Motorcycle")) {
+		} else if(vehicle.equals(VehicleType.MOTORCYCLE.toString())) {
 			vehicleType = VehicleType.MOTORCYCLE;
-		} else if(vehicle.equals("Car")) {
+		} else if(vehicle.equals(VehicleType.CAR.toString())) {
 			vehicleType = VehicleType.CAR;
-		} else if(vehicle.equals("SUV")) {
+		} else if(vehicle.equals(VehicleType.SUV.toString())) {
 			vehicleType = VehicleType.SUV;
-		} else if(vehicle.equals("Van")) {
+		} else if(vehicle.equals(VehicleType.VAN.toString())) {
 			vehicleType = VehicleType.VAN;
-		} else if(vehicle.equals("Pickup")) {
+		} else if(vehicle.equals(VehicleType.PICKUP.toString())) {
 			vehicleType = VehicleType.PICKUP;
-		} else if(vehicle.equals("Sprinter")) {
+		} else if(vehicle.equals(VehicleType.SPRINTER.toString())) {
 			vehicleType = VehicleType.SPRINTER;
-		} else if(vehicle.equals("Semi")) {
+		} else if(vehicle.equals(VehicleType.SEMI.toString())) {
 			vehicleType = VehicleType.SEMI;
 		} else {
 			vehicleType = null;
