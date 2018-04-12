@@ -565,13 +565,42 @@ public class DerbyDatabase implements IDatabase{
 				ResultSet resultSet = null;
 				
 				try {
+					stmt = conn.prepareStatement(
+							  "select courier_id, dispatcher_id, longitude, latitude, "
+							+ "vehicle_type, TSA_verified, "
+							+ "recipient_name, recipient_phone, distance, paid, "
+							+ "pick_up, drop_off, time, signed, invoice_approved "
+							+ "where job_id = ?");
 					
+					stmt.setInt(1, id);
+					
+					if(!resultSet.next())
+						return null;
+					
+					Job job = new Job();
+					
+					job.setJobID(id);
+					job.setCourierID(resultSet.getInt(1));
+					job.setDispatcherID(resultSet.getInt(2));
+					job.setDestLong(resultSet.getDouble(3));
+					job.setDestLat(resultSet.getDouble(4));
+					job.setVehicleType(resultSet.getString(5));
+					job.setTsaVerified(resultSet.getBoolean(6));
+					job.setRecipientName(resultSet.getString(7));
+					job.setRecipientPhone(resultSet.getLong(8));
+					job.setDistanceMi(resultSet.getDouble(9));
+					job.setCourierPaid(resultSet.getBoolean(10));
+					job.setPickUpTime(resultSet.getInt(11));
+					job.setDropOffTime(resultSet.getInt(12));
+					job.setActualTime(resultSet.getInt(13));
+					job.setSigned(resultSet.getBoolean(14));
+					job.setApproved(resultSet.getBoolean(15));
+					
+					return job;
 				} finally {
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}
@@ -625,13 +654,29 @@ public class DerbyDatabase implements IDatabase{
 				ResultSet resultSet = null;
 				
 				try {
+					stmt = conn.prepareStatement(
+							  "select username, password, email, name from users "
+							+ "where user_id = ?");
 					
+					stmt.setInt(1, id);
+					
+					resultSet = stmt.executeQuery();
+					
+					if(!resultSet.next())
+						return null;
+					
+					UserAccount user = new UserAccount();
+					user.setUserId(id);
+					user.setUsername(resultSet.getString(1));
+					user.setPassword(resultSet.getString(2));
+					user.setEmail(resultSet.getString(3));
+					user.setName(resultSet.getString(4));
+					
+					return user;
 				} finally {
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}
@@ -645,13 +690,32 @@ public class DerbyDatabase implements IDatabase{
 				ResultSet resultSet = null;
 				
 				try {
+					stmt = conn.prepareStatement(
+							  "select "
+							+ "courier_id, vehicle_type, plate, make, model, year, active from vehicle "
+							+ "where vehicle_id = ?");
 					
+					stmt.setInt(1, id);
+					
+					resultSet = stmt.executeQuery();
+					
+					if(!resultSet.next())
+						return null;
+					
+					Vehicle vehicle = new Vehicle();
+					vehicle.setCourierID(resultSet.getInt(1));
+					vehicle.setType(resultSet.getString(2));
+					vehicle.setLicensePlate(resultSet.getString(3));
+					vehicle.setMake(resultSet.getString(4));
+					vehicle.setModel(resultSet.getString(5));
+					vehicle.setYear(resultSet.getInt(6));
+					vehicle.setActive(resultSet.getBoolean(7));
+					
+					return vehicle;
 				} finally {
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}
@@ -745,13 +809,29 @@ public class DerbyDatabase implements IDatabase{
 				ResultSet resultSet = null;
 				
 				try {
+					stmt = conn.prepareStatement(
+							  "select user_id, password, email, name from users "
+							+ "where username = ?");
 					
+					stmt.setString(1, username);
+					
+					resultSet = stmt.executeQuery();
+					
+					if(!resultSet.next())
+						return null;
+					
+					UserAccount user = new UserAccount();
+					user.setUserId(resultSet.getInt(1));
+					user.setUsername(username);
+					user.setPassword(resultSet.getString(2));
+					user.setEmail(resultSet.getString(3));
+					user.setName(resultSet.getString(4));
+					
+					return user;
 				} finally {
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}
