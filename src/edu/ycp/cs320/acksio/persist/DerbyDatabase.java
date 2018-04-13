@@ -340,7 +340,7 @@ public class DerbyDatabase implements IDatabase{
 					stmt.setBoolean(14, job.getSigned());
 					stmt.setBoolean(15, job.getApproved());
 					
-					return stmt.execute();
+					return 0 != stmt.executeUpdate();
 				} finally {
 					DBUtil.closeQuietly(stmt);
 				}
@@ -371,7 +371,7 @@ public class DerbyDatabase implements IDatabase{
 					stmt.setDouble(8, courier.getPayHistory());
 					stmt.setBoolean(9, courier.getAvailability());
 					
-					return stmt.execute();
+					return 0 != stmt.executeUpdate();
 				} finally {
 					DBUtil.closeQuietly(stmt);
 				}
@@ -395,7 +395,7 @@ public class DerbyDatabase implements IDatabase{
 					stmt.setString(2, dispatcher.getAddress());
 					stmt.setInt(3, dispatcher.getPhone());
 					
-					return stmt.execute();
+					return 0 != stmt.executeUpdate();
 				} finally {
 					DBUtil.closeQuietly(stmt);
 				}
@@ -420,7 +420,7 @@ public class DerbyDatabase implements IDatabase{
 					stmt.setString(3, user.getEmail());
 					stmt.setString(4, user.getName());
 					
-					return stmt.execute();
+					return 0 != stmt.executeUpdate();
 				} finally {
 					DBUtil.closeQuietly(stmt);
 				}
@@ -448,7 +448,7 @@ public class DerbyDatabase implements IDatabase{
 					stmt.setInt(6, vehicle.getYear());
 					stmt.setBoolean(7, vehicle.isActive());
 					
-					return stmt.execute();
+					return 0 != stmt.executeUpdate();
 				} finally {
 					DBUtil.closeQuietly(stmt);
 				}
@@ -464,14 +464,51 @@ public class DerbyDatabase implements IDatabase{
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 				
-				try {
-					//TODO: implement 
+				try {					
+					stmt = conn.prepareStatement(
+							  "update jobs "
+							+ "set courier_id = ?, "
+							+ "set dispatcher_id = ?, "
+							+ "set longitude = ?, "
+							+ "set latitude = ?, "
+							+ "set vehicle_type = ?, "
+							+ "set TSA_verified = ?, "
+							+ "set recipient_name = ?, "
+							+ "set recipient_phone = ?, "
+							+ "set distance = ?, "
+							+ "set paid = ?, "
+							+ "set pick_up = ?, "
+							+ "set drop_off = ?, "
+							+ "set time = ?, "
+							+ "set signed = ?, "
+							+ "set invoice_approved = ? "
+							+ "where job_id = ?");
+					//CourierID|DispatcherID|Long|Lat|VehicleType|TSA_Ver|RecipientName|
+					//RecipientPhone|DistanceMi|CourierPaid|
+					//PickUpTime|DropOffTime|ActualTime|Signed|Approved
+					
+					stmt.setInt(1, job.getCourierID());
+					stmt.setInt(2, job.getDispatcherID());
+					stmt.setDouble(3, job.getDestLong());
+					stmt.setDouble(4, job.getDestLat());
+					stmt.setString(5, job.getVehicleType().toString());
+					stmt.setBoolean(6, job.getTsaVerified());
+					stmt.setString(7, job.getRecipientName());
+					stmt.setLong(8, job.getRecipientPhone());
+					stmt.setInt(9, job.getDispatcherID());
+					stmt.setBoolean(10, job.getCourierPaid());
+					stmt.setInt(11, job.getPickUpTime());
+					stmt.setInt(12, job.getDropOffTime());
+					stmt.setInt(13, job.getActualTime());
+					stmt.setBoolean(14, job.getSigned());
+					stmt.setBoolean(15, job.getApproved());
+					stmt.setInt(16, job.getJobID());
+					
+					return 0 != stmt.executeUpdate();
 				} finally {
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}
@@ -485,13 +522,35 @@ public class DerbyDatabase implements IDatabase{
 				ResultSet resultSet = null;
 				
 				try {
-					//TODO: implement 
+					stmt = conn.prepareStatement(
+							  "update couriers "
+							+ "set user_id = ?, "
+							+ "set dispatcher_id = ?, "
+							+ "set TSA_verified = ?, "
+							+ "set longitude = ?, "
+							+ "set latitude = ?, "
+							+ "set balance = ?, "
+							+ "set pay_estimate = ?, "
+							+ "set pay_history = ?, "
+							+ "set availability = ?"
+							+ "where courier_id = ?");
+					
+					stmt.setInt(1, courier.getUserId());
+					stmt.setInt(2, courier.getDispatcherID());
+					stmt.setBoolean(3, courier.isTsaVerified());
+					stmt.setDouble(4, courier.getLongitude());
+					stmt.setDouble(5, courier.getLatitude());
+					stmt.setDouble(6, courier.getBalance());
+					stmt.setDouble(7, courier.getPayEstimate());
+					stmt.setDouble(8, courier.getPayHistory());
+					stmt.setBoolean(9, courier.getAvailability());
+					stmt.setInt(10, courier.getCourierID());
+					
+					return 0 != stmt.executeUpdate();
 				} finally {
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}
@@ -505,13 +564,23 @@ public class DerbyDatabase implements IDatabase{
 				ResultSet resultSet = null;
 				
 				try {
-					//TODO: implement 
+					stmt = conn.prepareStatement(
+							  "update dispatchers "
+							+ "set user_id = ?, "
+							+ "address = ?, "
+							+ "phone = ?"
+							+ "where dispatcher_id = ?");
+					
+					stmt.setInt(1, dispatcher.getUserId());
+					stmt.setString(2, dispatcher.getAddress());
+					stmt.setInt(3, dispatcher.getPhone());
+					stmt.setInt(4, dispatcher.getDispatcherID());
+					
+					return 0 != stmt.executeUpdate();
 				} finally {
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}
@@ -573,6 +642,8 @@ public class DerbyDatabase implements IDatabase{
 							+ "where job_id = ?");
 					
 					stmt.setInt(1, id);
+					
+					resultSet = stmt.executeQuery();
 					
 					if(!resultSet.next())
 						return null;
