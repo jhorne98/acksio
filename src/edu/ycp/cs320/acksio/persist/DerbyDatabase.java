@@ -462,7 +462,6 @@ public class DerbyDatabase implements IDatabase{
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
 				
 				try {					
 					stmt = conn.prepareStatement(
@@ -507,7 +506,6 @@ public class DerbyDatabase implements IDatabase{
 					return 0 != stmt.executeUpdate();
 				} finally {
 					DBUtil.closeQuietly(stmt);
-					DBUtil.closeQuietly(resultSet);
 				}
 			}
 		});
@@ -519,7 +517,6 @@ public class DerbyDatabase implements IDatabase{
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
 				
 				try {
 					stmt = conn.prepareStatement(
@@ -549,7 +546,6 @@ public class DerbyDatabase implements IDatabase{
 					return 0 != stmt.executeUpdate();
 				} finally {
 					DBUtil.closeQuietly(stmt);
-					DBUtil.closeQuietly(resultSet);
 				}
 			}
 		});
@@ -561,7 +557,6 @@ public class DerbyDatabase implements IDatabase{
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
 				
 				try {
 					stmt = conn.prepareStatement(
@@ -579,7 +574,6 @@ public class DerbyDatabase implements IDatabase{
 					return 0 != stmt.executeUpdate();
 				} finally {
 					DBUtil.closeQuietly(stmt);
-					DBUtil.closeQuietly(resultSet);
 				}
 			}
 		});
@@ -591,16 +585,26 @@ public class DerbyDatabase implements IDatabase{
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
 				
 				try {
-					//TODO: implement 
+					stmt = conn.prepareStatement(
+							  "update users "
+							+ "set username = ?, "
+							+ "set password = ?, "
+							+ "set email = ?, "
+							+ "set name = ?"
+							+ "where user_id = ?");
+					
+					stmt.setString(1, user.getUsername());
+					stmt.setString(2, user.getPassword());
+					stmt.setString(3, user.getEmail());
+					stmt.setString(4, user.getName());
+					stmt.setInt(5, user.getUserId());
+					
+					return 0 != stmt.executeUpdate();
 				} finally {
 					DBUtil.closeQuietly(stmt);
-					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}
@@ -611,16 +615,32 @@ public class DerbyDatabase implements IDatabase{
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
 				
 				try {
-					//TODO: implement 
+					stmt = conn.prepareStatement(
+							  "update vehicles "
+							+ "set courier_id = ?, "
+							+ "set vehicle_type = ?, "
+							+ "set plate = ?, "
+							+ "set make = ?, "
+							+ "set model = ?, "
+							+ "set year = ?, "
+							+ "set active = ? "
+							+ "where vehicle_id = ?");
+					
+					stmt.setInt(1, vehicle.getCourierID());
+					stmt.setString(2, vehicle.getType().toString());
+					stmt.setString(3, vehicle.getLicensePlate());
+					stmt.setString(4, vehicle.getMake());
+					stmt.setString(5, vehicle.getModel());
+					stmt.setInt(6, vehicle.getYear());
+					stmt.setBoolean(7, vehicle.isActive());
+					stmt.setInt(8, vehicle.getVehicleID());
+					
+					return 0 != stmt.executeUpdate();
 				} finally {
 					DBUtil.closeQuietly(stmt);
-					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}
