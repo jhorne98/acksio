@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.ycp.cs320.acksio.model.Courier;
@@ -869,13 +870,36 @@ public class DerbyDatabase implements IDatabase{
 				ResultSet resultSet = null;
 				
 				try {
-					//TODO: implement 
+					stmt = conn.prepareStatement(
+							  "select vehicle_id, vehicle_type, plate, make, model, year, active from vehicle"
+							+ "where courier_id = ?");
+					
+					stmt.setInt(1, id);
+					
+					resultSet = stmt.executeQuery();
+					
+					List<Vehicle> vehicles = new ArrayList<Vehicle>();
+					
+					while(resultSet.next()) {
+						Vehicle vehicle = new Vehicle();
+						
+						vehicle.setVehicleID(resultSet.getInt(1));
+						vehicle.setType(resultSet.getString(2));
+						vehicle.setLicensePlate(resultSet.getString(3));
+						vehicle.setMake(resultSet.getString(4));
+						vehicle.setModel(resultSet.getString(5));
+						vehicle.setYear(resultSet.getInt(6));
+						vehicle.setActive(resultSet.getBoolean(7));
+						vehicle.setCourierID(id);
+						
+						vehicles.add(vehicle);
+					}
+					
+					return vehicles;
 				} finally {
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}
@@ -889,13 +913,49 @@ public class DerbyDatabase implements IDatabase{
 				ResultSet resultSet = null;
 				
 				try {
-					//TODO: implement 
+					stmt = conn.prepareStatement(
+							"select "
+							+ "job_id, dispatcher_id, longitude, latitude, "
+							+ "vehicle_type, TSA_verified, "
+							+ "recipient_name, recipient_phone, distance, paid, "
+							+ "pick_up, drop_off, time, signed, invoice_approved "
+							+ "from jobs "
+							+ "where courier_id = ?");
+					
+					stmt.setInt(1, id);
+					
+					resultSet = stmt.executeQuery();
+					
+					List<Job> jobs = new ArrayList<Job>();
+					
+					while(resultSet.next()) {
+						Job job = new Job();
+						
+						job.setJobID(resultSet.getInt(1));
+						job.setDispatcherID(resultSet.getInt(2));
+						job.setDestLong(resultSet.getDouble(3));
+						job.setDestLat(resultSet.getDouble(4));
+						job.setVehicleType(resultSet.getString(5));
+						job.setTsaVerified(resultSet.getBoolean(6));
+						job.setRecipientName(resultSet.getString(7));
+						job.setRecipientPhone(resultSet.getLong(8));
+						job.setDistanceMi(resultSet.getDouble(9));
+						job.setCourierPaid(resultSet.getBoolean(10));
+						job.setPickUpTime(resultSet.getInt(11));
+						job.setDropOffTime(resultSet.getInt(12));
+						job.setActualTime(resultSet.getInt(13));
+						job.setSigned(resultSet.getBoolean(14));
+						job.setApproved(resultSet.getBoolean(15));
+						job.setCourierID(id);
+						
+						jobs.add(job);
+					}
+					
+					return jobs;
 				} finally {
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}
@@ -909,13 +969,49 @@ public class DerbyDatabase implements IDatabase{
 				ResultSet resultSet = null;
 				
 				try {
-					//TODO: implement 
+					stmt = conn.prepareStatement(
+							"select "
+							+ "job_id, courier_id, longitude, latitude, "
+							+ "vehicle_type, TSA_verified, "
+							+ "recipient_name, recipient_phone, distance, paid, "
+							+ "pick_up, drop_off, time, signed, invoice_approved "
+							+ "from jobs "
+							+ "where dispatcher_id = ?");
+					
+					stmt.setInt(1, id);
+					
+					resultSet = stmt.executeQuery();
+					
+					List<Job> jobs = new ArrayList<Job>();
+					
+					while(resultSet.next()) {
+						Job job = new Job();
+						
+						job.setJobID(resultSet.getInt(1));
+						job.setCourierID(resultSet.getInt(2));
+						job.setDestLong(resultSet.getDouble(3));
+						job.setDestLat(resultSet.getDouble(4));
+						job.setVehicleType(resultSet.getString(5));
+						job.setTsaVerified(resultSet.getBoolean(6));
+						job.setRecipientName(resultSet.getString(7));
+						job.setRecipientPhone(resultSet.getLong(8));
+						job.setDistanceMi(resultSet.getDouble(9));
+						job.setCourierPaid(resultSet.getBoolean(10));
+						job.setPickUpTime(resultSet.getInt(11));
+						job.setDropOffTime(resultSet.getInt(12));
+						job.setActualTime(resultSet.getInt(13));
+						job.setSigned(resultSet.getBoolean(14));
+						job.setApproved(resultSet.getBoolean(15));
+						job.setDispatcherID(id);
+						
+						jobs.add(job);
+					}
+					
+					return jobs;
 				} finally {
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}
@@ -929,13 +1025,45 @@ public class DerbyDatabase implements IDatabase{
 				ResultSet resultSet = null;
 				
 				try {
-					//TODO: implement 
+					stmt = conn.prepareStatement("select "
+							+ "couriers.courier_id, couriers.TSA_verified, couriers.longitude, couriers.latitude, "
+							+ "couriers.balance, couriers.pay_estimate, couriers.pay_history, couriers.availability, "
+							+ "users.username, users.password, users.email, users.name, users.user_id from couriers, users "
+							+ "where couriers.user_id = users.user_id and couriers.dispatcher_id = ?");
+					
+					stmt.setInt(1, id);
+					
+					List<Courier> couriers = new ArrayList<Courier>();
+					
+					resultSet = stmt.executeQuery();
+					
+					while(resultSet.next()) {
+						Courier courier = new Courier();
+						
+						courier.setCourierID(resultSet.getInt(1));
+						courier.setTsaVerified(resultSet.getBoolean(2));
+						courier.setLongitude(resultSet.getDouble(3));
+						courier.setLatitude(resultSet.getDouble(4));
+						courier.setBalance(resultSet.getDouble(5));
+						courier.setPayEstimate(resultSet.getDouble(6));
+						courier.setPayHistory(resultSet.getDouble(7));
+						courier.setAvailability(resultSet.getBoolean(8));
+						courier.setUsername(resultSet.getString(9));
+						courier.setPassword(resultSet.getString(10));
+						courier.setEmail(resultSet.getString(11));
+						courier.setName(resultSet.getString(12));
+						courier.setUserId(resultSet.getInt(13));
+						
+						courier.setDispatcherID(id);
+						
+						couriers.add(courier);
+					}
+					
+					return couriers;
 				} finally {
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet);
 				}
-				
-				return null;
 			}
 		});
 	}
