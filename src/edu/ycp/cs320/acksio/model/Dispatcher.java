@@ -12,25 +12,22 @@ public class Dispatcher extends UserAccount{
 	private String address;
 	private int phone;
 	private double distance;
+	public String name; 
 	
-<<<<<<< HEAD
+/*
 	public Dispatcher() {
 		
-	}
+	}*/
 	
-	public Dispatcher(String vehicleType, Boolean tsaCert, String address, String name, int phone, double distance) {
-=======
-	public Dispatcher(VehicleType vehicleType, Boolean tsaCert, String address, int phone) {
->>>>>>> refs/remotes/origin/master
+	public Dispatcher(VehicleType vehicleType, Boolean tsaCert, String address, String name, int phone, double distance) {
+
 		this.vehicleType = vehicleType;
 		this.tsaCert = tsaCert;
 		this.address = address;
 		this.phone = phone;
-<<<<<<< HEAD
-		this.name = name; 
+		//this.name = name; 
 		this.distance = distance;
-=======
->>>>>>> refs/remotes/origin/master
+
 	}
 	
 	public Dispatcher() {
@@ -54,7 +51,6 @@ public class Dispatcher extends UserAccount{
 	}
 	public void Queue() {
 		//TODO: Implement
-<<<<<<< HEAD
 		testJob = new Job();
 		testJob.setActualTime(10); //Fixed number for testing
 		testJob.setCourierPaid(tsaCert);
@@ -64,13 +60,13 @@ public class Dispatcher extends UserAccount{
 		testJob.setPayActualForJob(10); //Fixed number for testing
 		testJob.setPayEstimateForJob(10);//Fixed number for testing
 		testJob.setPickUpTime(10); //Fixed number for testing
-		testJob.setRecipentName(name);
-		testJob.setRecipentPhone(phone);
+		testJob.setRecipientName("John Doe");
+		testJob.setRecipientPhone(phone);
 		testJob.setTsaVerified(tsaCert);
 		testJob.setVehicleType(vehicleType);
-=======
+
 		Job testJob = new Job("118 oak drive", vehicleType.CAR, true, "Don Hake", 7175555555L, 64.9, 53.7, 53.7, 1430, 1730);
->>>>>>> refs/remotes/origin/master
+
 	}
   
 	public Boolean getTsaCert() {

@@ -11,19 +11,12 @@ public class Job implements DataController{
 	private String destinationAddress;
 	private VehicleType vehicleType;
 	private Boolean tsaVerified;
-<<<<<<< HEAD
-	private String recipentName;
-	private int recipentPhone;
-	private double distanceMi;
-	private int payEstimateForJob;
-	private int payActualForJob;
-=======
+
 	private String recipientName;
 	private long recipientPhone;
 	private double distanceMi;
 	private double payEstimateForJob;
 	private double payActualForJob;
->>>>>>> refs/remotes/origin/master
 	private Boolean courierPaid;
 	private int pickUpTime;
 	private int dropOffTime;
@@ -96,13 +89,10 @@ public class Job implements DataController{
 	public void setRecipientPhone (long recipientPhone) {
 		this.recipientPhone = recipientPhone;
 	}
-<<<<<<< HEAD
-	public void setDistanceMi (double distance) {
-		this.distanceMi = distance;
-=======
+
 	public void setDistanceMi (double distanceMi) {
 		this.distanceMi = distanceMi;
->>>>>>> refs/remotes/origin/master
+
 	}
 	public void setPayEstimateForJob (int pay) {
 		this.payEstimateForJob = pay;

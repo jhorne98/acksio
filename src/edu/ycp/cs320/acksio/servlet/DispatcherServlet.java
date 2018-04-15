@@ -39,11 +39,10 @@ public class DispatcherServlet extends HttpServlet {
 			System.out.println(typeValues[i]);
 		}
 		
-<<<<<<< HEAD
-		Dispatcher model = new Dispatcher(req.getParameter("vehicleType"), true, req.getParameter("address"), req.getParameter("name"), getIntFromParameter(req.getParameter("phone")), getDoubleFromParameter(req.getParameter("distance")));
-=======
-		Dispatcher model = new Dispatcher(true, req.getParameter("address"), req.getParameter("name"), getIntFromParameter(req.getParameter("phone")));
->>>>>>> refs/remotes/origin/master
+
+		Dispatcher model = new Dispatcher();
+		//Dispatcher model = new Dispatcher(true, req.getParameter("address"), req.getParameter("name"), getIntFromParameter(req.getParameter("phone")) , getDoubleFromParameter(req.getParameter("distance")));
+				
 		
 		// Add parameters as request attributes
 		req.setAttribute("model", model);
