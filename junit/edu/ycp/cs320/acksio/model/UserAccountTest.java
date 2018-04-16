@@ -31,27 +31,33 @@ public class UserAccountTest {
 		assertEquals(model.getValidity(), false);
 	}
 	
+	@Test
 	public void testLogout() {
 		
 	}
 	
+	@Test
 	public void testVerifyLogin() {
 		
 	}
 	
+	@Test
 	public void testEdit() {
 		
 	}
 	
+	@Test
 	public void testAddVehicle() {
     
 	}
 	
+	@Test
 	public void testSetUserId() {
 		model.setUserId(1);
 		assertEquals(model.getUserId(), 1);
 	}
 	
+	@Test
 	public void testLogin() {
 		// TODO: generate a new user and use testLogin() on it: requires creation of createUser() or similar for db
 		model.setUsername("joel");
@@ -66,5 +72,18 @@ public class UserAccountTest {
 		model.login();
 		
 		assertEquals(model.getValidity(), false);
+	}
+	
+	@Test
+	public void testSignup() {
+		model.setUsername("john");
+		model.setPassword("pass");
+		model.setEmail("sample@ycp.edu");
+		model.setAccountType("courier");
+		
+		assertEquals(model.signup(), 0);
+		assertEquals(model.getValidity(), true);
+		
+		model.remove(8);
 	}
 }

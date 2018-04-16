@@ -117,6 +117,13 @@ public class UserAccount implements DataController{
 			provider.getInstance().insert(this);
 	}
 	
+	// remove user from users table by user_id
+	public int remove(int id) {
+		DerbyDatabase db = new DerbyDatabase();
+		
+		return db.removeEntry("user", id);
+	}
+	
 	public void logout() {
 		isValid = false; 
 	}
@@ -150,4 +157,6 @@ public class UserAccount implements DataController{
 		
 		return signupFlag;
 	}
+	
+	
 }

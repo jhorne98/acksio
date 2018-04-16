@@ -8,8 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import edu.ycp.cs320.acksio.model.*;
 //import edu.ycp.cs320.acksio.controller.DataController;
-import edu.ycp.cs320.acksio.model.UserAccount;
+//import edu.ycp.cs320.acksio.model.UserAccount;
 import edu.ycp.cs320.acksio.persist.PersistenceException;
 import edu.ycp.cs320.acksio.persist.DerbyDatabase;
 import edu.ycp.cs320.acksio.persist.InitialData;
@@ -41,6 +42,40 @@ public class DerbyDatabase {
 		
 	}
 	
+	public Integer removeEntry(String table, int id) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement removeStmt = null;
+				ResultSet removedSet = null;
+				Integer removed;
+				
+				String prepTablePlural = table.concat("s");
+				
+				try {
+					removeStmt = conn.prepareStatement(
+						"delete"
+						+ "	from " + prepTablePlural
+						+ "	where " + table + "_id=?"
+					);
+					
+					//removeStmt.setString(1, prepTablePlural);
+					//removeStmt.setString(2, table);
+					//removeStmt.setString(2, table);
+					removeStmt.setInt(1, id);
+					
+					removed = removeStmt.executeUpdate();
+					
+					return removed;
+					
+				} finally {
+					DBUtil.closeQuietly(removedSet);
+					DBUtil.closeQuietly(removeStmt);
+				}
+			}
+		});
+	}
+	
 	// pull users from database to verify that correct username and corresponding password has been input
 	public Boolean verifyLogin(String username, String password) {
 		return executeTransaction(new Transaction<Boolean>() {
@@ -59,7 +94,7 @@ public class DerbyDatabase {
 					
 					stmt.setString(1, username);
 					stmt.setString(2, password);
-					
+
 					resultSet = stmt.executeQuery();
 
 					//System.out.println(resultSet.getRow());
@@ -99,10 +134,10 @@ public class DerbyDatabase {
 					// determine if input credentials already exist in the database
 					checkUser = conn.prepareStatement(
 						"select *"
-							+ "	from users"
-							+ "	where users.username=?"
-							+ "		or users.password=?"
-							+ "		or users.email=?"
+						+ "	from users"
+						+ "	where users.username=?"
+						+ "		or users.password=?"
+						+ "		or users.email=?"
 					);
 					
 					checkUser.setString(1, username);
@@ -208,11 +243,12 @@ public class DerbyDatabase {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
-				PreparedStatement stmt1 = null;
+				PreparedStatement createUsers = null;
+				PreparedStatement createDispatchers = null;
 				//PreparedStatement stmt2 = null;
 				
 				try {
-					stmt1 = conn.prepareStatement(
+					createUsers = conn.prepareStatement(
 						"create table users (" +
 						"	user_id integer primary key " +
 						"		generated always as identity (start with 1, increment by 1), " +									
@@ -223,7 +259,18 @@ public class DerbyDatabase {
 						"	accounttype varchar(10)" +
 						")"
 					);	
-					stmt1.executeUpdate();
+					createUsers.executeUpdate();
+					
+					createDispatchers = conn.prepareStatement(
+						"create table dispatchers (" +
+						"	dispatcher_id integer primary key " +
+						"		generated always as identity (start with 1, increment by 1), " +
+						"	user_id integer," +
+						"	address varchar(70)," +
+						"	phone integer" +
+						")"
+					);
+					createDispatchers.executeUpdate();	
 					
 					/*
 					stmt2 = conn.prepareStatement(
@@ -241,7 +288,7 @@ public class DerbyDatabase {
 					
 					return true;
 				} finally {
-					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(createUsers);
 					//DBUtil.closeQuietly(stmt2);
 				}
 			}
@@ -254,16 +301,19 @@ public class DerbyDatabase {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
 				List<UserAccount> userList;
+				List<Dispatcher> dispatcherList;
 				//List<Book> bookList;
 				
 				try {
 					userList = InitialData.getUsers();
+					dispatcherList = InitialData.getDispatchers();
 					//bookList = InitialData.getBooks();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
 
 				PreparedStatement insertUser = null;
+				PreparedStatement insertDispatcher = null;
 				//PreparedStatement insertBook   = null;
 
 				try {
@@ -279,6 +329,15 @@ public class DerbyDatabase {
 						insertUser.addBatch();
 					}
 					insertUser.executeBatch();
+					
+					insertDispatcher = conn.prepareStatement("insert into dispatchers (user_id, address, phone) values (?, ?, ?)");
+					for(Dispatcher dispatcher : dispatcherList) {
+						insertDispatcher.setInt(1, dispatcher.getUserId());
+						insertDispatcher.setString(2, dispatcher.getAddress());
+						insertDispatcher.setInt(3, dispatcher.getPhone());
+						insertDispatcher.addBatch();
+					}
+					insertDispatcher.executeBatch();
 					
 					/*
 					// populate books table (do this after authors table,
