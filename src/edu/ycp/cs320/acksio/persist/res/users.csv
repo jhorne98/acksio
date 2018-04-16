@@ -1,2 +1,8 @@
 joel|password|jhorne@ycp.edu|joel
 other|pwd|email@gmail.com|notJoel
+testUser1|testPass1|test@gmail.com|testDispatcher1
+testUser2|testPass2|test0@gmail.com|testDispatcher2
+testUser3|testPass3|test1@gmail.com|testCourier1
+testUser4|testPass4|test2@gmail.com|testCourier2
+testUser5|testPass5|test3@gmail.com|testCourier3
+testUser6|testPass6|test4@gmail.com|testCourier4
