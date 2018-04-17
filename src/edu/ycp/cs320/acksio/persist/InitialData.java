@@ -188,8 +188,8 @@ public class InitialData {
 				vehicle.setLicensePlate(i.next());//LicensePlate
 				vehicle.setMake(i.next());//Make
 				vehicle.setModel(i.next());//Model
-				vehicle.setYear(Integer.parseInt(i.next()));//Year
-				vehicle.setActive(Boolean.parseBoolean(i.next()));//Active
+				vehicle.setYear(Integer.parseInt(i.next()));
+				vehicle.setActive(Boolean.parseBoolean(i.next()));
 				//Therefor, the data is presented in the csv as
 				//CourierID|Type|Plate|Make|Model|Year|Active
 				

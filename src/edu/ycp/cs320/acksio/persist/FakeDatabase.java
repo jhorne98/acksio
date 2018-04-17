@@ -29,6 +29,10 @@ public class FakeDatabase implements IDatabase{
 		readInitialData();
 		
 		System.out.println(userList.size() + " users");
+		System.out.println(courierList.size() + " couriers");
+		System.out.println(dispatcherList.size() + " dispatchers");
+		System.out.println(jobList.size() + " jobs");
+		System.out.println(vehicleList.size() + " vehicles");
 	}
 	
 	public void readInitialData() {
@@ -152,18 +156,18 @@ public class FakeDatabase implements IDatabase{
 
 	@Override
 	public Courier courierFromID(int id) {
-		int i = 0;
-		while(i < courierList.size() && courierList.get(i).getCourierID() != id) {
-			return courierList.get(i);
+		for(int i = 0; i < courierList.size(); i++) {
+			if(courierList.get(i).getCourierID() == id)
+				return courierList.get(i);
 		}
 		return null;
 	}
 
 	@Override
 	public Dispatcher dispatcherFromID(int id) {
-		int i = 0;
-		while(i < dispatcherList.size() && dispatcherList.get(i).getDispatcherID() != id) {
-			return dispatcherList.get(i);
+		for(int i = 0; i < dispatcherList.size(); i++) {
+			if(dispatcherList.get(i).getDispatcherID() == id)
+				return dispatcherList.get(i);
 		}
 		return null;
 	}
