@@ -245,6 +245,9 @@ public class DerbyDatabase {
 			public Boolean execute(Connection conn) throws SQLException {
 				PreparedStatement createUsers = null;
 				PreparedStatement createDispatchers = null;
+				PreparedStatement createCouriers = null;
+				PreparedStatement createJobs = null;
+				PreparedStatement createVehicles = null;
 				//PreparedStatement stmt2 = null;
 				
 				try {
@@ -272,6 +275,23 @@ public class DerbyDatabase {
 					);
 					createDispatchers.executeUpdate();	
 					
+					createCouriers = conn.prepareStatement(
+						"create table couriers (" +
+						"	courier_id integer primary key " +
+						"		generated always as identity (start with 1, increment by 1), " +
+						"	user_id integer, " +
+						"	dispatcher_id integer, " +
+						"	tsa_verified smallint, " +
+						"	long float, " +
+						"	lat float, " +
+						"	balance float, " +
+						"	pay_estimate float, " +
+						"	pay_history float, " +
+						"	availability smallint" +
+						")"
+					);
+					createCouriers.executeUpdate();
+					
 					/*
 					stmt2 = conn.prepareStatement(
 							"create table books (" +
@@ -289,6 +309,8 @@ public class DerbyDatabase {
 					return true;
 				} finally {
 					DBUtil.closeQuietly(createUsers);
+					DBUtil.closeQuietly(createDispatchers);
+					DBUtil.closeQuietly(createCouriers);
 					//DBUtil.closeQuietly(stmt2);
 				}
 			}
@@ -302,11 +324,13 @@ public class DerbyDatabase {
 			public Boolean execute(Connection conn) throws SQLException {
 				List<UserAccount> userList;
 				List<Dispatcher> dispatcherList;
+				List<Courier> courierList;
 				//List<Book> bookList;
 				
 				try {
 					userList = InitialData.getUsers();
 					dispatcherList = InitialData.getDispatchers();
+					courierList = InitialData.getCouriers();
 					//bookList = InitialData.getBooks();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
@@ -314,6 +338,7 @@ public class DerbyDatabase {
 
 				PreparedStatement insertUser = null;
 				PreparedStatement insertDispatcher = null;
+				PreparedStatement insertCourier = null;
 				//PreparedStatement insertBook   = null;
 
 				try {
@@ -338,6 +363,21 @@ public class DerbyDatabase {
 						insertDispatcher.addBatch();
 					}
 					insertDispatcher.executeBatch();
+					
+					insertCourier = conn.prepareStatement("insert into couriers (user_id, dispatcher_id, tsa_verified, long, lat, balance, pay_estimate, pay_history, availability) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					for(Courier courier : courierList) {
+						insertCourier.setInt(1, courier.getUserId());
+						insertCourier.setInt(2, courier.getDispatcherID());
+						insertCourier.setBoolean(3, courier.getAvailability());
+						insertCourier.setDouble(4, courier.getLongitude());
+						insertCourier.setDouble(5, courier.getLatitude());
+						insertCourier.setDouble(6, courier.getBalance());
+						insertCourier.setDouble(7, courier.getPayEstimate());
+						insertCourier.setDouble(8, courier.getPayHistory());
+						insertCourier.setBoolean(9, courier.getAvailability());
+						insertCourier.addBatch();
+					}
+					insertCourier.executeBatch();
 					
 					/*
 					// populate books table (do this after authors table,
