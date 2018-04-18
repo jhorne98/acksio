@@ -5,7 +5,7 @@ import java.util.List;
 
 import edu.ycp.cs320.acksio.persist.DatabaseProvider;
 import edu.ycp.cs320.acksio.persist.DerbyDatabase;
-import javafx.util.Pair;
+//import javafx.util.Pair;
 
 public class Courier extends UserAccount{
 	
@@ -200,9 +200,13 @@ public class Courier extends UserAccount{
 		this.latitude = latitude;
 	}
 	
-	public Pair<Double, Double> getLocation(){
-		return new Pair<Double, Double>(latitude, longitude);
+	/*
+	// just call getLatitude and getLongitude
+	public Pair getLocation(){
+		Pair ret = new Pair(latitude, longitude);
+		return ret;
 	}
+	*/
 	
 	public int getCourierID() {
 		return courierID;

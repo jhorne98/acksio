@@ -23,6 +23,12 @@ public interface IDatabase {
 	public Boolean update(UserAccount user);
 	public Boolean update(Vehicle vehicle);
 	
+	public Boolean remove(Job job, int id);
+	public Boolean remove(Courier courier, int id);
+	public Boolean remove(Dispatcher dispatcher, int id);
+	public Boolean remove(UserAccount user, int id);
+	public Boolean remove(Vehicle vehicle, int id);
+	
 	public Job jobFromID(int id);
 	public Courier courierFromID(int id);
 	public Dispatcher dispatcherFromID(int id);

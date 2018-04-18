@@ -51,12 +51,14 @@ public class SignupServlet extends HttpServlet {
 		String errorMessage = null;
 		
 		// create the UserAccount model for form input
-		UserAccount model = new UserAccount(req.getParameter("username"), req.getParameter("password"), req.getParameter("email"));
+		UserAccount model = new UserAccount(req.getParameter("username"), req.getParameter("password"), req.getParameter("email"), req.getParameter("accountType"));
 		
-		System.out.println("Try: " + model.getUsername() + " " + model.getPassword() + " " + model.getEmail());
+		//System.out.println(req.getParameter("accountType"));
+		
+		System.out.println("Try: " + model.getUsername() + " " + model.getPassword() + " " + model.getEmail() + " " + model.getAccountType());
 		
 		try {
-			if(model.getEmail().isEmpty() || model.getUsername().isEmpty() || model.getPassword().isEmpty()) {
+			if(model.getEmail().isEmpty() || model.getUsername().isEmpty() || model.getPassword().isEmpty() || model.getAccountType() == null) {
 				errorMessage = "One or more fields are blank";
 			} else {
 			
@@ -65,7 +67,7 @@ public class SignupServlet extends HttpServlet {
 				
 				if(signupFlag == 0) {
 					errorMessage = "Successful account creation!";
-					System.out.println("Account created: " + model.getUsername() + " " + model.getPassword() + " " + model.getEmail());
+					System.out.println("Account created: " + model.getUsername() + " " + model.getPassword() + " " + model.getEmail() + " " + model.getAccountType());
 				} else if(signupFlag == 1) {
 					errorMessage = "Username is already taken.";
 				} else if(signupFlag == 2) {

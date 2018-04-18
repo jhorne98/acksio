@@ -258,4 +258,34 @@ public class FakeDatabase implements IDatabase{
 				return user;
 		return null;
 	}
+
+	@Override
+	public Boolean remove(Job job, int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean remove(Courier courier, int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean remove(Dispatcher dispatcher, int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean remove(UserAccount user, int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean remove(Vehicle vehicle, int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

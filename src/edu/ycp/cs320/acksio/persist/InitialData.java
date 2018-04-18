@@ -10,6 +10,7 @@ import edu.ycp.cs320.acksio.model.Dispatcher;
 import edu.ycp.cs320.acksio.model.Job;
 import edu.ycp.cs320.acksio.model.UserAccount;
 import edu.ycp.cs320.acksio.model.Vehicle;
+import edu.ycp.cs320.acksio.model.VehicleType;
 import edu.ycp.cs320.acksio.persist.ReadCSV;
 
 public class InitialData {
@@ -26,11 +27,15 @@ public class InitialData {
 				}
 				Iterator<String> i = tuple.iterator();
 				UserAccount user = new UserAccount();
+				//System.out.println("User... " + userId);
 				user.setUserId(userId++);				
 				user.setUsername(i.next());
 				user.setPassword(i.next());
 				user.setEmail(i.next());
 				user.setName(i.next());
+				//System.out.println(i.hasNext());
+				user.setAccountType(i.next());
+				//System.out.println(i.hasNext());
 				userList.add(user);
 				//Therefor, the data in the csv is presented as
 				//username|password|email|name
@@ -135,6 +140,7 @@ public class InitialData {
 		try {
 			// auto-generated primary key for authors table
 			Integer jobId = 1;
+			System.out.println(VehicleType.CAR.toString());
 			while (true) {
 				List<String> tuple = readJobs.next();
 				if (tuple == null) {
@@ -147,7 +153,7 @@ public class InitialData {
 				job.setDispatcherID(Integer.parseInt(i.next()));
 				job.setDestLong(Double.parseDouble(i.next()));
 				job.setDestLat(Double.parseDouble(i.next()));
-				job.setVehicleType(i.next());//VehicleType
+				job.setVehicleType(i.next().toUpperCase());//VehicleType
 				job.setTsaVerified(Boolean.parseBoolean(i.next()));
 				job.setRecipientName(i.next());
 				job.setRecipientPhone(Long.parseLong(i.next()));

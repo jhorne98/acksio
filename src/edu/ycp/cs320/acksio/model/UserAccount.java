@@ -3,7 +3,7 @@ package edu.ycp.cs320.acksio.model;
 import edu.ycp.cs320.acksio.controller.DataController;
 //import edu.ycp.cs320.acksio.persist.DatabaseProvider;
 import edu.ycp.cs320.acksio.persist.*;
-import java.sql.*;
+//import java.sql.*;
 
 public class UserAccount implements DataController{
 	private String username;
@@ -26,10 +26,11 @@ public class UserAccount implements DataController{
 		//save();
 	}
 	
-	public UserAccount(String username, String password, String email) {
+	public UserAccount(String username, String password, String email, String accountType) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.accountType = accountType;
 		isValid = false;
 		//save();
 	}
@@ -39,6 +40,7 @@ public class UserAccount implements DataController{
 		populate(id);
 	}
 
+	// getters and setters
 	public int getUserId() {
 		return userId;
 	}
@@ -79,7 +81,6 @@ public class UserAccount implements DataController{
 		this.name = name;
 	}
 	
-	
 	public String getEmail() {
 		return email;
 	}
@@ -92,16 +93,16 @@ public class UserAccount implements DataController{
 		return accountType;
 	}
 	
-	public void setAccountType(String accountType) {
-		this.accountType = accountType;
-	}
-	
 	public void setAccountType() {
 		DerbyDatabase db = new DerbyDatabase();
 		if(db.dispatcherFromUsername(username) != null)
 			accountType = "dispatcher";
 		else
 			accountType = "courier";
+	}
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
 	}
 
 	@Override
@@ -144,6 +145,13 @@ public class UserAccount implements DataController{
 			db.insert(this);
 	}
 	
+	// remove user from users table by user_id
+	public int remove(int id) {
+		DerbyDatabase db = new DerbyDatabase();
+		
+		return db.removeEntry("user", id);
+	}
+	
 	public void logout() {
 		isValid = false; 
 	}
@@ -169,7 +177,7 @@ public class UserAccount implements DataController{
 	public int signup() {
 		DerbyDatabase db = new DerbyDatabase();
 		
-		int signupFlag = db.createAccount(username, password, email);
+		int signupFlag = db.createAccount(username, password, email, accountType);
 		
 		if(signupFlag == 0) {
 			isValid = true;
@@ -177,4 +185,6 @@ public class UserAccount implements DataController{
 		
 		return signupFlag;
 	}
+	
+	
 }

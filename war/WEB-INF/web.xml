@@ -5,10 +5,10 @@
          version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee">
 
-  <!-- Servlets --><servlet>
+  <!-- Servlets --><!--<servlet>
   	<servlet-name>MultiplyNumbersServlet</servlet-name>
   	<servlet-class>edu.ycp.cs320.acksio.servlet.MultiplyNumbersServlet</servlet-class>
-</servlet>
+  </servlet>
 	<servlet>
     <servlet-name>IndexLab02Servlet</servlet-name>
     <servlet-class>edu.ycp.cs320.acksio.servlet.IndexLab02Servlet</servlet-class>
@@ -20,7 +20,7 @@
   <servlet>
     <servlet-name>GuessingGameServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.acksio.servlet.GuessingGameServlet</servlet-class>
-  </servlet>
+  </servlet>-->
   <servlet>
     <servlet-name>DispatcherServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.acksio.servlet.DispatcherServlet</servlet-class>
@@ -34,7 +34,7 @@
     <servlet-class>edu.ycp.cs320.acksio.servlet.SignupServlet</servlet-class>
   </servlet>
 
-  <!-- Servlet mappings -->
+  <!-- Servlet mappings --><!--
   <servlet-mapping>
     <servlet-name>IndexLab02Servlet</servlet-name>
     <url-pattern>/indexLab02</url-pattern>
@@ -50,7 +50,7 @@
   <servlet-mapping>
     <servlet-name>GuessingGameServlet</servlet-name>
     <url-pattern>/guessingGame</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping>-->
   <servlet-mapping>
     <servlet-name>DispatcherServlet</servlet-name>
     <url-pattern>/dispatcher</url-pattern>

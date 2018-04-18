@@ -30,7 +30,7 @@
 			<form action="${pageContext.servletContext.contextPath}/signup" method="post">
 
 				Enter an Email Address:<br>
-				<input type="text" name=email value="${model.email}">
+				<input type="text" name="email" value="${model.email}">
 				<br>
 
 				Enter a User Name:<br>
@@ -39,7 +39,11 @@
 
 				Enter a Password:<br>
 				<input type="password" name="password" value="${model.password}">
-				<br><br>
+				<br>
+				
+				Account Type:<br>
+				<input type="radio" name="accountType" value="courier"> Courier<br>
+				<input type="radio" name="accountType" value="dispatcher"> Dispatcher<br><br>
 				
 				<input type="submit" name="submit" value="Create Account">
 			</form>

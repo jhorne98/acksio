@@ -9,8 +9,4 @@ public enum VehicleType {
 	PICKUP,
 	SPRINTER,
 	SEMI;
-	
-	public String toString() {
-		return null;
-	}
 }
