@@ -33,9 +33,9 @@ public class UserAccount implements DataController{
 		//save();
 	}
 	
-	public UserAccount(DatabaseProvider provider, int id) {
+	public UserAccount(int id) {
 		setUserId(id);
-		populate(provider, id);
+		populate(id);
 	}
 
 	public int getUserId() {
@@ -88,8 +88,9 @@ public class UserAccount implements DataController{
 	}
 
 	@Override
-	public void populate(DatabaseProvider provider, int id) {
-		UserAccount hold = provider.getInstance().userAccountFromID(id);
+	public void populate(int id) {
+		DerbyDatabase db = new DerbyDatabase();
+		UserAccount hold = db.userAccountFromID(id);
 		if(hold != null) {
 			setName(hold.getName());
 			setEmail(hold.getEmail());
@@ -102,9 +103,10 @@ public class UserAccount implements DataController{
 	}
 
 	@Override
-	public void save(DatabaseProvider provider) {
-		if(!provider.getInstance().update(this)) 
-			provider.getInstance().insert(this);
+	public void save() {
+		DerbyDatabase db = new DerbyDatabase();
+		if(!db.update(this)) 
+			db.insert(this);
 	}
 	
 	public void logout() {

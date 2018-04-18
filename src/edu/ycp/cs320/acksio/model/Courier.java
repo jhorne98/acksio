@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ycp.cs320.acksio.persist.DatabaseProvider;
+import edu.ycp.cs320.acksio.persist.DerbyDatabase;
 import javafx.util.Pair;
 
 public class Courier extends UserAccount{
@@ -53,14 +54,15 @@ public class Courier extends UserAccount{
 	
 	public Courier(DatabaseProvider provider, int id) {
 		setCourierID(id);
-		populate(provider, id);
+		populate(id);
 	}
 
 		
 	//METHODS
 	@Override
-	public void populate(DatabaseProvider provider, int id) {
-		Courier hold = provider.getInstance().courierFromID(id);
+	public void populate(int id) {
+		DerbyDatabase db = new DerbyDatabase();
+		Courier hold = db.courierFromID(id);
 		if(hold != null) {
 			setUserId(hold.getUserId());
 			setDispatcherID(hold.getDispatcherID());
@@ -81,9 +83,10 @@ public class Courier extends UserAccount{
 	}
 
 	@Override
-	public void save(DatabaseProvider provider) {
-		if(!provider.getInstance().update(this)) 
-			provider.getInstance().insert(this);
+	public void save() {
+		DerbyDatabase db = new DerbyDatabase();
+		if(!db.update(this)) 
+			db.insert(this);
 	}
 	
 	public Boolean acceptJob(Job job) {
@@ -108,8 +111,9 @@ public class Courier extends UserAccount{
 		
 	}
 	
-	public double calculateTotalPayment(DatabaseProvider provider) {
-		return calculateTotalPayment(provider.getInstance().jobsFromCourierID(courierID));
+	public double calculateTotalPayment() {
+		DerbyDatabase db = new DerbyDatabase();
+		return calculateTotalPayment(db.jobsFromCourierID(courierID));
 	}
 	
 	public double calculateTotalPayment(List<Job> jobs) {

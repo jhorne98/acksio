@@ -2,6 +2,7 @@ package edu.ycp.cs320.acksio.model;
 
 import edu.ycp.cs320.acksio.controller.DataController;
 import edu.ycp.cs320.acksio.persist.DatabaseProvider;
+import edu.ycp.cs320.acksio.persist.DerbyDatabase;
 
 public class Vehicle implements DataController{
 	//ATTRIBUTES
@@ -19,15 +20,16 @@ public class Vehicle implements DataController{
 		//Purposefully empty
 	}
 	
-	public Vehicle(DatabaseProvider provider, int id) {
+	public Vehicle(int id) {
 		setVehicleID(id);
-		populate(provider, id);
+		populate(id);
 	}
 	
 	//METHODS
 	@Override
-	public void populate(DatabaseProvider provider, int id) {
-		Vehicle hold = provider.getInstance().vehicleFromID(id);
+	public void populate(int id) {
+		DerbyDatabase db = new DerbyDatabase();
+		Vehicle hold = db.vehicleFromID(id);
 		if(hold != null) {
 			setCourierID(hold.getCourierID());//CourierID
 			setType(hold.getType());
@@ -42,9 +44,10 @@ public class Vehicle implements DataController{
 	}
 
 	@Override
-	public void save(DatabaseProvider provider) {
-		if(!provider.getInstance().update(this)) 
-			provider.getInstance().insert(this);
+	public void save() {
+		DerbyDatabase db = new DerbyDatabase();
+		if(!db.update(this)) 
+			db.insert(this);
 	}
 	
 	//SETTERS AND GETTERS

@@ -2,6 +2,7 @@ package edu.ycp.cs320.acksio.model;
 
 import edu.ycp.cs320.acksio.controller.DataController;
 import edu.ycp.cs320.acksio.persist.DatabaseProvider;
+import edu.ycp.cs320.acksio.persist.DerbyDatabase;
 
 public class Job implements DataController{
 	
@@ -47,9 +48,9 @@ public class Job implements DataController{
 		//Purposefully empty
 	}
 	
-	public Job(DatabaseProvider provider, int id) {
+	public Job(int id) {
 		setJobID(id);
-		populate(provider, id);
+		populate(id);
 	}
 	
 	public void setDeststinationAddress (String address) {
@@ -212,8 +213,9 @@ public class Job implements DataController{
 	}
 	
 	@Override
-	public void populate(DatabaseProvider provider, int id) {
-		Job hold = provider.getInstance().jobFromID(id);
+	public void populate(int id) {
+		DerbyDatabase db = new DerbyDatabase();
+		Job hold = db.jobFromID(id);
 		if(hold != null) {
 			setCourierID(hold.getCourierID());
 			setDispatcherID(hold.getDispatcherID());
@@ -236,9 +238,10 @@ public class Job implements DataController{
 	}
 
 	@Override
-	public void save(DatabaseProvider provider) {
-		if(!provider.getInstance().update(this)) 
-			provider.getInstance().insert(this);
+	public void save() {
+		DerbyDatabase db = new DerbyDatabase();
+		if(!db.update(this)) 
+			db.insert(this);
 	}
 	
 	public void signOff() {

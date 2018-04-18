@@ -2,6 +2,7 @@
 package edu.ycp.cs320.acksio.model;
 
 import edu.ycp.cs320.acksio.persist.DatabaseProvider;
+import edu.ycp.cs320.acksio.persist.DerbyDatabase;
 
 public class Dispatcher extends UserAccount{
 	
@@ -23,9 +24,9 @@ public class Dispatcher extends UserAccount{
 		//Purposefully empty
 	}
 	
-	public Dispatcher(DatabaseProvider provider, int id) {
+	public Dispatcher(int id) {
 		setDispatcherID(id);
-		populate(provider, id);
+		populate(id);
 	}
 
 	public Dispatcher(boolean tsaCert, String address, String name, int phone) {
@@ -72,8 +73,9 @@ public class Dispatcher extends UserAccount{
 	}
 	
 	@Override
-	public void populate(DatabaseProvider provider, int id) {
-		Dispatcher hold = provider.getInstance().dispatcherFromID(id);
+	public void populate(int id) {
+		DerbyDatabase db = new DerbyDatabase();
+		Dispatcher hold = db.dispatcherFromID(id);
 		if(hold != null) {
 			setUserId(hold.getUserId());
 			setAddress(hold.getAddress());
@@ -88,9 +90,10 @@ public class Dispatcher extends UserAccount{
 	}
 
 	@Override
-	public void save(DatabaseProvider provider) {
-		if(!provider.getInstance().update(this)) 
-			provider.getInstance().insert(this);
+	public void save() {
+		DerbyDatabase db = new DerbyDatabase();
+		if(!db.update(this)) 
+			db.insert(this);
 	}
 
 	public int getDispatcherID() {
