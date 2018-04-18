@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Scanner;
 
 import edu.ycp.cs320.acksio.model.*;
 //import edu.ycp.cs320.acksio.controller.DataController;
@@ -292,6 +293,21 @@ public class DerbyDatabase {
 					);
 					createCouriers.executeUpdate();
 					
+					createVehicles = conn.prepareStatement(
+						"create table vehicles (" +
+						"	vehicle_id integer primary key " +
+						"		generated always as identity (start with 1, increment by 1), " +
+						"	courier_id integer, " +
+						"	type varchar(40), " +
+						"	licence_plate varchar(40), " +
+						"	make varchar(40), " +
+						"	model varchar(40), " +
+						"	model_year integer, " +
+						"	active smallint" +
+						")"
+					);
+					createVehicles.executeUpdate();
+					
 					/*
 					stmt2 = conn.prepareStatement(
 							"create table books (" +
@@ -311,10 +327,44 @@ public class DerbyDatabase {
 					DBUtil.closeQuietly(createUsers);
 					DBUtil.closeQuietly(createDispatchers);
 					DBUtil.closeQuietly(createCouriers);
+					DBUtil.closeQuietly(createVehicles);
 					//DBUtil.closeQuietly(stmt2);
 				}
 			}
 		});
+	}
+	
+	public Integer removeTables() {
+		Integer removed;
+		String[] tables = new String[]{"users", "couriers", "dispatchers", "vehicles"};
+		
+		removed = executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement drop = null;
+				//PreparedStatement dropCouriers = null;
+				//PreparedStatement dropDispatchers = null;
+				//PreparedStatement dropJobs = null;
+				//PreparedStatement dropVehicles = null;
+				int removedDrop = 0;
+				
+				try {
+					for(String table : tables) {
+						drop = conn.prepareStatement(
+							"drop table " + table
+						);
+						
+						removedDrop += drop.executeUpdate();
+					}
+				} finally {
+					DBUtil.closeQuietly(drop);
+				}
+				
+				return removedDrop;
+			}
+		});
+		
+		return removed;
 	}
 	
 	// used to input all data into derby tables
@@ -325,12 +375,16 @@ public class DerbyDatabase {
 				List<UserAccount> userList;
 				List<Dispatcher> dispatcherList;
 				List<Courier> courierList;
+				List<Job> jobList;
+				List<Vehicle> vehicleList;
 				//List<Book> bookList;
 				
 				try {
 					userList = InitialData.getUsers();
 					dispatcherList = InitialData.getDispatchers();
 					courierList = InitialData.getCouriers();
+					//jobList = InitialData.getJobs();
+					vehicleList = InitialData.getVehicles();
 					//bookList = InitialData.getBooks();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
@@ -339,6 +393,8 @@ public class DerbyDatabase {
 				PreparedStatement insertUser = null;
 				PreparedStatement insertDispatcher = null;
 				PreparedStatement insertCourier = null;
+				PreparedStatement insertJob = null;
+				PreparedStatement insertVehicle = null;
 				//PreparedStatement insertBook   = null;
 
 				try {
@@ -379,6 +435,20 @@ public class DerbyDatabase {
 					}
 					insertCourier.executeBatch();
 					
+					
+					insertVehicle = conn.prepareStatement("insert into vehicles (courier_id, type, licence_plate, make, model, model_year, active) values (?, ?, ?, ?, ?, ?, ?)");
+					for(Vehicle vehicle : vehicleList) {
+						insertVehicle.setInt(1, vehicle.getCourierID());
+						insertVehicle.setString(2, vehicle.getType().toString());
+						insertVehicle.setString(3, vehicle.getLicensePlate());
+						insertVehicle.setString(4, vehicle.getMake());
+						insertVehicle.setString(5, vehicle.getModel());
+						insertVehicle.setInt(6, vehicle.getYear());
+						insertVehicle.setBoolean(7, vehicle.isActive());
+						insertVehicle.addBatch();
+					}
+					insertVehicle.executeBatch();
+					
 					/*
 					// populate books table (do this after authors table,
 					// since author_id must exist in authors table before inserting book)
@@ -405,14 +475,27 @@ public class DerbyDatabase {
 	
 	// The main method creates the database tables and loads the initial data.
 	public static void main(String[] args) throws IOException {
-		System.out.println("Creating tables...");
+		Scanner keyboard = new Scanner(System.in);
+		
+		// select if creating or destroying db
+		System.out.println("1: Create and Populate DB Tables, 2: Drop all Tables: ");
+		int dbChoice = keyboard.nextInt();
+		
 		DerbyDatabase db = new DerbyDatabase();
-		// TODO: fix createTables() to check if dbs already in schema
-		db.createTables();
 		
-		System.out.println("Loading initial data...");
-		db.loadInitialData();
-		
-		System.out.println("Success!");
+		if(dbChoice == 1) {
+			System.out.println("Creating tables...");
+			db.createTables();
+			
+			System.out.println("Loading initial data...");
+			db.loadInitialData();
+			
+			System.out.println("Success!");
+		} else if(dbChoice == 2) {
+			System.out.println("Removing tables...");
+			System.out.println(db.removeTables());
+			
+			System.out.println("Success!");
+		}
 	}
 }
