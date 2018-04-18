@@ -1,5 +1,7 @@
 package edu.ycp.cs320.acksio.model;
 
+import java.util.List;
+
 import edu.ycp.cs320.acksio.controller.DataController;
 import edu.ycp.cs320.acksio.persist.DatabaseProvider;
 import edu.ycp.cs320.acksio.persist.DerbyDatabase;

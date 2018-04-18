@@ -12,6 +12,7 @@ public class UserAccount implements DataController{
 	private Boolean isValid;
 	private String name;
 	private String email;
+	private String accountType;
 	
 	public UserAccount() {
 		//Purposefully empty
@@ -86,16 +87,50 @@ public class UserAccount implements DataController{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getAccountType() {
+		return accountType;
+	}
+	
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
+	
+	public void setAccountType() {
+		DerbyDatabase db = new DerbyDatabase();
+		if(db.dispatcherFromUsername(username) != null)
+			accountType = "dispatcher";
+		else
+			accountType = "courier";
+	}
 
 	@Override
 	public void populate(int id) {
 		DerbyDatabase db = new DerbyDatabase();
 		UserAccount hold = db.userAccountFromID(id);
 		if(hold != null) {
+			setUserId(hold.getUserId());
 			setName(hold.getName());
 			setEmail(hold.getEmail());
 			setUsername(hold.getUsername());
 			setPassword(hold.getPassword());
+			setAccountType();
+			login();
+		} else {
+			throw new NullPointerException();
+		}
+	}
+	
+	public void populate(String username) {
+		DerbyDatabase db = new DerbyDatabase();
+		UserAccount hold = db.userAccountFromUsername(username);
+		if(hold != null) {
+			setUserId(hold.getUserId());
+			setName(hold.getName());
+			setEmail(hold.getEmail());
+			setUsername(hold.getUsername());
+			setPassword(hold.getPassword());
+			setAccountType();
 			login();
 		} else {
 			throw new NullPointerException();

@@ -1,6 +1,8 @@
 
 package edu.ycp.cs320.acksio.model;
 
+import java.util.List;
+
 import edu.ycp.cs320.acksio.persist.DatabaseProvider;
 import edu.ycp.cs320.acksio.persist.DerbyDatabase;
 
@@ -12,6 +14,8 @@ public class Dispatcher extends UserAccount{
 	private Job testJob; //will go to database when implemented 
 	private String address;
 	private int phone;
+	private List<Job> jobs;
+	private List<Courier> couriers;
 	
 	public Dispatcher(VehicleType vehicleType, Boolean tsaCert, String address, int phone) {
 		this.vehicleType = vehicleType;
@@ -72,11 +76,38 @@ public class Dispatcher extends UserAccount{
 		this.phone = phone;
 	}
 	
+	public List<Job> getJobs(){
+		return jobs;
+	}
+	
+	public void setJobs(List<Job> jobs) {
+		this.jobs = jobs;
+	}
+	
+	public void setJobs() {
+		DerbyDatabase db = new DerbyDatabase();
+		jobs = db.jobsFromDispatcherID(dispatcherID);
+	}
+	
+	public List<Courier> getCouriers(){
+		return couriers;
+	}
+	
+	public void setCouriers(List<Courier> couriers) {
+		this.couriers = couriers;
+	}
+	
+	public void setCouriers() {
+		DerbyDatabase db = new DerbyDatabase();
+		couriers = db.couriersFromDispatcherID(dispatcherID);
+	}
+	
 	@Override
 	public void populate(int id) {
 		DerbyDatabase db = new DerbyDatabase();
 		Dispatcher hold = db.dispatcherFromID(id);
 		if(hold != null) {
+			setDispatcherID(hold.getDispatcherID());
 			setUserId(hold.getUserId());
 			setAddress(hold.getAddress());
 			setPhone(hold.getPhone());
@@ -84,6 +115,29 @@ public class Dispatcher extends UserAccount{
 			setEmail(hold.getEmail());
 			setUsername(hold.getUsername());
 			setPassword(hold.getPassword());
+			setAccountType();
+			setJobs();
+			setCouriers();
+		} else {
+			throw new NullPointerException();
+		}
+	}
+	
+	public void populate(String username) {
+		DerbyDatabase db = new DerbyDatabase();
+		Dispatcher hold = db.dispatcherFromUsername(username);
+		if(hold != null) {
+			setDispatcherID(hold.getDispatcherID());
+			setUserId(hold.getUserId());
+			setAddress(hold.getAddress());
+			setPhone(hold.getPhone());
+			setName(hold.getName());
+			setEmail(hold.getEmail());
+			setUsername(hold.getUsername());
+			setPassword(hold.getPassword());
+			setAccountType();
+			setJobs();
+			setCouriers();
 		} else {
 			throw new NullPointerException();
 		}

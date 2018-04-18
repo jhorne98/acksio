@@ -24,6 +24,7 @@ public class Courier extends UserAccount{
 	private double latitude;
 	private double longitude;
 	List<Vehicle> vehicles;
+	List<Job> jobs;
 
 	/* 
 	public Courier(int driverNumber, String name, boolean availability, 
@@ -65,6 +66,7 @@ public class Courier extends UserAccount{
 		Courier hold = db.courierFromID(id);
 		if(hold != null) {
 			setUserId(hold.getUserId());
+			setCourierID(hold.getCourierID());
 			setDispatcherID(hold.getDispatcherID());
 			setTsaVerified(hold.isTsaVerified());
 			setLongitude(hold.getLongitude());
@@ -77,6 +79,35 @@ public class Courier extends UserAccount{
 			setEmail(hold.getEmail());
 			setUsername(hold.getUsername());
 			setPassword(hold.getPassword());
+			setAccountType();
+			setJobs();
+			setVehicles();
+		} else {
+			throw new NullPointerException();
+		}
+	}
+	
+	public void populate(String username) {
+		DerbyDatabase db = new DerbyDatabase();
+		Courier hold = db.courierFromUsername(username);
+		if(hold != null) {
+			setUserId(hold.getUserId());
+			setCourierID(hold.getCourierID());
+			setDispatcherID(hold.getDispatcherID());
+			setTsaVerified(hold.isTsaVerified());
+			setLongitude(hold.getLongitude());
+			setLatitude(hold.getLatitude());
+			setBalance(hold.getBalance());
+			setPayEstimate(hold.getPayEstimate());
+			setPayHistory(hold.getPayHistory());
+			setAvailability(hold.getAvailability());
+			setName(hold.getName());
+			setEmail(hold.getEmail());
+			setUsername(hold.getUsername());
+			setPassword(hold.getPassword());
+			setAccountType();
+			setJobs();
+			setVehicles();
 		} else {
 			throw new NullPointerException();
 		}
@@ -125,6 +156,24 @@ public class Courier extends UserAccount{
 	}
 
 	//SETTERS AND GETTERS
+	
+	public List<Job> getJobs(){
+		return jobs;
+	}
+	
+	public void setJobs(List<Job> jobs) {
+		this.jobs = jobs;
+	}
+	
+	public void setJobs() {
+		DerbyDatabase db = new DerbyDatabase();
+		jobs = db.jobsFromCourierID(courierID);
+	}
+	
+	public void setVehicles() {
+		DerbyDatabase db = new DerbyDatabase();
+		vehicles = db.vehiclesFromCourierID(courierID);
+	}
 	
 	public void addVehicle(Vehicle vehicle) {
 		vehicles.add(vehicle);
