@@ -357,11 +357,11 @@ public class DerbyDatabase {
 		});
 	}
 	
-	public Integer removeTables() {
-		Integer removed;
-		String[] tables = new String[]{"users", "couriers", "dispatchers", "vehicles"};
+	public void removeTables() {
+		//Integer removed;
+		String[] tables = new String[]{"users", "couriers", "dispatchers", "jobs", "vehicles"};
 		
-		removed = executeTransaction(new Transaction<Integer>() {
+		executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
 				PreparedStatement drop = null;
@@ -369,7 +369,7 @@ public class DerbyDatabase {
 				//PreparedStatement dropDispatchers = null;
 				//PreparedStatement dropJobs = null;
 				//PreparedStatement dropVehicles = null;
-				int removedDrop = 0;
+				//int removedDrop = 0;
 				
 				try {
 					for(String table : tables) {
@@ -377,17 +377,17 @@ public class DerbyDatabase {
 							"drop table " + table
 						);
 						
-						removedDrop += drop.executeUpdate();
+						drop.executeUpdate();
 					}
 				} finally {
 					DBUtil.closeQuietly(drop);
 				}
 				
-				return removedDrop;
+				return 0;
 			}
 		});
 		
-		return removed;
+		//return removed;
 	}
 	
 	// used to input all data into derby tables
@@ -536,7 +536,7 @@ public class DerbyDatabase {
 			System.out.println("Success!");
 		} else if(dbChoice == 2) {
 			System.out.println("Removing tables...");
-			System.out.println(db.removeTables());
+			db.removeTables();
 			
 			System.out.println("Success!");
 		}
