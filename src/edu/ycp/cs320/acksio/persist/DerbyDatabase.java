@@ -352,7 +352,7 @@ public class DerbyDatabase implements IDatabase{
 	
 	public Integer removeTables() {
 		Integer removed;
-		String[] tables = new String[]{"users", "couriers", "dispatchers", "vehicles"};
+		String[] tables = new String[]{"users", "couriers", "dispatchers", "vehicles", "jobs"};
 		
 		removed = executeTransaction(new Transaction<Integer>() {
 			@Override
