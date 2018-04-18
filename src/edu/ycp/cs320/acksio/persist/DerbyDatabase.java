@@ -293,6 +293,29 @@ public class DerbyDatabase {
 					);
 					createCouriers.executeUpdate();
 					
+					createJobs = conn.prepareStatement(
+						"create table jobs (" +
+						"	job_id integer primary key " +
+						"		generated always as identity (start with 1, increment by 1), " +
+						"	courier_id integer, " +
+						"	dispatcher_id integer, " +
+						"	destination_lat float, " +
+						"	destination_long float, " +
+						"	vehicle_type varchar(40), " +
+						"	tsa_verified smallint, " +
+						"	recipient_name varchar(40), " +
+						"	recipient_phone bigint, " +
+						"	distance_mi float, " +
+						"	courier_paid smallint, " +
+						"	pickup_time integer, " +
+						"	dropoff_time integer, " +
+						"	actual_time integer, " +
+						"	signed smallint, " +
+						"	invoice_approved smallint " +
+						")"
+					);
+					createJobs.executeUpdate();
+					
 					createVehicles = conn.prepareStatement(
 						"create table vehicles (" +
 						"	vehicle_id integer primary key " +
@@ -307,7 +330,7 @@ public class DerbyDatabase {
 						")"
 					);
 					createVehicles.executeUpdate();
-					
+
 					/*
 					stmt2 = conn.prepareStatement(
 							"create table books (" +
@@ -383,7 +406,7 @@ public class DerbyDatabase {
 					userList = InitialData.getUsers();
 					dispatcherList = InitialData.getDispatchers();
 					courierList = InitialData.getCouriers();
-					//jobList = InitialData.getJobs();
+					jobList = InitialData.getJobs();
 					vehicleList = InitialData.getVehicles();
 					//bookList = InitialData.getBooks();
 				} catch (IOException e) {
@@ -435,6 +458,26 @@ public class DerbyDatabase {
 					}
 					insertCourier.executeBatch();
 					
+					insertJob = conn.prepareStatement("insert into jobs (courier_id, dispatcher_id, destination_lat, destination_long, vehicle_type, tsa_verified, recipient_name, recipient_phone, distance_mi, courier_paid, pickup_time, dropoff_time, actual_time, signed, invoice_approved) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					for(Job job : jobList) {
+						insertJob.setInt(1, job.getCourierID());
+						insertJob.setInt(2, job.getDispatcherID());
+						insertJob.setDouble(3, job.getDestLat());
+						insertJob.setDouble(4, job.getDestLong());
+						insertJob.setString(5, job.getVehicleType().toString());
+						insertJob.setBoolean(6, job.getTsaVerified());
+						insertJob.setString(7, job.getRecipientName());
+						insertJob.setLong(8, job.getRecipientPhone());
+						insertJob.setDouble(9, job.getDistanceMi());
+						insertJob.setBoolean(10, job.getCourierPaid());
+						insertJob.setInt(11, job.getPickUpTime());
+						insertJob.setInt(12, job.getDropOffTime());
+						insertJob.setInt(13, job.getActualTime());
+						insertJob.setBoolean(14, job.getSigned());
+						insertJob.setBoolean(15, job.getApproved());
+						insertJob.addBatch();
+					}
+					insertJob.executeBatch();
 					
 					insertVehicle = conn.prepareStatement("insert into vehicles (courier_id, type, licence_plate, make, model, model_year, active) values (?, ?, ?, ?, ?, ?, ?)");
 					for(Vehicle vehicle : vehicleList) {
