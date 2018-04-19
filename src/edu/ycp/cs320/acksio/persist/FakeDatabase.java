@@ -261,31 +261,61 @@ public class FakeDatabase implements IDatabase{
 
 	@Override
 	public Boolean remove(Job job, int id) {
-		// TODO Auto-generated method stub
-		return null;
+		int i = 0;
+		while(i < jobList.size() && !(jobList.get(i).getJobID() == job.getJobID()))
+			i++;
+		if(jobList.get(i).getJobID() == job.getJobID()) {
+			jobList.remove(i);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public Boolean remove(Courier courier, int id) {
-		// TODO Auto-generated method stub
-		return null;
+		int i = 0;
+		while(i < courierList.size() && !(courierList.get(i).getCourierID() == courier.getCourierID()))
+			i++;
+		if(courierList.get(i).getCourierID() == courier.getCourierID()) {
+			courierList.remove(i);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public Boolean remove(Dispatcher dispatcher, int id) {
-		// TODO Auto-generated method stub
-		return null;
+		int i = 0;
+		while(i < dispatcherList.size() && !(dispatcherList.get(i).getDispatcherID() == dispatcher.getDispatcherID()))
+			i++;
+		if(dispatcherList.get(i).getDispatcherID() == dispatcher.getDispatcherID()) {
+			dispatcherList.remove(i);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public Boolean remove(UserAccount user, int id) {
-		// TODO Auto-generated method stub
-		return null;
+		int i = 0;
+		while(i < userList.size() && !(userList.get(i).getUserId() == user.getUserId()))
+			i++;
+		if(userList.get(i).getUserId() == user.getUserId()) {
+			userList.remove(i);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public Boolean remove(Vehicle vehicle, int id) {
-		// TODO Auto-generated method stub
-		return null;
+		int i = 0;
+		while(i < vehicleList.size() && !(vehicleList.get(i).getVehicleID() == vehicle.getVehicleID()))
+			i++;
+		if(vehicleList.get(i).getVehicleID() == vehicle.getVehicleID()) {
+			vehicleList.remove(i);
+			return true;
+		}
+		return false;
 	}
 }

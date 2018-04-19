@@ -50,7 +50,7 @@ public class Vehicle implements DataController{
 			db.insert(this);
 	}
 	
-	//SETTERS AND GETTERS
+	//SETTERS AND GETTERS	
 	public String getLicensePlate() {
 		return licensePlate;
 	}

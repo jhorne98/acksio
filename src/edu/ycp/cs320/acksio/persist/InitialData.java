@@ -38,7 +38,7 @@ public class InitialData {
 				//System.out.println(i.hasNext());
 				userList.add(user);
 				//Therefor, the data in the csv is presented as
-				//username|password|email|name
+				//username|password|email|name|accountType
 			}
 			return userList;
 		} finally {
