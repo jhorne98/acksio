@@ -6,6 +6,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.*;
+import java.io.*;
+
 
 import edu.ycp.cs320.acksio.model.Dispatcher;
 import edu.ycp.cs320.acksio.model.UserAccount;
@@ -13,7 +16,7 @@ import edu.ycp.cs320.acksio.model.UserAccount;
 // servlet based on Lab02 servlets
 public class DispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -30,6 +33,17 @@ public class DispatcherServlet extends HttpServlet {
 		
 		System.out.println("Dispatcher Servlet: doPost");
 
+		
+
+		// Opens url for Google Maps API in order to be used with Javascript
+		URL googleMapsAPI = new URL("https://maps.google.com/maps/api/js?sensor=false");
+		URLConnection yc = googleMapsAPI.openConnection();
+		BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+		String inputLine;
+		while ((inputLine = in.readLine()) != null) 
+			System.out.println(inputLine);
+		in.close();
+		
 		// holds the error message text, if there is any
 		String errorMessage = null;
 		
@@ -71,4 +85,6 @@ public class DispatcherServlet extends HttpServlet {
 			return Double.parseDouble(s);
 		}
 	}
+	
+	
 }
