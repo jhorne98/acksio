@@ -30,7 +30,9 @@ public class InitialData {
 				//System.out.println("User... " + userId);
 				user.setUserId(userId++);				
 				user.setUsername(i.next());
+				//System.out.println("User... " + user.getUsername());
 				user.setPassword(i.next());
+				//System.out.println("User... " + user.getPassword());
 				user.setEmail(i.next());
 				user.setName(i.next());
 				//System.out.println(i.hasNext());
@@ -140,7 +142,7 @@ public class InitialData {
 		try {
 			// auto-generated primary key for authors table
 			Integer jobId = 1;
-			System.out.println(VehicleType.CAR.toString());
+			//System.out.println(VehicleType.CAR.toString());
 			while (true) {
 				List<String> tuple = readJobs.next();
 				if (tuple == null) {

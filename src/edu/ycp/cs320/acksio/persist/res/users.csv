@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 joel|password|jhorne@ycp.edu|joel|courier
 other|pwd|email@gmail.com|other|courier
 testUser1|testPass1|test@gmail.com|testDispatcher1|dispatcher
@@ -9,8 +8,3 @@ testUser5|testPass5|test3@gmail.com|testCourier3|courier
 testUser6|testPass6|test4@gmail.com|testCourier4|courier
 testUser7|testPass7|test5@gmail.com|testDispatcher3|dispatcher
 testUser8|testPass8|test8@gmail.com|testCourier5|courier
-=======
-joel|password|jhorne@ycp.edu|joel|courier
-other|pwd|email@gmail.com|other|courier
-dispatcher|pw|dispatch@acksio.com|dee|dispatcher
->>>>>>> branch 'alaska' of git@github.com:jhorne98/acksio.git
