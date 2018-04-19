@@ -1,5 +1,7 @@
 package edu.ycp.cs320.acksio.model;
 
+import edu.ycp.cs320.acksio.persist.DerbyDatabase;
+
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -7,17 +9,21 @@ import org.junit.Test;
 
 public class UserAccountTest {
 	private UserAccount model;
+	private DerbyDatabase db;
 	
 	@Before
 	public void setUp() {
 		model = new UserAccount("username", "password");
+		db = new DerbyDatabase();
 	}
 	
+	/*
 	@Test 
 	public void testGets() {
 		assertEquals(model.getPassword(), "password");
 		assertEquals(model.getUsername(), "username");
 	}
+	*/
 	
 	@Test
 	public void testSets() {
@@ -29,6 +35,12 @@ public class UserAccountTest {
 		assertEquals(model.getUserId(), 1);
 		model.setValidity(false);
 		assertEquals(model.getValidity(), false);
+		model.setName("name");
+		assertEquals(model.getName(), "name");
+		model.setEmail("test@email.com");
+		assertEquals(model.getEmail(), "test@email.com");
+		model.setAccountType("courier");
+		assertEquals(model.getAccountType(), "courier");
 	}
 	
 	@Test
@@ -76,6 +88,8 @@ public class UserAccountTest {
 	
 	@Test
 	public void testSignup() {
+		UserAccount signedInModel = new UserAccount();
+		
 		model.setUsername("john");
 		model.setPassword("pass");
 		model.setEmail("sample@ycp.edu");
@@ -84,6 +98,8 @@ public class UserAccountTest {
 		assertEquals(model.signup(), 0);
 		assertEquals(model.getValidity(), true);
 		
-		model.remove(8);
+		signedInModel = db.userAccountFromUsername("john");
+		
+		model.remove(signedInModel.getUserId());
 	}
 }

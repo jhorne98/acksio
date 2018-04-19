@@ -36,6 +36,14 @@ public class DerbyDatabase implements IDatabase{
 
 	private static final int MAX_ATTEMPTS = 10;
 	
+	public void populate(String id) {
+		
+	}
+	
+	public void save() {
+		
+	}
+	
 	public Integer removeEntry(String table, int id) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
@@ -1274,43 +1282,6 @@ public class DerbyDatabase implements IDatabase{
 	}
 
 	@Override
-	public UserAccount userAccountFromUsername(String username) {
-		return executeTransaction(new Transaction<UserAccount>() {
-			@Override
-			public UserAccount execute(Connection conn) throws SQLException {
-				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
-				
-				try {
-					stmt = conn.prepareStatement(
-							  "select user_id, password, email, name, accounttype from users "
-							+ "where username = ?");
-					
-					stmt.setString(1, username);
-					
-					resultSet = stmt.executeQuery();
-					
-					if(!resultSet.next())
-						return null;
-					
-					UserAccount user = new UserAccount();
-					user.setUserId(resultSet.getInt(1));
-					user.setUsername(username);
-					user.setPassword(resultSet.getString(2));
-					user.setEmail(resultSet.getString(3));
-					user.setName(resultSet.getString(4));
-					user.setAccountType(resultSet.getString(5));
-					
-					return user;
-				} finally {
-					DBUtil.closeQuietly(stmt);
-					DBUtil.closeQuietly(resultSet);
-				}
-			}
-		});
-	}
-
-	@Override
 	public Courier courierFromUsername(String username) {
 		return executeTransaction(new Transaction<Courier>() {
 			@Override
@@ -1484,6 +1455,93 @@ public class DerbyDatabase implements IDatabase{
 					return 0 != stmt.executeUpdate();
 				} finally {
 					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+
+	/*
+	// populate a Courier object with fields from db
+	public Courier courierFromUsername(String username) {
+		return executeTransaction(new Transaction<Courier>() {
+			@Override
+			public Courier execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement("select "
+							+ "users.user_id, couriers.dispatcher_id, couriers.TSA_verified, couriers.longitude, couriers.latitude, "
+							+ "couriers.balance, couriers.pay_estimate, couriers.pay_history, couriers.availability, "
+							+ "users.username, users.password, users.email, users.name, users.user_id from couriers, users "
+							+ "where couriers.user_id = users.user_id and users.username = ?");
+					
+					stmt.setString(1, username);
+					
+					resultSet = stmt.executeQuery();
+					
+					if(!resultSet.next())
+						return null;
+					
+					Courier courier = new Courier();
+					
+					courier.setCourierID(resultSet.getInt(1));
+					courier.setDispatcherID(resultSet.getInt(2));
+					courier.setTsaVerified(resultSet.getBoolean(3));
+					courier.setLongitude(resultSet.getDouble(4));
+					courier.setLatitude(resultSet.getDouble(5));
+					courier.setBalance(resultSet.getDouble(6));
+					courier.setPayEstimate(resultSet.getDouble(7));
+					courier.setPayHistory(resultSet.getDouble(8));
+					courier.setAvailability(resultSet.getBoolean(9));
+					courier.setUsername(resultSet.getString(10));
+					courier.setPassword(resultSet.getString(11));
+					courier.setEmail(resultSet.getString(12));
+					courier.setName(resultSet.getString(13));
+					courier.setUserId(resultSet.getInt(14));
+					
+					return courier;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
+	*/
+
+	@Override
+	public UserAccount userAccountFromUsername(String username) {
+		return executeTransaction(new Transaction<UserAccount>() {
+			@Override
+			public UserAccount execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							  "select user_id, password, email, name, accounttype from users "
+							+ "where username = ?");
+					
+					stmt.setString(1, username);
+					
+					resultSet = stmt.executeQuery();
+					
+					if(!resultSet.next())
+						return null;
+					
+					UserAccount user = new UserAccount();
+					user.setUserId(resultSet.getInt(1));
+					user.setUsername(username);
+					user.setPassword(resultSet.getString(2));
+					user.setEmail(resultSet.getString(3));
+					user.setName(resultSet.getString(4));
+					user.setAccountType(resultSet.getString(5));
+					
+					return user;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
 				}
 			}
 		});

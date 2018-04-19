@@ -49,8 +49,8 @@ public class Vehicle implements DataController{
 		if(!db.update(this)) 
 			db.insert(this);
 	}
-	
-	//SETTERS AND GETTERS	
+
+	//SETTERS AND GETTERS
 	public String getLicensePlate() {
 		return licensePlate;
 	}
@@ -91,7 +91,9 @@ public class Vehicle implements DataController{
 		this.type = type;
 	}
 	
-	public void setType (String vehicle) {
+	
+	public void setType(String vehicle) {
+		/*
 		if(vehicle.equals(VehicleType.BICYCLE.toString())) {
 			type = VehicleType.BICYCLE;
 		} else if(vehicle.equals(VehicleType.MOTORCYCLE.toString())) {
@@ -111,8 +113,13 @@ public class Vehicle implements DataController{
 		} else {
 			type = null;
 		}
+		*/
+		
+		vehicle = vehicle.toUpperCase();
+		
+		type = VehicleType.valueOf(vehicle);
 	}
-
+	
 	public boolean isActive() {
 		return active;
 	}

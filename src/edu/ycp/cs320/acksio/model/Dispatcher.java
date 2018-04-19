@@ -135,7 +135,7 @@ public class Dispatcher extends UserAccount{
 			setEmail(hold.getEmail());
 			setUsername(hold.getUsername());
 			setPassword(hold.getPassword());
-			setAccountType();
+			setAccountType(hold.getAccountType());
 			setJobs();
 			setCouriers();
 		} else {

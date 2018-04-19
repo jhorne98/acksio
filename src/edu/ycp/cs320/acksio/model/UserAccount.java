@@ -105,6 +105,7 @@ public class UserAccount implements DataController{
 		this.accountType = accountType;
 	}
 
+	
 	@Override
 	public void populate(int id) {
 		DerbyDatabase db = new DerbyDatabase();
@@ -115,7 +116,7 @@ public class UserAccount implements DataController{
 			setEmail(hold.getEmail());
 			setUsername(hold.getUsername());
 			setPassword(hold.getPassword());
-			setAccountType();
+			setAccountType(hold.getAccountType());
 			login();
 		} else {
 			throw new NullPointerException();
@@ -131,7 +132,7 @@ public class UserAccount implements DataController{
 			setEmail(hold.getEmail());
 			setUsername(hold.getUsername());
 			setPassword(hold.getPassword());
-			setAccountType();
+			setAccountType(hold.getAccountType());
 			login();
 		} else {
 			throw new NullPointerException();
@@ -168,10 +169,17 @@ public class UserAccount implements DataController{
 	*/
 	
 	// login() looks at users to determine if username exists and correct password has been input
-	public void login() {
+	public UserAccount login() {
 		DerbyDatabase db = new DerbyDatabase();
+		UserAccount user = new UserAccount();
 		
 		isValid = db.verifyLogin(username, password);
+		
+		if(isValid) {
+			user = db.userAccountFromUsername(username);
+		}
+		
+		return user;
 	}
 	
 	public int signup() {

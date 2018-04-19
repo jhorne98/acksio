@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 1|CAR|EFJHIG|Dodge|Dakota|2004|1
 1|SUV|IG88|Ford|Crown-Vic|2005|false
 2|SUV|Sold76|Honda|CR-V|2018|false
 3|SUV|WHAT|Russia|T-90|2004|false
 4|SUV|WHY555|Ford|Ranger|2011|false
 4|SUV|DOUBLE|TestMake|TestModel|2342|false
+=======
+1|car|EFJHIG|Dodge|Dakota|2004|1
+>>>>>>> branch 'alaska' of git@github.com:jhorne98/acksio.git
