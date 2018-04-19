@@ -35,9 +35,9 @@ public class UserAccount implements DataController{
 		//save();
 	}
 	
-	public UserAccount(DatabaseProvider provider, int id) {
+	public UserAccount(int id) {
 		setUserId(id);
-		populate(provider, id);
+		populate(id);
 	}
 
 	// getters and setters
@@ -97,14 +97,34 @@ public class UserAccount implements DataController{
 		this.accountType = accountType;
 	}
 
+	
 	@Override
-	public void populate(DatabaseProvider provider, int id) {
-		UserAccount hold = provider.getInstance().userAccountFromID(id);
+	public void populate(int id) {
+		DerbyDatabase db = new DerbyDatabase();
+		UserAccount hold = db.userAccountFromID(id);
 		if(hold != null) {
+			setUserId(hold.getUserId());
 			setName(hold.getName());
 			setEmail(hold.getEmail());
 			setUsername(hold.getUsername());
 			setPassword(hold.getPassword());
+			setAccountType(hold.getAccountType());
+			login();
+		} else {
+			throw new NullPointerException();
+		}
+	}
+	
+	public void populate(String username) {
+		DerbyDatabase db = new DerbyDatabase();
+		UserAccount hold = db.userAccountFromUsername(username);
+		if(hold != null) {
+			setUserId(hold.getUserId());
+			setName(hold.getName());
+			setEmail(hold.getEmail());
+			setUsername(hold.getUsername());
+			setPassword(hold.getPassword());
+			setAccountType(hold.getAccountType());
 			login();
 		} else {
 			throw new NullPointerException();
@@ -112,9 +132,10 @@ public class UserAccount implements DataController{
 	}
 
 	@Override
-	public void save(DatabaseProvider provider) {
-		if(!provider.getInstance().update(this)) 
-			provider.getInstance().insert(this);
+	public void save() {
+		DerbyDatabase db = new DerbyDatabase();
+		if(!db.update(this)) 
+			db.insert(this);
 	}
 	
 	// remove user from users table by user_id
@@ -140,10 +161,17 @@ public class UserAccount implements DataController{
 	*/
 	
 	// login() looks at users to determine if username exists and correct password has been input
-	public void login() {
+	public UserAccount login() {
 		DerbyDatabase db = new DerbyDatabase();
+		UserAccount user = new UserAccount();
 		
 		isValid = db.verifyLogin(username, password);
+		
+		if(isValid) {
+			user = db.userAccountFromUsername(username);
+		}
+		
+		return user;
 	}
 	
 	public int signup() {

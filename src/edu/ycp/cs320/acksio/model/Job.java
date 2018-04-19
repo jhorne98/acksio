@@ -1,7 +1,10 @@
 package edu.ycp.cs320.acksio.model;
 
+import java.util.List;
+
 import edu.ycp.cs320.acksio.controller.DataController;
 import edu.ycp.cs320.acksio.persist.DatabaseProvider;
+import edu.ycp.cs320.acksio.persist.DerbyDatabase;
 
 public class Job implements DataController{
 	
@@ -47,9 +50,9 @@ public class Job implements DataController{
 		//Purposefully empty
 	}
 	
-	public Job(DatabaseProvider provider, int id) {
+	public Job(int id) {
 		setJobID(id);
-		populate(provider, id);
+		populate(id);
 	}
 	
 	public void setDeststinationAddress (String address) {
@@ -59,21 +62,21 @@ public class Job implements DataController{
 		this.vehicleType = vehicle; 
 	}
 	public void setVehicleType (String vehicle) {
-		if(vehicle.equals("Bicycle")) {
+		if(vehicle.equals(VehicleType.BICYCLE.toString())) {
 			vehicleType = VehicleType.BICYCLE;
-		} else if(vehicle.equals("Motorcycle")) {
+		} else if(vehicle.equals(VehicleType.MOTORCYCLE.toString())) {
 			vehicleType = VehicleType.MOTORCYCLE;
-		} else if(vehicle.equals("Car")) {
+		} else if(vehicle.equals(VehicleType.CAR.toString())) {
 			vehicleType = VehicleType.CAR;
-		} else if(vehicle.equals("SUV")) {
+		} else if(vehicle.equals(VehicleType.SUV.toString())) {
 			vehicleType = VehicleType.SUV;
-		} else if(vehicle.equals("Van")) {
+		} else if(vehicle.equals(VehicleType.VAN.toString())) {
 			vehicleType = VehicleType.VAN;
-		} else if(vehicle.equals("Pickup")) {
+		} else if(vehicle.equals(VehicleType.PICKUP.toString())) {
 			vehicleType = VehicleType.PICKUP;
-		} else if(vehicle.equals("Sprinter")) {
+		} else if(vehicle.equals(VehicleType.SPRINTER.toString())) {
 			vehicleType = VehicleType.SPRINTER;
-		} else if(vehicle.equals("Semi")) {
+		} else if(vehicle.equals(VehicleType.SEMI.toString())) {
 			vehicleType = VehicleType.SEMI;
 		} else {
 			vehicleType = null;
@@ -212,8 +215,9 @@ public class Job implements DataController{
 	}
 	
 	@Override
-	public void populate(DatabaseProvider provider, int id) {
-		Job hold = provider.getInstance().jobFromID(id);
+	public void populate(int id) {
+		DerbyDatabase db = new DerbyDatabase();
+		Job hold = db.jobFromID(id);
 		if(hold != null) {
 			setCourierID(hold.getCourierID());
 			setDispatcherID(hold.getDispatcherID());
@@ -236,9 +240,10 @@ public class Job implements DataController{
 	}
 
 	@Override
-	public void save(DatabaseProvider provider) {
-		if(!provider.getInstance().update(this)) 
-			provider.getInstance().insert(this);
+	public void save() {
+		DerbyDatabase db = new DerbyDatabase();
+		if(!db.update(this)) 
+			db.insert(this);
 	}
 	
 	public void signOff() {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ycp.cs320.acksio.persist.DatabaseProvider;
+import edu.ycp.cs320.acksio.persist.DerbyDatabase;
 //import javafx.util.Pair;
 
 public class Courier extends UserAccount{
@@ -23,6 +24,7 @@ public class Courier extends UserAccount{
 	private double latitude;
 	private double longitude;
 	List<Vehicle> vehicles;
+	List<Job> jobs;
 
 	/* 
 	public Courier(int driverNumber, String name, boolean availability, 
@@ -53,16 +55,18 @@ public class Courier extends UserAccount{
 	
 	public Courier(DatabaseProvider provider, int id) {
 		setCourierID(id);
-		populate(provider, id);
+		populate(id);
 	}
 
 		
 	//METHODS
 	@Override
-	public void populate(DatabaseProvider provider, int id) {
-		Courier hold = provider.getInstance().courierFromID(id);
+	public void populate(int id) {
+		DerbyDatabase db = new DerbyDatabase();
+		Courier hold = db.courierFromID(id);
 		if(hold != null) {
 			setUserId(hold.getUserId());
+			setCourierID(hold.getCourierID());
 			setDispatcherID(hold.getDispatcherID());
 			setTsaVerified(hold.isTsaVerified());
 			setLongitude(hold.getLongitude());
@@ -75,15 +79,45 @@ public class Courier extends UserAccount{
 			setEmail(hold.getEmail());
 			setUsername(hold.getUsername());
 			setPassword(hold.getPassword());
+			setAccountType(hold.getAccountType());
+			setJobs();
+			setVehicles();
+		} else {
+			throw new NullPointerException();
+		}
+	}
+	
+	public void populate(String username) {
+		DerbyDatabase db = new DerbyDatabase();
+		Courier hold = db.courierFromUsername(username);
+		if(hold != null) {
+			setUserId(hold.getUserId());
+			setCourierID(hold.getCourierID());
+			setDispatcherID(hold.getDispatcherID());
+			setTsaVerified(hold.isTsaVerified());
+			setLongitude(hold.getLongitude());
+			setLatitude(hold.getLatitude());
+			setBalance(hold.getBalance());
+			setPayEstimate(hold.getPayEstimate());
+			setPayHistory(hold.getPayHistory());
+			setAvailability(hold.getAvailability());
+			setName(hold.getName());
+			setEmail(hold.getEmail());
+			setUsername(hold.getUsername());
+			setPassword(hold.getPassword());
+			setAccountType(hold.getAccountType());
+			setJobs();
+			setVehicles();
 		} else {
 			throw new NullPointerException();
 		}
 	}
 
 	@Override
-	public void save(DatabaseProvider provider) {
-		if(!provider.getInstance().update(this)) 
-			provider.getInstance().insert(this);
+	public void save() {
+		DerbyDatabase db = new DerbyDatabase();
+		if(!db.update(this)) 
+			db.insert(this);
 	}
 	
 	public Boolean acceptJob(Job job) {
@@ -108,8 +142,9 @@ public class Courier extends UserAccount{
 		
 	}
 	
-	public double calculateTotalPayment(DatabaseProvider provider) {
-		return calculateTotalPayment(provider.getInstance().jobsFromCourierID(courierID));
+	public double calculateTotalPayment() {
+		DerbyDatabase db = new DerbyDatabase();
+		return calculateTotalPayment(db.jobsFromCourierID(courierID));
 	}
 	
 	public double calculateTotalPayment(List<Job> jobs) {
@@ -121,6 +156,24 @@ public class Courier extends UserAccount{
 	}
 
 	//SETTERS AND GETTERS
+	
+	public List<Job> getJobs(){
+		return jobs;
+	}
+	
+	public void setJobs(List<Job> jobs) {
+		this.jobs = jobs;
+	}
+	
+	public void setJobs() {
+		DerbyDatabase db = new DerbyDatabase();
+		jobs = db.jobsFromCourierID(courierID);
+	}
+	
+	public void setVehicles() {
+		DerbyDatabase db = new DerbyDatabase();
+		vehicles = db.vehiclesFromCourierID(courierID);
+	}
 	
 	public void addVehicle(Vehicle vehicle) {
 		vehicles.add(vehicle);

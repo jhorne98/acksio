@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,7 +21,7 @@ import edu.ycp.cs320.acksio.sqldemo.DBUtil;
 
 // copied almost directly from lab06, and modified
 // credit for all copied code goes to djhake and others respectively
-public class DerbyDatabase {
+public class DerbyDatabase implements IDatabase {
 	static {
 		try {
 			Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
@@ -515,13 +516,979 @@ public class DerbyDatabase {
 			}
 		});
 	}
+
+	@Override
+	public Boolean insert(Job job) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							  "insert into jobs (courier_id, dispatcher_id, longitude, latitude, vehicle_type, TSA_verified, recipient_name, recipient_phone, distance, paid, pick_up, drop_off, time, signed, invoice_approved) "
+							+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+									// 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15
+					
+					//CourierID|DispatcherID|Long|Lat|VehicleType|TSA_Ver|RecipientName|
+					//RecipientPhone|DistanceMi|CourierPaid|
+					//PickUpTime|DropOffTime|ActualTime|Signed|Approved
+					
+					stmt.setInt(1, job.getCourierID());
+					stmt.setInt(2, job.getDispatcherID());
+					stmt.setDouble(3, job.getDestLong());
+					stmt.setDouble(4, job.getDestLat());
+					stmt.setString(5, job.getVehicleType().toString());
+					stmt.setBoolean(6, job.getTsaVerified());
+					stmt.setString(7, job.getRecipientName());
+					stmt.setLong(8, job.getRecipientPhone());
+					stmt.setInt(9, job.getDispatcherID());
+					stmt.setBoolean(10, job.getCourierPaid());
+					stmt.setInt(11, job.getPickUpTime());
+					stmt.setInt(12, job.getDropOffTime());
+					stmt.setInt(13, job.getActualTime());
+					stmt.setBoolean(14, job.getSigned());
+					stmt.setBoolean(15, job.getApproved());
+					
+					return 0 != stmt.executeUpdate();
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+
+	@Override
+	public Boolean insert(Courier courier) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							  "insert into couriers (user_id, dispatcher_id, TSA_verified, longitude, latitude, balance, pay_estimate, pay_history, availability) "
+							+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					//UserID|DispatcherID|TSA_Ver|Long|Lat|Balance|PayEstimate|PayHistory|Availability
+					
+					stmt.setInt(1, courier.getUserId());
+					stmt.setInt(2, courier.getDispatcherID());
+					stmt.setBoolean(3, courier.isTsaVerified());
+					stmt.setDouble(4, courier.getLongitude());
+					stmt.setDouble(5, courier.getLatitude());
+					stmt.setDouble(6, courier.getBalance());
+					stmt.setDouble(7, courier.getPayEstimate());
+					stmt.setDouble(8, courier.getPayHistory());
+					stmt.setBoolean(9, courier.getAvailability());
+					
+					return 0 != stmt.executeUpdate();
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+
+	@Override
+	public Boolean insert(Dispatcher dispatcher) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							  "insert into dispatchers (user_id, address, phone)"
+							+ "values (?, ?, ?)");
+					
+					stmt.setInt(1, dispatcher.getUserId());
+					stmt.setString(2, dispatcher.getAddress());
+					stmt.setInt(3, dispatcher.getPhone());
+					
+					return 0 != stmt.executeUpdate();
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+
+	@Override
+	public Boolean insert(UserAccount user) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							  "insert into users (username, password, email, name) "
+							+ "values (?, ?, ?, ?)");
+					
+					stmt.setString(1, user.getUsername());
+					stmt.setString(2, user.getPassword());
+					stmt.setString(3, user.getEmail());
+					stmt.setString(4, user.getName());
+					
+					return 0 != stmt.executeUpdate();
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+
+	@Override
+	public Boolean insert(Vehicle vehicle) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							  "insert into vehicles (courier_id, vehicle_type, plate, make, model, year, active)"
+							+ "values (?, ?, ?, ?, ?, ?, ?)");
+					
+					stmt.setInt(1, vehicle.getCourierID());
+					stmt.setString(2, vehicle.getType().toString());
+					stmt.setString(3, vehicle.getLicensePlate());
+					stmt.setString(4, vehicle.getMake());
+					stmt.setString(5, vehicle.getModel());
+					stmt.setInt(6, vehicle.getYear());
+					stmt.setBoolean(7, vehicle.isActive());
+					
+					return 0 != stmt.executeUpdate();
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+
+	@Override
+	public Boolean update(Job job) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {					
+					stmt = conn.prepareStatement(
+							  "update jobs "
+							+ "set courier_id = ?, "
+							+ "set dispatcher_id = ?, "
+							+ "set longitude = ?, "
+							+ "set latitude = ?, "
+							+ "set vehicle_type = ?, "
+							+ "set TSA_verified = ?, "
+							+ "set recipient_name = ?, "
+							+ "set recipient_phone = ?, "
+							+ "set distance = ?, "
+							+ "set paid = ?, "
+							+ "set pick_up = ?, "
+							+ "set drop_off = ?, "
+							+ "set time = ?, "
+							+ "set signed = ?, "
+							+ "set invoice_approved = ? "
+							+ "where job_id = ?");
+					//CourierID|DispatcherID|Long|Lat|VehicleType|TSA_Ver|RecipientName|
+					//RecipientPhone|DistanceMi|CourierPaid|
+					//PickUpTime|DropOffTime|ActualTime|Signed|Approved
+					
+					stmt.setInt(1, job.getCourierID());
+					stmt.setInt(2, job.getDispatcherID());
+					stmt.setDouble(3, job.getDestLong());
+					stmt.setDouble(4, job.getDestLat());
+					stmt.setString(5, job.getVehicleType().toString());
+					stmt.setBoolean(6, job.getTsaVerified());
+					stmt.setString(7, job.getRecipientName());
+					stmt.setLong(8, job.getRecipientPhone());
+					stmt.setInt(9, job.getDispatcherID());
+					stmt.setBoolean(10, job.getCourierPaid());
+					stmt.setInt(11, job.getPickUpTime());
+					stmt.setInt(12, job.getDropOffTime());
+					stmt.setInt(13, job.getActualTime());
+					stmt.setBoolean(14, job.getSigned());
+					stmt.setBoolean(15, job.getApproved());
+					stmt.setInt(16, job.getJobID());
+					
+					return 0 != stmt.executeUpdate();
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+
+	@Override
+	public Boolean update(Courier courier) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							  "update couriers "
+							+ "set user_id = ?, "
+							+ "set dispatcher_id = ?, "
+							+ "set TSA_verified = ?, "
+							+ "set longitude = ?, "
+							+ "set latitude = ?, "
+							+ "set balance = ?, "
+							+ "set pay_estimate = ?, "
+							+ "set pay_history = ?, "
+							+ "set availability = ?"
+							+ "where courier_id = ?");
+					
+					stmt.setInt(1, courier.getUserId());
+					stmt.setInt(2, courier.getDispatcherID());
+					stmt.setBoolean(3, courier.isTsaVerified());
+					stmt.setDouble(4, courier.getLongitude());
+					stmt.setDouble(5, courier.getLatitude());
+					stmt.setDouble(6, courier.getBalance());
+					stmt.setDouble(7, courier.getPayEstimate());
+					stmt.setDouble(8, courier.getPayHistory());
+					stmt.setBoolean(9, courier.getAvailability());
+					stmt.setInt(10, courier.getCourierID());
+					
+					return 0 != stmt.executeUpdate();
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+
+	@Override
+	public Boolean update(Dispatcher dispatcher) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							  "update dispatchers "
+							+ "set user_id = ?, "
+							+ "address = ?, "
+							+ "phone = ?"
+							+ "where dispatcher_id = ?");
+					
+					stmt.setInt(1, dispatcher.getUserId());
+					stmt.setString(2, dispatcher.getAddress());
+					stmt.setInt(3, dispatcher.getPhone());
+					stmt.setInt(4, dispatcher.getDispatcherID());
+					
+					return 0 != stmt.executeUpdate();
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+
+	@Override
+	public Boolean update(UserAccount user) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							  "update users "
+							+ "set username = ?, "
+							+ "set password = ?, "
+							+ "set email = ?, "
+							+ "set name = ?"
+							+ "where user_id = ?");
+					
+					stmt.setString(1, user.getUsername());
+					stmt.setString(2, user.getPassword());
+					stmt.setString(3, user.getEmail());
+					stmt.setString(4, user.getName());
+					stmt.setInt(5, user.getUserId());
+					
+					return 0 != stmt.executeUpdate();
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+
+	@Override
+	public Boolean update(Vehicle vehicle) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							  "update vehicles "
+							+ "set courier_id = ?, "
+							+ "set vehicle_type = ?, "
+							+ "set plate = ?, "
+							+ "set make = ?, "
+							+ "set model = ?, "
+							+ "set year = ?, "
+							+ "set active = ? "
+							+ "where vehicle_id = ?");
+					
+					stmt.setInt(1, vehicle.getCourierID());
+					stmt.setString(2, vehicle.getType().toString());
+					stmt.setString(3, vehicle.getLicensePlate());
+					stmt.setString(4, vehicle.getMake());
+					stmt.setString(5, vehicle.getModel());
+					stmt.setInt(6, vehicle.getYear());
+					stmt.setBoolean(7, vehicle.isActive());
+					stmt.setInt(8, vehicle.getVehicleID());
+					
+					return 0 != stmt.executeUpdate();
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+
+	@Override
+	public Job jobFromID(int id) {
+		return executeTransaction(new Transaction<Job>() {
+			@Override
+			public Job execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							  "select courier_id, dispatcher_id, longitude, latitude, "
+							+ "vehicle_type, TSA_verified, "
+							+ "recipient_name, recipient_phone, distance, paid, "
+							+ "pick_up, drop_off, time, signed, invoice_approved "
+							+ "where job_id = ?");
+					
+					stmt.setInt(1, id);
+					
+					resultSet = stmt.executeQuery();
+					
+					if(!resultSet.next())
+						return null;
+					
+					Job job = new Job();
+					
+					job.setJobID(id);
+					job.setCourierID(resultSet.getInt(1));
+					job.setDispatcherID(resultSet.getInt(2));
+					job.setDestLong(resultSet.getDouble(3));
+					job.setDestLat(resultSet.getDouble(4));
+					job.setVehicleType(resultSet.getString(5));
+					job.setTsaVerified(resultSet.getBoolean(6));
+					job.setRecipientName(resultSet.getString(7));
+					job.setRecipientPhone(resultSet.getLong(8));
+					job.setDistanceMi(resultSet.getDouble(9));
+					job.setCourierPaid(resultSet.getBoolean(10));
+					job.setPickUpTime(resultSet.getInt(11));
+					job.setDropOffTime(resultSet.getInt(12));
+					job.setActualTime(resultSet.getInt(13));
+					job.setSigned(resultSet.getBoolean(14));
+					job.setApproved(resultSet.getBoolean(15));
+					
+					return job;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
+
+	@Override
+	public Courier courierFromID(int id) {
+		return executeTransaction(new Transaction<Courier>() {
+			@Override
+			public Courier execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement("select "
+							+ "couriers.dispatcher_id, couriers.TSA_verified, couriers.longitude, couriers.latitude, "
+							+ "couriers.balance, couriers.pay_estimate, couriers.pay_history, couriers.availability, "
+							+ "users.username, users.password, users.email, users.name, users.user_id from couriers, users "
+							+ "where couriers.user_id = users.user_id and couriers.courier_id = ?");
+					
+					stmt.setInt(1, id);
+					
+					resultSet = stmt.executeQuery();
+					
+					if(!resultSet.next())
+						return null;
+					
+					Courier courier = new Courier();
+					
+					courier.setCourierID(id);
+					courier.setDispatcherID(resultSet.getInt(1));
+					courier.setTsaVerified(resultSet.getBoolean(2));
+					courier.setLongitude(resultSet.getDouble(3));
+					courier.setLatitude(resultSet.getDouble(4));
+					courier.setBalance(resultSet.getDouble(5));
+					courier.setPayEstimate(resultSet.getDouble(6));
+					courier.setPayHistory(resultSet.getDouble(7));
+					courier.setAvailability(resultSet.getBoolean(8));
+					courier.setUsername(resultSet.getString(9));
+					courier.setPassword(resultSet.getString(10));
+					courier.setEmail(resultSet.getString(11));
+					courier.setName(resultSet.getString(12));
+					courier.setUserId(resultSet.getInt(13));
+					
+					return courier;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
+
+	/*
+	// populate a Courier object with fields from db
+	public Courier courierFromUsername(String username) {
+		return executeTransaction(new Transaction<Courier>() {
+			@Override
+			public Courier execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement("select "
+							+ "users.user_id, couriers.dispatcher_id, couriers.TSA_verified, couriers.longitude, couriers.latitude, "
+							+ "couriers.balance, couriers.pay_estimate, couriers.pay_history, couriers.availability, "
+							+ "users.username, users.password, users.email, users.name, users.user_id from couriers, users "
+							+ "where couriers.user_id = users.user_id and users.username = ?");
+					
+					stmt.setString(1, username);
+					
+					resultSet = stmt.executeQuery();
+					
+					if(!resultSet.next())
+						return null;
+					
+					Courier courier = new Courier();
+					
+					courier.setCourierID(resultSet.getInt(1));
+					courier.setDispatcherID(resultSet.getInt(2));
+					courier.setTsaVerified(resultSet.getBoolean(3));
+					courier.setLongitude(resultSet.getDouble(4));
+					courier.setLatitude(resultSet.getDouble(5));
+					courier.setBalance(resultSet.getDouble(6));
+					courier.setPayEstimate(resultSet.getDouble(7));
+					courier.setPayHistory(resultSet.getDouble(8));
+					courier.setAvailability(resultSet.getBoolean(9));
+					courier.setUsername(resultSet.getString(10));
+					courier.setPassword(resultSet.getString(11));
+					courier.setEmail(resultSet.getString(12));
+					courier.setName(resultSet.getString(13));
+					courier.setUserId(resultSet.getInt(14));
+					
+					return courier;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
+	*/
+	
+	@Override
+	public Dispatcher dispatcherFromID(int id) {
+		return executeTransaction(new Transaction<Dispatcher>() {
+			@Override
+			public Dispatcher execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							    "select dispathers.address, dispathers.phone "
+							  + "users.username, users.password, users.email, users.name, users.user_id from dispatchers, users "
+							  + "where dispatchers.user_id = users.user_id and dispatchers.dispatcher_id = ?");
+					
+					stmt.setInt(1, id);
+					
+					resultSet = stmt.executeQuery();
+					
+					if(!resultSet.next())
+						return null;
+					
+					Dispatcher dispatcher = new Dispatcher();
+					
+					dispatcher.setDispatcherID(id);
+					dispatcher.setAddress(resultSet.getString(1));
+					dispatcher.setPhone(resultSet.getInt(2));
+					dispatcher.setUsername(resultSet.getString(3));
+					dispatcher.setPassword(resultSet.getString(4));
+					dispatcher.setEmail(resultSet.getString(5));
+					dispatcher.setName(resultSet.getString(6));
+					dispatcher.setUserId(resultSet.getInt(7));
+					
+					return dispatcher;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
+
+	@Override
+	public UserAccount userAccountFromID(int id) {
+		return executeTransaction(new Transaction<UserAccount>() {
+			@Override
+			public UserAccount execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							  "select username, password, email, name from users "
+							+ "where user_id = ?");
+					
+					stmt.setInt(1, id);
+					
+					resultSet = stmt.executeQuery();
+					
+					if(!resultSet.next())
+						return null;
+					
+					UserAccount user = new UserAccount();
+					user.setUserId(id);
+					user.setUsername(resultSet.getString(1));
+					user.setPassword(resultSet.getString(2));
+					user.setEmail(resultSet.getString(3));
+					user.setName(resultSet.getString(4));
+					
+					return user;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
+
+	@Override
+	public Vehicle vehicleFromID(int id) {
+		return executeTransaction(new Transaction<Vehicle>() {
+			@Override
+			public Vehicle execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							  "select "
+							+ "courier_id, vehicle_type, plate, make, model, year, active from vehicle "
+							+ "where vehicle_id = ?");
+					
+					stmt.setInt(1, id);
+					
+					resultSet = stmt.executeQuery();
+					
+					if(!resultSet.next())
+						return null;
+					
+					Vehicle vehicle = new Vehicle();
+					vehicle.setCourierID(resultSet.getInt(1));
+					vehicle.setType(resultSet.getString(2));
+					vehicle.setLicensePlate(resultSet.getString(3));
+					vehicle.setMake(resultSet.getString(4));
+					vehicle.setModel(resultSet.getString(5));
+					vehicle.setYear(resultSet.getInt(6));
+					vehicle.setActive(resultSet.getBoolean(7));
+					
+					return vehicle;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
+
+	@Override
+	public List<Vehicle> vehiclesFromCourierID(int id) {
+		return executeTransaction(new Transaction<List<Vehicle>>() {
+			@Override
+			public List<Vehicle> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							  "select vehicle_id, vehicle_type, plate, make, model, year, active from vehicle"
+							+ "where courier_id = ?");
+					
+					stmt.setInt(1, id);
+					
+					resultSet = stmt.executeQuery();
+					
+					List<Vehicle> vehicles = new ArrayList<Vehicle>();
+					
+					while(resultSet.next()) {
+						Vehicle vehicle = new Vehicle();
+						
+						vehicle.setVehicleID(resultSet.getInt(1));
+						vehicle.setType(resultSet.getString(2));
+						vehicle.setLicensePlate(resultSet.getString(3));
+						vehicle.setMake(resultSet.getString(4));
+						vehicle.setModel(resultSet.getString(5));
+						vehicle.setYear(resultSet.getInt(6));
+						vehicle.setActive(resultSet.getBoolean(7));
+						vehicle.setCourierID(id);
+						
+						vehicles.add(vehicle);
+					}
+					
+					return vehicles;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
+
+	@Override
+	public List<Job> jobsFromCourierID(int id) {
+		return executeTransaction(new Transaction<List<Job>>() {
+			@Override
+			public List<Job> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"select "
+							+ "job_id, dispatcher_id, longitude, latitude, "
+							+ "vehicle_type, TSA_verified, "
+							+ "recipient_name, recipient_phone, distance, paid, "
+							+ "pick_up, drop_off, time, signed, invoice_approved "
+							+ "from jobs "
+							+ "where courier_id = ?");
+					
+					stmt.setInt(1, id);
+					
+					resultSet = stmt.executeQuery();
+					
+					List<Job> jobs = new ArrayList<Job>();
+					
+					while(resultSet.next()) {
+						Job job = new Job();
+						
+						job.setJobID(resultSet.getInt(1));
+						job.setDispatcherID(resultSet.getInt(2));
+						job.setDestLong(resultSet.getDouble(3));
+						job.setDestLat(resultSet.getDouble(4));
+						job.setVehicleType(resultSet.getString(5));
+						job.setTsaVerified(resultSet.getBoolean(6));
+						job.setRecipientName(resultSet.getString(7));
+						job.setRecipientPhone(resultSet.getLong(8));
+						job.setDistanceMi(resultSet.getDouble(9));
+						job.setCourierPaid(resultSet.getBoolean(10));
+						job.setPickUpTime(resultSet.getInt(11));
+						job.setDropOffTime(resultSet.getInt(12));
+						job.setActualTime(resultSet.getInt(13));
+						job.setSigned(resultSet.getBoolean(14));
+						job.setApproved(resultSet.getBoolean(15));
+						job.setCourierID(id);
+						
+						jobs.add(job);
+					}
+					
+					return jobs;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
+
+	@Override
+	public List<Job> jobsFromDispatcherID(int id) {
+		return executeTransaction(new Transaction<List<Job>>() {
+			@Override
+			public List<Job> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"select "
+							+ "job_id, courier_id, longitude, latitude, "
+							+ "vehicle_type, TSA_verified, "
+							+ "recipient_name, recipient_phone, distance, paid, "
+							+ "pick_up, drop_off, time, signed, invoice_approved "
+							+ "from jobs "
+							+ "where dispatcher_id = ?");
+					
+					stmt.setInt(1, id);
+					
+					resultSet = stmt.executeQuery();
+					
+					List<Job> jobs = new ArrayList<Job>();
+					
+					while(resultSet.next()) {
+						Job job = new Job();
+						
+						job.setJobID(resultSet.getInt(1));
+						job.setCourierID(resultSet.getInt(2));
+						job.setDestLong(resultSet.getDouble(3));
+						job.setDestLat(resultSet.getDouble(4));
+						job.setVehicleType(resultSet.getString(5));
+						job.setTsaVerified(resultSet.getBoolean(6));
+						job.setRecipientName(resultSet.getString(7));
+						job.setRecipientPhone(resultSet.getLong(8));
+						job.setDistanceMi(resultSet.getDouble(9));
+						job.setCourierPaid(resultSet.getBoolean(10));
+						job.setPickUpTime(resultSet.getInt(11));
+						job.setDropOffTime(resultSet.getInt(12));
+						job.setActualTime(resultSet.getInt(13));
+						job.setSigned(resultSet.getBoolean(14));
+						job.setApproved(resultSet.getBoolean(15));
+						job.setDispatcherID(id);
+						
+						jobs.add(job);
+					}
+					
+					return jobs;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
+
+	@Override
+	public List<Courier> couriersFromDispatcherID(int id) {
+		return executeTransaction(new Transaction<List<Courier>>() {
+			@Override
+			public List<Courier> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement("select "
+							+ "couriers.courier_id, couriers.TSA_verified, couriers.longitude, couriers.latitude, "
+							+ "couriers.balance, couriers.pay_estimate, couriers.pay_history, couriers.availability, "
+							+ "users.username, users.password, users.email, users.name, users.user_id from couriers, users "
+							+ "where couriers.user_id = users.user_id and couriers.dispatcher_id = ?");
+					
+					stmt.setInt(1, id);
+					
+					List<Courier> couriers = new ArrayList<Courier>();
+					
+					resultSet = stmt.executeQuery();
+					
+					while(resultSet.next()) {
+						Courier courier = new Courier();
+						
+						courier.setCourierID(resultSet.getInt(1));
+						courier.setTsaVerified(resultSet.getBoolean(2));
+						courier.setLongitude(resultSet.getDouble(3));
+						courier.setLatitude(resultSet.getDouble(4));
+						courier.setBalance(resultSet.getDouble(5));
+						courier.setPayEstimate(resultSet.getDouble(6));
+						courier.setPayHistory(resultSet.getDouble(7));
+						courier.setAvailability(resultSet.getBoolean(8));
+						courier.setUsername(resultSet.getString(9));
+						courier.setPassword(resultSet.getString(10));
+						courier.setEmail(resultSet.getString(11));
+						courier.setName(resultSet.getString(12));
+						courier.setUserId(resultSet.getInt(13));
+						
+						courier.setDispatcherID(id);
+						
+						couriers.add(courier);
+					}
+					
+					return couriers;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
+
+	@Override
+	public UserAccount userAccountFromUsername(String username) {
+		return executeTransaction(new Transaction<UserAccount>() {
+			@Override
+			public UserAccount execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							  "select user_id, password, email, name, accounttype from users "
+							+ "where username = ?");
+					
+					stmt.setString(1, username);
+					
+					resultSet = stmt.executeQuery();
+					
+					if(!resultSet.next())
+						return null;
+					
+					UserAccount user = new UserAccount();
+					user.setUserId(resultSet.getInt(1));
+					user.setUsername(username);
+					user.setPassword(resultSet.getString(2));
+					user.setEmail(resultSet.getString(3));
+					user.setName(resultSet.getString(4));
+					user.setAccountType(resultSet.getString(5));
+					
+					return user;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
+
+	@Override
+	public Courier courierFromUsername(String username) {
+		return executeTransaction(new Transaction<Courier>() {
+			@Override
+			public Courier execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement("select "
+							+ "couriers.courier_id, couriers.dispatcher_id, couriers.TSA_verified, couriers.longitude, couriers.latitude, "
+							+ "couriers.balance, couriers.pay_estimate, couriers.pay_history, couriers.availability, "
+							+ "users.password, users.email, users.name, users.user_id from couriers, users "
+							+ "where couriers.user_id = users.user_id and users.username = ?");
+					
+					stmt.setString(1, username);
+					
+					resultSet = stmt.executeQuery();
+					
+					if(!resultSet.next())
+						return null;
+					
+					Courier courier = new Courier();
+					
+					courier.setCourierID(resultSet.getInt(1));
+					courier.setDispatcherID(resultSet.getInt(2));
+					courier.setTsaVerified(resultSet.getBoolean(3));
+					courier.setLongitude(resultSet.getDouble(4));
+					courier.setLatitude(resultSet.getDouble(5));
+					courier.setBalance(resultSet.getDouble(6));
+					courier.setPayEstimate(resultSet.getDouble(7));
+					courier.setPayHistory(resultSet.getDouble(8));
+					courier.setAvailability(resultSet.getBoolean(9));
+					courier.setUsername(username);
+					courier.setPassword(resultSet.getString(10));
+					courier.setEmail(resultSet.getString(11));
+					courier.setName(resultSet.getString(12));
+					courier.setUserId(resultSet.getInt(13));
+					
+					return courier;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
+
+	@Override
+	public Dispatcher dispatcherFromUsername(String username) {
+		return executeTransaction(new Transaction<Dispatcher>() {
+			@Override
+			public Dispatcher execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+						    "select dispathers.address, dispathers.phone "
+						  + "dispatchers.dispatcher_id, users.password, users.email, users.name, users.user_id from dispatchers, users "
+						  + "where dispatchers.user_id = users.user_id and users.username = ?");
+					
+				stmt.setString(1, username);
+				
+				resultSet = stmt.executeQuery();
+				
+				if(!resultSet.next())
+					return null;
+				
+				Dispatcher dispatcher = new Dispatcher();
+				
+				dispatcher.setUsername(username);
+				dispatcher.setAddress(resultSet.getString(1));
+				dispatcher.setPhone(resultSet.getInt(2));
+				dispatcher.setDispatcherID(resultSet.getInt(3));
+				dispatcher.setPassword(resultSet.getString(4));
+				dispatcher.setEmail(resultSet.getString(5));
+				dispatcher.setName(resultSet.getString(6));
+				dispatcher.setUserId(resultSet.getInt(7));
+				
+				return dispatcher;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
+
+	@Override
+	public Boolean remove(Job job, int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean remove(Courier courier, int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean remove(Dispatcher dispatcher, int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean remove(UserAccount user, int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean remove(Vehicle vehicle, int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	// The main method creates the database tables and loads the initial data.
 	public static void main(String[] args) throws IOException {
 		Scanner keyboard = new Scanner(System.in);
 		
 		// select if creating or destroying db
-		System.out.println("1: Create and Populate DB Tables, 2: Drop all Tables: ");
+		System.out.print("1: Create and Populate DB Tables, 2: Drop all Tables: ");
 		int dbChoice = keyboard.nextInt();
 		
 		DerbyDatabase db = new DerbyDatabase();

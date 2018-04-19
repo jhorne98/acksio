@@ -53,13 +53,18 @@ public class LoginServlet extends HttpServlet {
 		// create the UserAccount model for form input
 		UserAccount model = new UserAccount(req.getParameter("username"), req.getParameter("password"));
 		
+		// validModel holds all UserAccount info for the recently signed-in user
+		UserAccount validModel = new UserAccount();
+		
 		System.out.println(model.getUsername() + " " + model.getPassword());
 		
 		try {
 			// test the input for validity in database
-			model.login();
+			validModel = model.login();
 			
 			System.out.println(model.getValidity());
+			
+			System.out.println(validModel.getAccountType());
 			
 			if(req.getParameter("signup") != null) {
 				resp.sendRedirect("signup");
@@ -71,8 +76,16 @@ public class LoginServlet extends HttpServlet {
 			if(model.getValidity()) {
 				//HttpSession session = req.getSession(true);	    
 		        //session.setAttribute("user", model); 
-
-				resp.sendRedirect("dispatcher");
+				
+				/*
+				if(validModel.getAccountType().equals("courier")) {
+					resp.sendRedirect("courier");
+				} else {
+					resp.sendRedirect("dispatcher");
+				}
+				*/
+				
+				resp.sendRedirect(validModel.getAccountType());
 				
 				//req.getRequestDispatcher("/_view/dispatcher.jsp").forward(req, resp);
 			// username | password is not in db

@@ -2,6 +2,7 @@ package edu.ycp.cs320.acksio.model;
 
 import edu.ycp.cs320.acksio.controller.DataController;
 import edu.ycp.cs320.acksio.persist.DatabaseProvider;
+import edu.ycp.cs320.acksio.persist.DerbyDatabase;
 
 public class Vehicle implements DataController{
 	//ATTRIBUTES
@@ -19,15 +20,16 @@ public class Vehicle implements DataController{
 		//Purposefully empty
 	}
 	
-	public Vehicle(DatabaseProvider provider, int id) {
+	public Vehicle(int id) {
 		setVehicleID(id);
-		populate(provider, id);
+		populate(id);
 	}
 	
 	//METHODS
 	@Override
-	public void populate(DatabaseProvider provider, int id) {
-		Vehicle hold = provider.getInstance().vehicleFromID(id);
+	public void populate(int id) {
+		DerbyDatabase db = new DerbyDatabase();
+		Vehicle hold = db.vehicleFromID(id);
 		if(hold != null) {
 			setCourierID(hold.getCourierID());//CourierID
 			setType(hold.getType());
@@ -42,9 +44,10 @@ public class Vehicle implements DataController{
 	}
 
 	@Override
-	public void save(DatabaseProvider provider) {
-		if(!provider.getInstance().update(this)) 
-			provider.getInstance().insert(this);
+	public void save() {
+		DerbyDatabase db = new DerbyDatabase();
+		if(!db.update(this)) 
+			db.insert(this);
 	}
 	
 	//SETTERS AND GETTERS
@@ -88,28 +91,35 @@ public class Vehicle implements DataController{
 		this.type = type;
 	}
 	
-	public void setType (String vehicle) {
-		if(vehicle.equals("Bicycle")) {
+	
+	public void setType(String vehicle) {
+		/*
+		if(vehicle.equals(VehicleType.BICYCLE.toString())) {
 			type = VehicleType.BICYCLE;
-		} else if(vehicle.equals("Motorcycle")) {
+		} else if(vehicle.equals(VehicleType.MOTORCYCLE.toString())) {
 			type = VehicleType.MOTORCYCLE;
-		} else if(vehicle.equals("Car")) {
+		} else if(vehicle.equals(VehicleType.CAR.toString())) {
 			type = VehicleType.CAR;
-		} else if(vehicle.equals("SUV")) {
+		} else if(vehicle.equals(VehicleType.SUV.toString())) {
 			type = VehicleType.SUV;
-		} else if(vehicle.equals("Van")) {
+		} else if(vehicle.equals(VehicleType.VAN.toString())) {
 			type = VehicleType.VAN;
-		} else if(vehicle.equals("Pickup")) {
+		} else if(vehicle.equals(VehicleType.PICKUP.toString())) {
 			type = VehicleType.PICKUP;
-		} else if(vehicle.equals("Sprinter")) {
+		} else if(vehicle.equals(VehicleType.SPRINTER.toString())) {
 			type = VehicleType.SPRINTER;
-		} else if(vehicle.equals("Semi")) {
+		} else if(vehicle.equals(VehicleType.SEMI.toString())) {
 			type = VehicleType.SEMI;
 		} else {
 			type = null;
 		}
+		*/
+		
+		vehicle = vehicle.toUpperCase();
+		
+		type = VehicleType.valueOf(vehicle);
 	}
-
+	
 	public boolean isActive() {
 		return active;
 	}
