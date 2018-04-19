@@ -13,9 +13,8 @@
 		<script type="text/javascript">
 		var directionDisplay;
 		var directionsService = new google.maps.DirectionsService();
-		var map, infoWindow;
-
-		infoWindow = new google.maps.InfoWindow; 
+		var map;
+		
 		function initialize() {
 			directionsDisplay = new google.maps.DirectionsRenderer();
 			var York = new google.maps.LatLng(39.9626, -76.7277);
@@ -25,35 +24,10 @@
 				center: York
 			}
 
-			if (navigator.geolocation){
-		    navigator.geolocation.getCurrentPosition(function(position){
-		        var pos = { lat: position.coords.latitude, lng: position.coords.latitude};
-		        infoWindow.setPosition(pos);
-
-		        infoWindow.setContent('Your Location');
-		        infoWindow.open(map);
-		        map.setCenter(pos);
-		    }, function() {
-		        handleLocationError(true, infoWindow. map.getCenter());
-		    });
-
-		
-		}
-		else {
-		handleLocationError(false, infoWindow, map.getCenter());
-		}
-		
 			map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 			directionsDisplay.setMap(map);
 		}
 
-		function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
-		
 		function calcRoute() {
 			var start = document.getElementById("start").value;
 			var end = document.getElementById("end").value;
@@ -73,8 +47,6 @@
 			});
 		}
 		</script>
-		 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0846Ueyj15ntD3LiL_3a1zSu9qP3nXNc&callback=initMap">
-    		</script>
 	</head>
 	<body onload="initialize()">
 		<div>

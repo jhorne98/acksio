@@ -2,13 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<!-- JS and gogole maps refrences are based off of two tutorials: https://www.youtube.com/watch?v=lusad8WirIc and https://www.youtube.com/watch?v=Zxf1mnP5zcw --->
-
 <html>
 
 	<head>
-		<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 		<meta name="author" content="jhorne@ycp.edu">
 		<meta name="desc" content="ACKSIO dispatch draft updated 3/6/18">
@@ -87,8 +83,7 @@
 				<br><br>
 
 				<input type="checkbox" name="tsaCertified" value="${model.tsaCert}"> TSA certified driver needed<br><br>
-
-				<!--- <input type=" ---->
+				<!----  <input type=" ----->
 
 				<label for="start">Start: </label>
 				<input type="text" name="start" id="start" />
@@ -101,10 +96,9 @@
 				
 				<p><label for="distance">Distance (km): </label>
 				<input type="text" name="distance" id="distance" readonly="true" value = "${model.distance}"/></p>
-				<input type="submit" value="Create Job">				
+				<input type="submit" value="Create Job">			
 
-
-				<!--- <input type="submit" name="submit" value="Create Job"> --->
+				<input type="submit" name="submit" value="Create Job">
 
 				
 				<p>${model.vehicleType}</p>
