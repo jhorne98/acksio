@@ -49,7 +49,12 @@ xhttp.send();
 		function calcRoute() {
 			var start = document.getElementById("start").value;
 			var end = document.getElementById("end").value;
+			var payCof = document.getElementById("payCof").value; 
+
 			var distanceInput = document.getElementById("distance");
+			var payment = document.getElementbyId("payment");
+
+			
 			
 			var request = {
 				origin:start, 
@@ -64,6 +69,9 @@ xhttp.send();
 					distanceInput.value = response.routes[0].legs[0].distance.value / 1000;
 				}
 			});
+
+
+			payment = payCof * distanceInput;
 		}
 		</script>
 	</head>
@@ -81,6 +89,9 @@ xhttp.send();
 
 		<div id=main_body>
 				
+
+			<!-- for generic HTML -->
+
 			Target Address: 
 				<input type="text" name="destinationAddress" value="${model.address}" method="post">
 				<br><br>
@@ -100,19 +111,29 @@ xhttp.send();
 				<input type="checkbox" name="tsaCertified" value="${model.tsaCert}"> TSA certified driver needed<br><br>
 
 				<!--- <input type=" ---->
+				
+				<!-- for google maps functions --->				
 
-				<label for="start">Start: </label>
+				<label for="payCof">Payment Coefficient (cost/mile) : </label>
+				<input type "text" name="payCof" id="payCof" />
+				<br><br>
+
+				<label for="start">Pickup Address : </label>
 				<input type="text" name="start" id="start" />
 				
-				<label for="end">End: </label>
+				<label for="end">Delivery Location : </label>
 				<input type="text" name="end" id="end" />
 				
 				<input type="submit" value="Calculate Route" onclick="calcRoute()" />
 
 				
-				<p><label for="distance">Distance (km): </label>
+				<p><label for="distance">Distance: </label>
 				<input type="text" name="distance" id="distance" readonly="true" value = "${model.distance}"/></p>
-				<input type="submit" value="Create Job">				
+
+				<p><label for="payment">Payment Estimate : </label>
+				<input type="text" name="payment" id="payment" readonly="true" value = "${model.payment}"/></p>
+
+				<input type="submit" value="Create Job">
 
 
 				<!--- <input type="submit" name="submit" value="Create Job"> --->
