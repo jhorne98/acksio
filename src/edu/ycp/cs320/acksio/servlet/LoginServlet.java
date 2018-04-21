@@ -2,6 +2,7 @@ package edu.ycp.cs320.acksio.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -72,7 +73,6 @@ public class LoginServlet extends HttpServlet {
 			
 			// if user inputs correct login info, move to page corresponding to user type
 			// else, inform the user of their error
-			// TODO: refactor UserAccount for user type, currently redirects to dispatcher.jsp only
 			if(model.getValidity()) {
 				//HttpSession session = req.getSession(true);	    
 		        //session.setAttribute("user", model); 
@@ -85,7 +85,18 @@ public class LoginServlet extends HttpServlet {
 				}
 				*/
 				
-				resp.sendRedirect(validModel.getAccountType());
+				/*
+				// https://stackoverflow.com/questions/19946277/how-to-pass-a-string-value-from-one-servlet-to-another-servlet
+				// passes username so EditServlet knows which UserAccount to edit
+				req.setAttribute("username", model.getUsername());
+				req.getRequestDispatcher("/edit").include(req, resp);
+				*/
+				
+				// https://stackoverflow.com/questions/10599059/how-to-retrieve-session-value-from-one-servlet-to-other-servlet
+				HttpSession session = req.getSession(true);
+				session.setAttribute("valid_model", validModel);
+				
+				resp.sendRedirect("edit");
 				
 				//req.getRequestDispatcher("/_view/dispatcher.jsp").forward(req, resp);
 			// username | password is not in db

@@ -51,7 +51,7 @@ public class SignupServlet extends HttpServlet {
 		String errorMessage = null;
 		
 		// create the UserAccount model for form input
-		UserAccount model = new UserAccount(req.getParameter("username"), req.getParameter("password"), req.getParameter("email"), req.getParameter("accountType"));
+		UserAccount model = new UserAccount(req.getParameter("username"), req.getParameter("password"), req.getParameter("email"), "", req.getParameter("accountType"));
 		
 		//System.out.println(req.getParameter("accountType"));
 		

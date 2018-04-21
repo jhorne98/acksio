@@ -140,7 +140,7 @@ public class InitialData {
 		try {
 			// auto-generated primary key for authors table
 			Integer jobId = 1;
-			System.out.println(VehicleType.CAR.toString());
+			//System.out.println(VehicleType.CAR.toString());
 			while (true) {
 				List<String> tuple = readJobs.next();
 				if (tuple == null) {

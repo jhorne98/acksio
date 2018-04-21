@@ -512,6 +512,10 @@ public class DerbyDatabase implements IDatabase {
 				} finally {
 					//DBUtil.closeQuietly(insertBook);
 					DBUtil.closeQuietly(insertUser);
+					DBUtil.closeQuietly(insertDispatcher);
+					DBUtil.closeQuietly(insertCourier);
+					DBUtil.closeQuietly(insertJob);
+					DBUtil.closeQuietly(insertVehicle);
 				}
 			}
 		});
@@ -526,7 +530,7 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							  "insert into jobs (courier_id, dispatcher_id, longitude, latitude, vehicle_type, TSA_verified, recipient_name, recipient_phone, distance, paid, pick_up, drop_off, time, signed, invoice_approved) "
+							  "insert into jobs (courier_id, dispatcher_id, destination_long, destination_lat, vehicle_type, TSA_verified, recipient_name, recipient_phone, distance_mi, courier_paid, pickup_time, dropoff_time, actual_time, signed, invoice_approved) "
 							+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 									// 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15
 					
@@ -567,7 +571,7 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							  "insert into couriers (user_id, dispatcher_id, TSA_verified, longitude, latitude, balance, pay_estimate, pay_history, availability) "
+							  "insert into couriers (user_id, dispatcher_id, TSA_verified, long, lat, balance, pay_estimate, pay_history, availability) "
 							+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 					//UserID|DispatcherID|TSA_Ver|Long|Lat|Balance|PayEstimate|PayHistory|Availability
 					
@@ -647,7 +651,7 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							  "insert into vehicles (courier_id, vehicle_type, plate, make, model, year, active)"
+							  "insert into vehicles (courier_id, type, licence_plate, make, model, model_year, active)"
 							+ "values (?, ?, ?, ?, ?, ?, ?)");
 					
 					stmt.setInt(1, vehicle.getCourierID());
@@ -678,17 +682,17 @@ public class DerbyDatabase implements IDatabase {
 							  "update jobs "
 							+ "set courier_id = ?, "
 							+ "set dispatcher_id = ?, "
-							+ "set longitude = ?, "
-							+ "set latitude = ?, "
+							+ "set destination_long = ?, "
+							+ "set destination_lat = ?, "
 							+ "set vehicle_type = ?, "
 							+ "set TSA_verified = ?, "
 							+ "set recipient_name = ?, "
 							+ "set recipient_phone = ?, "
-							+ "set distance = ?, "
-							+ "set paid = ?, "
-							+ "set pick_up = ?, "
-							+ "set drop_off = ?, "
-							+ "set time = ?, "
+							+ "set distance_mi = ?, "
+							+ "set courier_paid = ?, "
+							+ "set pickup_time = ?, "
+							+ "set dropoff_time = ?, "
+							+ "set actual_time = ?, "
 							+ "set signed = ?, "
 							+ "set invoice_approved = ? "
 							+ "where job_id = ?");
@@ -734,8 +738,8 @@ public class DerbyDatabase implements IDatabase {
 							+ "set user_id = ?, "
 							+ "set dispatcher_id = ?, "
 							+ "set TSA_verified = ?, "
-							+ "set longitude = ?, "
-							+ "set latitude = ?, "
+							+ "set long = ?, "
+							+ "set lat = ?, "
 							+ "set balance = ?, "
 							+ "set pay_estimate = ?, "
 							+ "set pay_history = ?, "
@@ -800,9 +804,9 @@ public class DerbyDatabase implements IDatabase {
 					stmt = conn.prepareStatement(
 							  "update users "
 							+ "set username = ?, "
-							+ "set password = ?, "
-							+ "set email = ?, "
-							+ "set name = ?"
+							+ "password = ?, "
+							+ "email = ?, "
+							+ "name = ?"
 							+ "where user_id = ?");
 					
 					stmt.setString(1, user.getUsername());
@@ -830,11 +834,11 @@ public class DerbyDatabase implements IDatabase {
 					stmt = conn.prepareStatement(
 							  "update vehicles "
 							+ "set courier_id = ?, "
-							+ "set vehicle_type = ?, "
-							+ "set plate = ?, "
+							+ "set type = ?, "
+							+ "set licence_plate = ?, "
 							+ "set make = ?, "
 							+ "set model = ?, "
-							+ "set year = ?, "
+							+ "set model_year = ?, "
 							+ "set active = ? "
 							+ "where vehicle_id = ?");
 					
@@ -865,10 +869,11 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							  "select courier_id, dispatcher_id, longitude, latitude, "
+							  "select courier_id, dispatcher_id, destination_long, destination_lat, "
 							+ "vehicle_type, TSA_verified, "
-							+ "recipient_name, recipient_phone, distance, paid, "
-							+ "pick_up, drop_off, time, signed, invoice_approved "
+							+ "recipient_name, recipient_phone, distance_mi, courier_paid, "
+							+ "pickup_time, dropoff_time, actual_time, signed, invoice_approved "
+							+ "from jobs "
 							+ "where job_id = ?");
 					
 					stmt.setInt(1, id);
@@ -916,7 +921,7 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement("select "
-							+ "couriers.dispatcher_id, couriers.TSA_verified, couriers.longitude, couriers.latitude, "
+							+ "couriers.dispatcher_id, couriers.TSA_verified, couriers.long, couriers.lat, "
 							+ "couriers.balance, couriers.pay_estimate, couriers.pay_history, couriers.availability, "
 							+ "users.username, users.password, users.email, users.name, users.user_id from couriers, users "
 							+ "where couriers.user_id = users.user_id and couriers.courier_id = ?");
@@ -1014,7 +1019,7 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							    "select dispathers.address, dispathers.phone "
+							    "select dispatchers.address, dispatchers.phone, "
 							  + "users.username, users.password, users.email, users.name, users.user_id from dispatchers, users "
 							  + "where dispatchers.user_id = users.user_id and dispatchers.dispatcher_id = ?");
 					
@@ -1055,7 +1060,7 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							  "select username, password, email, name from users "
+							  "select username, password, email, name, accounttype from users "
 							+ "where user_id = ?");
 					
 					stmt.setInt(1, id);
@@ -1071,6 +1076,7 @@ public class DerbyDatabase implements IDatabase {
 					user.setPassword(resultSet.getString(2));
 					user.setEmail(resultSet.getString(3));
 					user.setName(resultSet.getString(4));
+					user.setAccountType(resultSet.getString(5));
 					
 					return user;
 				} finally {
@@ -1092,7 +1098,7 @@ public class DerbyDatabase implements IDatabase {
 				try {
 					stmt = conn.prepareStatement(
 							  "select "
-							+ "courier_id, vehicle_type, plate, make, model, year, active from vehicle "
+							+ "courier_id, type, licence_plate, make, model, model_year, active from vehicles "
 							+ "where vehicle_id = ?");
 					
 					stmt.setInt(1, id);
@@ -1110,6 +1116,7 @@ public class DerbyDatabase implements IDatabase {
 					vehicle.setModel(resultSet.getString(5));
 					vehicle.setYear(resultSet.getInt(6));
 					vehicle.setActive(resultSet.getBoolean(7));
+					vehicle.setVehicleID(id);
 					
 					return vehicle;
 				} finally {
@@ -1130,7 +1137,7 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							  "select vehicle_id, vehicle_type, plate, make, model, year, active from vehicle"
+							  "select vehicle_id, type, licence_plate, make, model, model_year, active from vehicles "
 							+ "where courier_id = ?");
 					
 					stmt.setInt(1, id);
@@ -1174,10 +1181,10 @@ public class DerbyDatabase implements IDatabase {
 				try {
 					stmt = conn.prepareStatement(
 							"select "
-							+ "job_id, dispatcher_id, longitude, latitude, "
+							+ "job_id, dispatcher_id, destination_long, destination_lat, "
 							+ "vehicle_type, TSA_verified, "
-							+ "recipient_name, recipient_phone, distance, paid, "
-							+ "pick_up, drop_off, time, signed, invoice_approved "
+							+ "recipient_name, recipient_phone, distance_mi, courier_paid, "
+							+ "pickup_time, dropoff_time, actual_time, signed, invoice_approved "
 							+ "from jobs "
 							+ "where courier_id = ?");
 					
@@ -1230,10 +1237,10 @@ public class DerbyDatabase implements IDatabase {
 				try {
 					stmt = conn.prepareStatement(
 							"select "
-							+ "job_id, courier_id, longitude, latitude, "
+							+ "job_id, courier_id, destination_long, destination_lat, "
 							+ "vehicle_type, TSA_verified, "
-							+ "recipient_name, recipient_phone, distance, paid, "
-							+ "pick_up, drop_off, time, signed, invoice_approved "
+							+ "recipient_name, recipient_phone, distance_mi, courier_paid, "
+							+ "pickup_time, dropoff_time, actual_time, signed, invoice_approved "
 							+ "from jobs "
 							+ "where dispatcher_id = ?");
 					
@@ -1285,7 +1292,7 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement("select "
-							+ "couriers.courier_id, couriers.TSA_verified, couriers.longitude, couriers.latitude, "
+							+ "couriers.courier_id, couriers.TSA_verified, couriers.long, couriers.lat, "
 							+ "couriers.balance, couriers.pay_estimate, couriers.pay_history, couriers.availability, "
 							+ "users.username, users.password, users.email, users.name, users.user_id from couriers, users "
 							+ "where couriers.user_id = users.user_id and couriers.dispatcher_id = ?");
@@ -1374,7 +1381,7 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement("select "
-							+ "couriers.courier_id, couriers.dispatcher_id, couriers.TSA_verified, couriers.longitude, couriers.latitude, "
+							+ "couriers.courier_id, couriers.dispatcher_id, couriers.TSA_verified, couriers.long, couriers.lat, "
 							+ "couriers.balance, couriers.pay_estimate, couriers.pay_history, couriers.availability, "
 							+ "users.password, users.email, users.name, users.user_id from couriers, users "
 							+ "where couriers.user_id = users.user_id and users.username = ?");
@@ -1422,7 +1429,7 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-						    "select dispathers.address, dispathers.phone "
+						    "select dispatchers.address, dispatchers.phone "
 						  + "dispatchers.dispatcher_id, users.password, users.email, users.name, users.user_id from dispatchers, users "
 						  + "where dispatchers.user_id = users.user_id and users.username = ?");
 					
@@ -1455,32 +1462,92 @@ public class DerbyDatabase implements IDatabase {
 
 	@Override
 	public Boolean remove(Job job, int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement("delete from jobs where job_id = ?");
+					stmt.setInt(1, job.getJobID());
+					return 0 != stmt.executeUpdate();
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
 	}
 
 	@Override
 	public Boolean remove(Courier courier, int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement("delete from couriers where courier_id = ?");
+					stmt.setInt(1, courier.getCourierID());
+					return 0 != stmt.executeUpdate();
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
 	}
 
 	@Override
 	public Boolean remove(Dispatcher dispatcher, int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement("delete from dispatchers where dispatcher_id = ?");
+					stmt.setInt(1, dispatcher.getDispatcherID());
+					return 0 != stmt.executeUpdate();
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
 	}
 
 	@Override
 	public Boolean remove(UserAccount user, int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement("delete from users where user_id = ?");
+					stmt.setInt(1, user.getUserId());
+					return 0 != stmt.executeUpdate();
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
 	}
 
 	@Override
 	public Boolean remove(Vehicle vehicle, int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement("delete from vehicles where vehicle_id = ?");
+					stmt.setInt(1, vehicle.getVehicleID());
+					return 0 != stmt.executeUpdate();
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
 	}
 	
 	// The main method creates the database tables and loads the initial data.

@@ -26,10 +26,11 @@ public class UserAccount implements DataController{
 		//save();
 	}
 	
-	public UserAccount(String username, String password, String email, String accountType) {
+	public UserAccount(String username, String password, String email, String name, String accountType) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.name = name;
 		this.accountType = accountType;
 		isValid = false;
 		//save();
@@ -159,6 +160,39 @@ public class UserAccount implements DataController{
 		return true;
 	}
 	*/
+	
+	// allows User to edit specific fields of UserAccount
+	public Boolean edit(UserAccount updated) {
+		DerbyDatabase db = new DerbyDatabase();
+		//UserAccount editedUser = new UserAccount();
+		
+		// there's no good way to iterate through fields of a class, or so what StackOverflow tells me
+		// user is able to update username, password, email, and name
+		if(!updated.getUsername().equals(username) && !updated.getUsername().equals(null)) {
+			username = updated.getUsername();
+		}
+		
+		if(!updated.getPassword().equals(password) && !updated.getPassword().equals(null)) {
+			password = updated.getPassword();			
+		}
+		
+		if(!updated.getEmail().equals(email) && !updated.getEmail().equals(null)) {
+			email = updated.getEmail();
+		}
+		
+		if(!updated.getName().equals(name) && !updated.getName().equals(null)) {
+			name = updated.getName();			
+		}
+		
+		// update() only edits four above
+		/*
+		userId = updated.getUserId();
+		isValid = updated.getValidity();
+		accountType = updated.getAccountType();
+		*/
+		
+		return db.update(this);
+	}
 	
 	// login() looks at users to determine if username exists and correct password has been input
 	public UserAccount login() {

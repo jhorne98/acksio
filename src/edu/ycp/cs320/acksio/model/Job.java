@@ -62,6 +62,7 @@ public class Job implements DataController{
 		this.vehicleType = vehicle; 
 	}
 	public void setVehicleType (String vehicle) {
+		/*
 		if(vehicle.equals(VehicleType.BICYCLE.toString())) {
 			vehicleType = VehicleType.BICYCLE;
 		} else if(vehicle.equals(VehicleType.MOTORCYCLE.toString())) {
@@ -81,6 +82,11 @@ public class Job implements DataController{
 		} else {
 			vehicleType = null;
 		}
+		*/
+		
+		vehicle = vehicle.toUpperCase();
+		
+		vehicleType = VehicleType.valueOf(vehicle);
 	}
 	public void setTsaVerified (Boolean tsa) {
 		this.tsaVerified = tsa; 
