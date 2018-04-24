@@ -47,11 +47,15 @@ public class EditServlet extends HttpServlet {
 		
 		System.out.println("UserAccount new values: " + newValuesAccount.getUsername() + " " + newValuesAccount.getName() + " " + newValuesAccount.getPassword() + " " + newValuesAccount.getAccountType() + " "  + newValuesAccount.getEmail());
 		
+		System.out.println(newValuesAccount.getName().length());
+		
 		// edit the db with new values
-		editAccount.edit(newValuesAccount);
-		
-		successfulUpdate = "Success!";
-		
+		if(editAccount.edit(newValuesAccount)) {
+			successfulUpdate = "Successful update!";
+			
+			req.setAttribute("successfulUpdate", successfulUpdate);
+		}
+
 		/*
 		try {
 			

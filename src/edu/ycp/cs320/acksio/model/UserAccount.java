@@ -168,19 +168,19 @@ public class UserAccount implements DataController{
 		
 		// there's no good way to iterate through fields of a class, or so what StackOverflow tells me
 		// user is able to update username, password, email, and name
-		if(!updated.getUsername().equals(username) && !updated.getUsername().equals(null)) {
+		if(updated.getUsername().length() != 0) {
 			username = updated.getUsername();
 		}
 		
-		if(!updated.getPassword().equals(password) && !updated.getPassword().equals(null)) {
+		if(updated.getPassword().length() != 0) {
 			password = updated.getPassword();			
 		}
 		
-		if(!updated.getEmail().equals(email) && !updated.getEmail().equals(null)) {
+		if(updated.getEmail().length() != 0) {
 			email = updated.getEmail();
 		}
 		
-		if(!updated.getName().equals(name) && !updated.getName().equals(null)) {
+		if(updated.getName().length() != 0) {
 			name = updated.getName();			
 		}
 		

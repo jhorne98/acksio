@@ -21,6 +21,10 @@
 			<h2>ACKSIO</h2>
 		</div>
 
+		<c:if test="${! empty successfulUpdate}">
+			<div class="output">${successfulUpdate}</div>
+		</c:if>
+
 		<c:if test="${! empty errorMessage}">
 			<div class="error">${errorMessage}</div>
 		</c:if>
@@ -48,10 +52,6 @@
 				<input type="submit" name="submit" value="Update Info">
 			</form>
 		</div>
-		
-		<c:if test="${! empty successfulUpdate}">
-			<div class="output">${successfulUpdate}</div>
-		</c:if>
 
 		<!--
 		<div id=link>
