@@ -1574,5 +1574,7 @@ public class DerbyDatabase implements IDatabase {
 			
 			System.out.println("Success!");
 		}
+		
+		keyboard.close();
 	}
 }
