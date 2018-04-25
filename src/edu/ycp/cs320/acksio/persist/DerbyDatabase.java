@@ -17,6 +17,7 @@ import edu.ycp.cs320.acksio.persist.PersistenceException;
 import edu.ycp.cs320.acksio.persist.DerbyDatabase;
 import edu.ycp.cs320.acksio.persist.InitialData;
 import edu.ycp.cs320.acksio.sqldemo.DBUtil;
+import jbcrypt.org.mindrot.jbcrypt.BCrypt;
 //import jdk.internal.util.xml.impl.Pair;
 
 // copied almost directly from lab06, and modified
@@ -85,30 +86,30 @@ public class DerbyDatabase implements IDatabase {
 			public Boolean execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
+				boolean passwordMatches = false;
 				
 				try {
 					stmt = conn.prepareStatement(
-							"select users.user_id"
+							"select password"
 							+ "	from users"
-							+ "	where users.username=?"
-							+ "		and users.password=?"
+							+ "	where username=?"
+							//+ "		and password=?"	
 					);
 					
 					stmt.setString(1, username);
-					stmt.setString(2, password);
+					//stmt.setString(2, password);
 
 					resultSet = stmt.executeQuery();
 
 					//System.out.println(resultSet.getRow());
-					
-					if (resultSet.next()) {
-						return true;
-						
-						//System.out.println(resultSet.getMetaData());
+
+					while(resultSet.next()) {
+						passwordMatches = BCrypt.checkpw(password, resultSet.getString(1));
 					}
+
+					//return resultSet.next();
 					
-					return false;
-							
+					return passwordMatches;
 				} finally {
 					DBUtil.closeQuietly(resultSet);
 					DBUtil.closeQuietly(stmt);
@@ -138,31 +139,31 @@ public class DerbyDatabase implements IDatabase {
 						"select *"
 						+ "	from users"
 						+ "	where users.username=?"
-						+ "		or users.password=?"
+						//+ "		or users.password=?"
 						+ "		or users.email=?"
 					);
 					
 					checkUser.setString(1, username);
-					checkUser.setString(2, password);
-					checkUser.setString(3, email);
+					//checkUser.setString(2, password);
+					checkUser.setString(2, email);
 					
 					userSet = checkUser.executeQuery();
 					
 					// test result set for identical username/password/email: return based on those params in that order
 					while(userSet.next()) {
 						String takenUser = userSet.getString(2);
-						String takenPassword = userSet.getString(3);
+						//String takenPassword = userSet.getString(3);
 						String takenEmail = userSet.getString(4);
 						
 						//System.out.println(userSet.getString(2) + " " + userSet.getString(3) + " " + userSet.getString(4));
 						
 						if(takenUser.equals(username)) {
 							return 1;
-						} else if(takenPassword.equals(password)) {
-							return 2;
 						} else if(takenEmail.equals(email)) {
+							return 2;
+						}/* else if(takenEmail.equals(email)) {
 							return 3;
-						}
+						}*/
 					}
 					
 					// user does not already exist: insert into users
@@ -172,7 +173,7 @@ public class DerbyDatabase implements IDatabase {
 					);
 					
 					insertNewUser.setString(1, username);
-					insertNewUser.setString(2, password);
+					insertNewUser.setString(2, BCrypt.hashpw(password, BCrypt.gensalt()));
 					insertNewUser.setString(3, email);
 					insertNewUser.setString(4, "");
 					insertNewUser.setString(5, accountType);
@@ -258,7 +259,7 @@ public class DerbyDatabase implements IDatabase {
 						"	user_id integer primary key " +
 						"		generated always as identity (start with 1, increment by 1), " +									
 						"	username varchar(40)," +
-						"	password varchar(40)," +
+						"	password varchar(60)," +
 						"	email varchar(40)," +
 						"	name varchar(40), " +
 						"	accounttype varchar(10)" +

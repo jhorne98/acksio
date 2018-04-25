@@ -71,9 +71,7 @@ public class SignupServlet extends HttpServlet {
 				} else if(signupFlag == 1) {
 					errorMessage = "Username is already taken.";
 				} else if(signupFlag == 2) {
-					errorMessage = "Password is already taken.";
-				} else if(signupFlag == 3) {
-					errorMessage = "Email address is already taken.";
+					errorMessage = "Email is already taken.";
 				}
 			}
 			

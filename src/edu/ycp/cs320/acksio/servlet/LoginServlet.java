@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import edu.ycp.cs320.acksio.model.UserAccount;
+import jbcrypt.org.mindrot.jbcrypt.BCrypt;
 
 // servlet for the UserAccount class login page
 // this servlet and UserAccount.login() based directly on http://met.guc.edu.eg/OnlineTutorials/JSP%20-%20Servlets/Full%20Login%20Example.aspx
@@ -97,6 +98,9 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("valid_model", validModel);
 				
 				resp.sendRedirect("edit");
+				
+				String hashedPass = BCrypt.hashpw(validModel.getPassword(), BCrypt.gensalt());
+				System.out.println(hashedPass.length());
 				
 				//req.getRequestDispatcher("/_view/dispatcher.jsp").forward(req, resp);
 			// username | password is not in db

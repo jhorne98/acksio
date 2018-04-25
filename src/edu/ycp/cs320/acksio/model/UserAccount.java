@@ -3,6 +3,7 @@ package edu.ycp.cs320.acksio.model;
 import edu.ycp.cs320.acksio.controller.DataController;
 //import edu.ycp.cs320.acksio.persist.DatabaseProvider;
 import edu.ycp.cs320.acksio.persist.*;
+import jbcrypt.org.mindrot.jbcrypt.*;
 //import java.sql.*;
 
 public class UserAccount implements DataController{
@@ -173,7 +174,7 @@ public class UserAccount implements DataController{
 		}
 		
 		if(updated.getPassword().length() != 0) {
-			password = updated.getPassword();			
+			password = BCrypt.hashpw(updated.getPassword(), BCrypt.gensalt());			
 		}
 		
 		if(updated.getEmail().length() != 0) {
@@ -210,6 +211,9 @@ public class UserAccount implements DataController{
 	
 	public int signup() {
 		DerbyDatabase db = new DerbyDatabase();
+		
+		// implementation of jBCrypt to hash pw
+		//String hashedPass = BCrypt.hashpw(password, BCrypt.gensalt());
 		
 		int signupFlag = db.createAccount(username, password, email, accountType);
 		
