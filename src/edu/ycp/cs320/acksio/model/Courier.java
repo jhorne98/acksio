@@ -120,26 +120,93 @@ public class Courier extends UserAccount{
 			db.insert(this);
 	}
 	
+	//Adds a job to the Courier's list of jobs in model and database
 	public Boolean acceptJob(Job job) {
-		//TODO: Implement
+		if(job.getCourierID() < 0) {
+			job.setCourierID(courierID);
+			jobs.add(job);
+			job.save();
+			payEstimate+=job.getPayEstimateForJob();
+			return true;
+		}
 		return false;
 	}
 	
-	public boolean acceptInvoice(ArrayList<Job> jobs) {
-		
-		int count=0;
-		for(Job job : jobs) {
-			if(job.getApproved()) {
-				count++;
-			}
-		}
-		if(count==jobs.size()) {
+	//Approves the invoice for job and transfers payment records to match.
+	public boolean acceptInvoice(Job job) {
+		if(!job.approvedOnInvoice()) {
+			job.setApproved(true);
+			job.save();
+			payEstimate -= job.getPayEstimateForJob();
+			payHistory += job.getPayActualForJob();
 			return true;
 		}
-		else {
-			return false;
+		return false;
+	}
+	
+	//Returns if all invoices are approved
+	public boolean allInvoicesApproved(ArrayList<Job> jobs) {
+		for(Job job : jobs) {
+			if(!job.approvedOnInvoice()) {
+				return false;
+			}
 		}
-		
+		return true;
+	}
+	
+	//Returns if all invoices are approved, but uses the the model's list instead of from somewhere else
+	public boolean allInvoicesApproved() {
+		for(Job job : jobs) {
+			if(!job.approvedOnInvoice()) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	//Returns if all invoices are approved, but updates the model's list and then uses the the model's list instead of from somewhere else
+	public boolean allInvoicesApproved(boolean database) {
+		if(database)
+			setJobs();
+		for(Job job : jobs) {
+			if(!job.approvedOnInvoice()) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	//Accepts all invoices from a list of jobs
+	public boolean acceptAllInvoices(ArrayList<Job> jobs) {
+		for(Job job : jobs) {
+			acceptInvoice(job);
+		}
+		return allInvoicesApproved(jobs);
+	}
+	
+	//Accepts all invoices from the model's jobs after updating the model
+	public boolean acceptAllInvoices(boolean database) {
+		if(database)
+			setJobs();
+		for(Job job : jobs) {
+			acceptInvoice(job);
+		}
+		return allInvoicesApproved((ArrayList<Job>) jobs);
+	}
+	
+	//Accepts all invoices from the model's jobs
+	public boolean acceptAllInvoices() {
+		for(Job job : jobs) {
+			acceptInvoice(job);
+		}
+		return allInvoicesApproved((ArrayList<Job>) jobs);
+	}
+	
+	//Reset for payHistory and payEstimate from the database
+	public Boolean recalculatePayment() {
+		payHistory = calculateTotalPayment(true);
+		payEstimate = calculateTotalPayment(false);
+		return true;
 	}
 	
 	public double calculateTotalPayment() {
@@ -147,10 +214,32 @@ public class Courier extends UserAccount{
 		return calculateTotalPayment(db.jobsFromCourierID(courierID));
 	}
 	
+	public double calculateTotalPayment(boolean approved) {
+		DerbyDatabase db = new DerbyDatabase();
+		return calculateTotalPayment(db.jobsFromCourierID(courierID), approved);
+	}
+	
 	public double calculateTotalPayment(List<Job> jobs) {
 		double total = 0;
 		for(Job job : jobs) {
-			total+=job.getPayActualForJob();
+			if(job.approvedOnInvoice())
+				total+=job.getPayActualForJob();
+		}
+		return total;
+	}
+	
+	public double calculateTotalPayment(List<Job> jobs, boolean approved) {
+		double total = 0;
+		if(approved) {
+			for(Job job : jobs) {
+				if(job.approvedOnInvoice())
+					total+=job.getPayActualForJob();
+			}
+		} else {
+			for(Job job : jobs) {
+				if(!job.approvedOnInvoice())
+					total+=job.getPayEstimateForJob();
+			}
 		}
 		return total;
 	}
