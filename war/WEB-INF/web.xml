@@ -37,6 +37,10 @@
   	<servlet-name>EditServlet</servlet-name>
   	<servlet-class>edu.ycp.cs320.acksio.servlet.EditServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>CourierServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.acksio.servlet.CourierServlet</servlet-class>
+  </servlet>
 
   <!-- Servlet mappings --><!--
   <servlet-mapping>
@@ -70,6 +74,10 @@
   <servlet-mapping>
   	<servlet-name>EditServlet</servlet-name>
   	<url-pattern>/edit</url-pattern> 
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>CourierServlet</servlet-name>
+  	<url-pattern>/courier</url-pattern> 
   </servlet-mapping>
   
 </web-app>

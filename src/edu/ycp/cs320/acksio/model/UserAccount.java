@@ -163,12 +163,12 @@ public class UserAccount implements DataController{
 	*/
 	
 	// allows User to edit specific fields of UserAccount
-	public Boolean edit(UserAccount updated) {
+	public Boolean edit(UserAccount updated, String tsaVerifiedParam, Dispatcher updatedDispatcher) {
 		DerbyDatabase db = new DerbyDatabase();
 		//UserAccount editedUser = new UserAccount();
 		
 		// there's no good way to iterate through fields of a class, or so what StackOverflow tells me
-		// user is able to update username, password, email, and name
+		// check if each field is non-empty using length
 		if(updated.getUsername().length() != 0) {
 			username = updated.getUsername();
 		}
@@ -183,6 +183,42 @@ public class UserAccount implements DataController{
 		
 		if(updated.getName().length() != 0) {
 			name = updated.getName();			
+		}
+		
+		if(accountType.equals("courier")) {
+			Courier updatedCourier = db.courierFromID(userId);
+			updatedCourier.setTsaVerified(0);
+			
+			//System.out.println(updatedCourier.isTsaVerified() + " " + updatedCourier.getBalance());
+			
+			// tsaVerified set to 0 before changes to user made: if users specifies, change here
+			if(tsaVerifiedParam.equals("yes")) {
+				updatedCourier.setTsaVerified(1);
+			}
+			
+			// update courier with new tsaVerified info
+			db.update(updatedCourier);
+			//updatedCourier = db.courierFromID(userId);
+			//System.out.println(updatedCourier.isTsaVerified());
+		} else {
+			Dispatcher oldDispatcher = db.dispatcherFromID(userId);
+			oldDispatcher.getPhone();
+			//System.out.println(oldDispatcher.getAddress());
+			//System.out.println(updatedDispatcher.getPhone());
+			
+			if(updatedDispatcher.getAddress().length() != 0) {
+				oldDispatcher.setAddress(updatedDispatcher.getAddress());
+			}
+			
+			//oldDispatcher.setPhone(updatedDispatcher.getPhone());
+			System.out.println(updatedDispatcher.getPhone());
+			
+			
+			if(updatedDispatcher.getPhone().length() != 0) {
+				oldDispatcher.setPhone(updatedDispatcher.getPhone());
+			}
+			
+			db.update(oldDispatcher);
 		}
 		
 		// update() only edits four above

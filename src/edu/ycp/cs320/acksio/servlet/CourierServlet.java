@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.acksio.model.UserAccount;
 
-//THIS SERVLET IS EMPTY SO THAT WE MAY USE IT TO 
-
 public class CourierServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -18,17 +16,17 @@ public class CourierServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		System.out.println("Empty Servlet: doGet");	
+		System.out.println("Courier Servlet: doGet");	
 		
 		// call JSP to generate empty form
-		req.getRequestDispatcher("/_view/empty.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/courier.jsp").forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) //TODO: Implement 
 			throws ServletException, IOException {
 		
-		System.out.println("Empty Servlet: doPost");
+		System.out.println("Courier Servlet: doPost");
 		
 		// holds the error message text, if there is any
 		String errorMessage = null;
@@ -42,7 +40,11 @@ public class CourierServlet extends HttpServlet {
 		// this adds the errorMessage text and the result to the response
 		req.setAttribute("errorMessage", errorMessage);
 		
+		if(req.getParameter("edit") != null) {
+			resp.sendRedirect("edit");
+		}
+		
 		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/empty.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/courier.jsp").forward(req, resp);
 	}
 }

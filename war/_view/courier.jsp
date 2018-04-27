@@ -25,7 +25,9 @@
 		</div>
 
 		<div id=main_body>
-				
+			<form action="${pageContext.servletContext.contextPath}/courier" method="post">
+				<input type="submit" name="edit" value="Edit Information">
+			</form>
 		</div>
 
 		<!--

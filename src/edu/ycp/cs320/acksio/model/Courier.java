@@ -11,13 +11,13 @@ public class Courier extends UserAccount{
 	
 	private int courierID;
 	private int dispatcherID;
-	private Boolean availability;
+	private Integer availability;
 	private int licenseID;
 	private String licenseExpiration;
-	private Boolean insured;
+	private Integer insured;
 	private int insuranceExpiration;
 	private int[] insuranceCoverage;
-	private boolean tsaVerified;
+	private Integer tsaVerified;
 	private double payHistory;
 	private double payEstimate;
 	private double balance;
@@ -129,7 +129,7 @@ public class Courier extends UserAccount{
 		
 		int count=0;
 		for(Job job : jobs) {
-			if(job.getApproved()) {
+			if(job.getApproved().equals(1)) {
 				count++;
 			}
 		}
@@ -224,11 +224,11 @@ public class Courier extends UserAccount{
 		this.dispatcherID = dispatcherID;
 	}
 
-	public Boolean getAvailability() {
+	public Integer getAvailability() {
 		return availability;
 	}
 
-	public void setAvailability(Boolean availability) {
+	public void setAvailability(Integer availability) {
 		this.availability = availability;
 	}
 
@@ -248,11 +248,11 @@ public class Courier extends UserAccount{
 		this.licenseExpiration = licenseExpiration;
 	}
 
-	public Boolean getInsured() {
+	public Integer getInsured() {
 		return insured;
 	}
 
-	public void setInsured(Boolean insured) {
+	public void setInsured(Integer insured) {
 		this.insured = insured;
 	}
 
@@ -272,11 +272,11 @@ public class Courier extends UserAccount{
 		this.insuranceCoverage = insuranceCoverage;
 	}
 
-	public boolean isTsaVerified() {
+	public Integer isTsaVerified() {
 		return tsaVerified;
 	}
 
-	public void setTsaVerified(boolean tsaVerified) {
+	public void setTsaVerified(Integer tsaVerified) {
 		this.tsaVerified = tsaVerified;
 	}
 

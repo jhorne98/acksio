@@ -97,7 +97,7 @@ public class LoginServlet extends HttpServlet {
 				HttpSession session = req.getSession(true);
 				session.setAttribute("valid_model", validModel);
 				
-				resp.sendRedirect("edit");
+				resp.sendRedirect(validModel.getAccountType());
 				
 				String hashedPass = BCrypt.hashpw(validModel.getPassword(), BCrypt.gensalt());
 				System.out.println(hashedPass.length());

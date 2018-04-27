@@ -34,23 +34,40 @@
 			<form action="${pageContext.servletContext.contextPath}/edit" method="post">
 
 				Change your Username:<br>
-				<input type="text" name="username" value="${model.username}">
+				<input type="text" name="username" value="${username}">
 				<br><br>
 
 				Change your Password:<br>
-				<input type="text" name="password" value="${model.password}">
+				<input type="text" name="password" value="${password}">
 				<br><br>
 				
 				Change your Email:<br>
-				<input type="text" name="email" value="${model.email}">
+				<input type="text" name="email" value="${email}">
 				<br><br>
 				
 				Change your Name:<br>
-				<input type="text" name="name" value="${model.name}">
+				<input type="text" name="name" value="${name}">
 				<br><br>
+				
+				<c:if test="${accountType=='courier'}">
+					TSA Verfied:<br>
+					<input type="radio" name="tsaVerified" value="yes">Verified<br>
+					<input type="radio" name="tsaVerified" value="no">Not Verified<br><br>
+				</c:if>
+				
+				<c:if test="${accountType=='dispatcher'}">
+					Change your Address:<br>
+					<input type="text" name="address" value="${address}">
+					<br><br>
+					
+					Change your Phone Number:<br>
+					<input type="text" name="phone" value="${phone}">
+					<br><br>
+				</c:if>
 				
 				<input type="submit" name="submit" value="Update Info">
 			</form>
+
 		</div>
 
 		<!--

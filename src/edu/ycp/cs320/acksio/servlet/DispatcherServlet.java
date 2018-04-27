@@ -39,7 +39,7 @@ public class DispatcherServlet extends HttpServlet {
 			System.out.println(typeValues[i]);
 		}
 		
-		Dispatcher model = new Dispatcher(true, req.getParameter("address"), req.getParameter("name"), getIntFromParameter(req.getParameter("phone")));
+		Dispatcher model = new Dispatcher(true, req.getParameter("address"), req.getParameter("name"), req.getParameter("phone"));
 		
 		// Add parameters as request attributes
 		req.setAttribute("model", model);
@@ -53,9 +53,9 @@ public class DispatcherServlet extends HttpServlet {
 		
 		
 	}
-	private int getIntFromParameter(String s) {
+	private Integer getIntFromParameter(String s) {
 		if (s == null || s.equals("")) {
-			return (Integer) null;
+			return null;
 		} else {
 			return Integer.parseInt(s);
 		}

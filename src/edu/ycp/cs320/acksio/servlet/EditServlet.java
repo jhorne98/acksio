@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import edu.ycp.cs320.acksio.model.UserAccount;
+import edu.ycp.cs320.acksio.model.*;
 
 // servlet for the UserAccount class login page
 // this servlet and UserAccount.login() based directly on http://met.guc.edu.eg/OnlineTutorials/JSP%20-%20Servlets/Full%20Login%20Example.aspx
@@ -24,10 +24,18 @@ public class EditServlet extends HttpServlet {
 		System.out.println("Edit Servlet: doGet");
 		
 		// take in logged in account from LoginServlet
-		editAccount = (UserAccount)req.getSession(false).getAttribute("valid_model");
+		editAccount = (UserAccount)req.getSession(true).getAttribute("valid_model");
+		
+		//System.out.println(editAccount.getValidity());
 		
 		// call JSP to generate empty form
-		req.getRequestDispatcher("/_view/edit.jsp").forward(req, resp);
+		if(editAccount != null) {
+			req.setAttribute("accountType", editAccount.getAccountType());
+			
+			req.getRequestDispatcher("/_view/edit.jsp").forward(req, resp);
+		} else {
+			resp.sendRedirect("login");
+		}
 	}
 	
 	@Override
@@ -38,22 +46,21 @@ public class EditServlet extends HttpServlet {
 
 		// holds the error message text, if there is any
 		String errorMessage = null;
-		String successfulUpdate = null;
+		Dispatcher editDispatcher = new Dispatcher(req.getParameter("address"), req.getParameter("phone"));
+		System.out.println(req.getParameter("phone"));
 		
-		System.out.println("UserAccount to edit: " + editAccount.getUsername() + " " + editAccount.getName() + " " + editAccount.getPassword() + " " + editAccount.getAccountType() + " "  + editAccount.getEmail());
+		System.out.println("UserAccount to edit: " + editAccount.getUsername() + " " + editAccount.getName() + " " + editAccount.getPassword() + " " + editAccount.getEmail() + " " + editAccount.getAccountType());
 		
 		// populate newValues account with info from jsp
 		UserAccount newValuesAccount = new UserAccount(req.getParameter("username"), req.getParameter("password"), req.getParameter("email"), req.getParameter("name"), editAccount.getAccountType());
 		
-		System.out.println("UserAccount new values: " + newValuesAccount.getUsername() + " " + newValuesAccount.getName() + " " + newValuesAccount.getPassword() + " " + newValuesAccount.getAccountType() + " "  + newValuesAccount.getEmail());
+		System.out.println("UserAccount new values: " + newValuesAccount.getUsername() + " " + newValuesAccount.getName() + " " + newValuesAccount.getPassword()  + " "  + newValuesAccount.getEmail()+ " " + newValuesAccount.getAccountType());
 		
-		System.out.println(newValuesAccount.getName().length());
+		//System.out.println(newValuesAccount.getName().length());
 		
 		// edit the db with new values
-		if(editAccount.edit(newValuesAccount)) {
-			successfulUpdate = "Successful update!";
-			
-			req.setAttribute("successfulUpdate", successfulUpdate);
+		if(editAccount.edit(newValuesAccount, req.getParameter("tsaVerified"), editDispatcher)) {
+			req.setAttribute("successfulUpdate", "Successful update!");
 		}
 
 		/*
@@ -63,7 +70,17 @@ public class EditServlet extends HttpServlet {
 			errorMessage = "Exception: something happened.";
 		}
 		*/
+
 		// Forward to view to render the result HTML document
+		req.setAttribute("accountType", editAccount.getAccountType());
 		req.getRequestDispatcher("/_view/edit.jsp").forward(req, resp);
+	}
+	
+	private Integer getIntFromParameter(String s) {
+		if (s == null || s.equals("")) {
+			return null;
+		} else {
+			return Integer.parseInt(s);
+		}
 	}
 }
