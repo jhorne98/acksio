@@ -246,10 +246,9 @@ public class Job implements DataController{
 	}
 
 	@Override
-	public void save() {
+	public Boolean save() {
 		DerbyDatabase db = new DerbyDatabase();
-		if(!db.update(this)) 
-			db.insert(this);
+		return db.insert(this);
 	}
 	
 	public void signOff() {

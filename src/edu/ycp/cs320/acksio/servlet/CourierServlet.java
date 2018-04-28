@@ -44,6 +44,10 @@ public class CourierServlet extends HttpServlet {
 			resp.sendRedirect("edit");
 		}
 		
+		if(req.getParameter("insertvehicle") != null) {
+			resp.sendRedirect("insertvehicle");
+		}
+		
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/courier.jsp").forward(req, resp);
 	}

@@ -41,6 +41,10 @@
   	<servlet-name>CourierServlet</servlet-name>
   	<servlet-class>edu.ycp.cs320.acksio.servlet.CourierServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>InsertVehicleServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.acksio.servlet.InsertVehicleServlet</servlet-class>
+  </servlet>
 
   <!-- Servlet mappings --><!--
   <servlet-mapping>
@@ -78,6 +82,10 @@
   <servlet-mapping>
   	<servlet-name>CourierServlet</servlet-name>
   	<url-pattern>/courier</url-pattern> 
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>InsertVehicleServlet</servlet-name>
+  	<url-pattern>/insertvehicle</url-pattern> 
   </servlet-mapping>
   
 </web-app>

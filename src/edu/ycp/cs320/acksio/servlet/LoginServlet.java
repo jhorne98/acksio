@@ -100,7 +100,7 @@ public class LoginServlet extends HttpServlet {
 				resp.sendRedirect(validModel.getAccountType());
 				
 				String hashedPass = BCrypt.hashpw(validModel.getPassword(), BCrypt.gensalt());
-				System.out.println(hashedPass.length());
+				//System.out.println(hashedPass.length());
 				
 				//req.getRequestDispatcher("/_view/dispatcher.jsp").forward(req, resp);
 			// username | password is not in db

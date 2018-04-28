@@ -149,10 +149,9 @@ public class Dispatcher extends UserAccount{
 	}
 
 	@Override
-	public void save() {
+	public Boolean save() {
 		DerbyDatabase db = new DerbyDatabase();
-		if(!db.update(this)) 
-			db.insert(this);
+		return db.insert(this);
 	}
 
 	public int getDispatcherID() {

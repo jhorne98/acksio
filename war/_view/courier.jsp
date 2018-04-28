@@ -26,7 +26,8 @@
 
 		<div id=main_body>
 			<form action="${pageContext.servletContext.contextPath}/courier" method="post">
-				<input type="submit" name="edit" value="Edit Information">
+				<input type="submit" name="edit" value="Edit Information"><br>
+				<input type="submit" name="insertvehicle" value="Add a Vehicle">
 			</form>
 		</div>
 

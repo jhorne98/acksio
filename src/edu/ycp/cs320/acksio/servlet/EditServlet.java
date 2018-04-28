@@ -55,6 +55,8 @@ public class EditServlet extends HttpServlet {
 		UserAccount newValuesAccount = new UserAccount(req.getParameter("username"), req.getParameter("password"), req.getParameter("email"), req.getParameter("name"), editAccount.getAccountType());
 		
 		System.out.println("UserAccount new values: " + newValuesAccount.getUsername() + " " + newValuesAccount.getName() + " " + newValuesAccount.getPassword()  + " "  + newValuesAccount.getEmail()+ " " + newValuesAccount.getAccountType());
+		System.out.println("Courier new tsaVerified: " + req.getParameter("tsaVerfied"));
+		System.out.println("Dispatcher new values: " + req.getParameter("address") + " " + req.getParameter("phone"));
 		
 		//System.out.println(newValuesAccount.getName().length());
 		

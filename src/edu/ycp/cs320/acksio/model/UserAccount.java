@@ -134,10 +134,9 @@ public class UserAccount implements DataController{
 	}
 
 	@Override
-	public void save() {
+	public Boolean save() {
 		DerbyDatabase db = new DerbyDatabase();
-		if(!db.update(this)) 
-			db.insert(this);
+		return db.insert(this);
 	}
 	
 	// remove user from users table by user_id
@@ -187,13 +186,14 @@ public class UserAccount implements DataController{
 		
 		if(accountType.equals("courier")) {
 			Courier updatedCourier = db.courierFromID(userId);
-			updatedCourier.setTsaVerified(0);
 			
 			//System.out.println(updatedCourier.isTsaVerified() + " " + updatedCourier.getBalance());
 			
 			// tsaVerified set to 0 before changes to user made: if users specifies, change here
 			if(tsaVerifiedParam.equals("yes")) {
 				updatedCourier.setTsaVerified(1);
+			} else if(tsaVerifiedParam.equals("no")) {
+				updatedCourier.setTsaVerified(0);
 			}
 			
 			// update courier with new tsaVerified info
@@ -202,7 +202,7 @@ public class UserAccount implements DataController{
 			//System.out.println(updatedCourier.isTsaVerified());
 		} else {
 			Dispatcher oldDispatcher = db.dispatcherFromID(userId);
-			oldDispatcher.getPhone();
+			//oldDispatcher.getPhone();
 			//System.out.println(oldDispatcher.getAddress());
 			//System.out.println(updatedDispatcher.getPhone());
 			
@@ -211,7 +211,7 @@ public class UserAccount implements DataController{
 			}
 			
 			//oldDispatcher.setPhone(updatedDispatcher.getPhone());
-			System.out.println(updatedDispatcher.getPhone());
+			//System.out.println(updatedDispatcher.getPhone());
 			
 			
 			if(updatedDispatcher.getPhone().length() != 0) {
