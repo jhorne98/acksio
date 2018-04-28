@@ -17,8 +17,7 @@ public class Job implements DataController{
 	private String recipientName;
 	private long recipientPhone;
 	private double distanceMi;
-	private double payEstimateForJob;
-	private double payActualForJob;
+	private double payForJob;
 	private Boolean courierPaid;
 	private int pickUpTime;
 	private int dropOffTime;
@@ -31,7 +30,7 @@ public class Job implements DataController{
 	
 	public Job(String destinationAddress, VehicleType vehicleType, boolean tsaVerified, 
 				String recipientName, long recipientPhone, double distanceMi, 
-				double payEstimateForJob, double payActualForJob, 
+				double pay, 
 				int pickUpTime, int dropOffTime) {
 		this.destinationAddress=destinationAddress;
 		this.vehicleType=vehicleType;
@@ -39,8 +38,7 @@ public class Job implements DataController{
 		this.recipientName=recipientName;
 		this.recipientPhone=recipientPhone;
 		this.distanceMi=distanceMi;
-		this.payEstimateForJob=payEstimateForJob;
-		this.payActualForJob=payActualForJob;
+		this.setPayForJob(pay);
 		this.pickUpTime=pickUpTime;
 		this.dropOffTime=dropOffTime;
 		approved=false;
@@ -94,12 +92,6 @@ public class Job implements DataController{
 	public void setDistanceMi (double distanceMi) {
 		this.distanceMi = distanceMi;
 	}
-	public void setPayEstimateForJob (int pay) {
-		this.payEstimateForJob = pay;
-	}
-	public void setPayActualForJob (int pay) {
-		this.payActualForJob = pay; 
-	}
 	public void setCourierPaid  (Boolean paid) {
 		this.courierPaid = paid;
 	}
@@ -132,12 +124,6 @@ public class Job implements DataController{
 	}
 	public double getDistanceMi () {
 		return distanceMi;
-	}
-	public double getPayEstimateForJob () {
-		return payEstimateForJob;
-	}
-	public double getPayActualForJob () {
-		return payActualForJob; 
 	}
 	public Boolean getCourierPaid  () {
 		return courierPaid;
@@ -214,6 +200,14 @@ public class Job implements DataController{
 		this.destLong = destLong;
 	}
 	
+	public double getPayForJob() {
+		return payForJob;
+	}
+
+	public void setPayForJob(double payForJob) {
+		this.payForJob = payForJob;
+	}
+
 	@Override
 	public void populate(int id) {
 		DerbyDatabase db = new DerbyDatabase();

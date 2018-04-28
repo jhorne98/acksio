@@ -45,7 +45,7 @@ public class Dispatcher extends UserAccount{
 	}
 	public void Queue() {
 		//TODO: Implement
-		Job testJob = new Job("118 oak drive", vehicleType.CAR, true, "Don Hake", 7175555555L, 64.9, 53.7, 53.7, 1430, 1730);
+		Job testJob = new Job("118 oak drive", vehicleType.CAR, true, "Don Hake", 7175555555L, 64.9, 53.7, 1430, 1730);
 	}
   
 	public Boolean getTsaCert() {

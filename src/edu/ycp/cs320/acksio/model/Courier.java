@@ -126,7 +126,7 @@ public class Courier extends UserAccount{
 			job.setCourierID(courierID);
 			jobs.add(job);
 			job.save();
-			payEstimate+=job.getPayEstimateForJob();
+			payEstimate+=job.getPayForJob();
 			return true;
 		}
 		return false;
@@ -137,8 +137,8 @@ public class Courier extends UserAccount{
 		if(!job.approvedOnInvoice()) {
 			job.setApproved(true);
 			job.save();
-			payEstimate -= job.getPayEstimateForJob();
-			payHistory += job.getPayActualForJob();
+			payEstimate -= job.getPayForJob();
+			balance += job.getPayForJob();
 			return true;
 		}
 		return false;
@@ -222,8 +222,8 @@ public class Courier extends UserAccount{
 	public double calculateTotalPayment(List<Job> jobs) {
 		double total = 0;
 		for(Job job : jobs) {
-			if(job.approvedOnInvoice())
-				total+=job.getPayActualForJob();
+			if(job.getCourierPaid())
+				total+=job.getPayForJob();
 		}
 		return total;
 	}
@@ -232,20 +232,40 @@ public class Courier extends UserAccount{
 		double total = 0;
 		if(approved) {
 			for(Job job : jobs) {
-				if(job.approvedOnInvoice())
-					total+=job.getPayActualForJob();
+				if(job.getCourierPaid())
+					total+=job.getPayForJob();
 			}
 		} else {
 			for(Job job : jobs) {
-				if(!job.approvedOnInvoice())
-					total+=job.getPayEstimateForJob();
+				if(!job.getCourierPaid())
+					total+=job.getPayForJob();
 			}
 		}
 		return total;
 	}
+	
+	public int numberOfUnapprovedInvoices(boolean database) {
+		if(database)
+			setJobs();
+		return numberOfUnapprovedInvoices(jobs);
+	}
+	
+	public int numberOfUnapprovedInvoices() {
+		return numberOfUnapprovedInvoices(jobs);
+	}
+	
+	public int numberOfUnapprovedInvoices(List<Job> jobs) {
+		int count = 0;
+		
+		for(Job job : jobs) {
+			if(!job.approvedOnInvoice())
+				count++;
+		}
+		
+		return count;
+	}
 
 	//SETTERS AND GETTERS
-	
 	public List<Job> getJobs(){
 		return jobs;
 	}
