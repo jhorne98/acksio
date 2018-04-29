@@ -26,9 +26,19 @@
 
 		<div id=main_body>
 			<form action="${pageContext.servletContext.contextPath}/courier" method="post">
-				<input type="submit" name="edit" value="Edit Information"><br>
-				<input type="submit" name="insertvehicle" value="Add a Vehicle">
+				<input type="submit" name="edit" value="Edit Information"><br><br>
+				<input type="submit" name="insertvehicle" value="Add a Vehicle"><br>
 			</form>
+			
+			<p>Your Vehicles</p>
+			<div id=vehicles>
+				<c:forEach var="vehicleloop" items="${loop}">
+					${vehicleloop.licensePlate}, ${vehicleloop.year}, ${vehicleloop.make}, ${vehicleloop.model}, ${vehicleloop.licensePlate}
+					<c:if test="${vehicleloop.active == 1}">
+						ACTIVE
+					</c:if><br>
+				</c:forEach>
+			</div>
 		</div>
 
 		<!--

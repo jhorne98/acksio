@@ -174,6 +174,10 @@ public class Courier extends UserAccount{
 		vehicles = db.vehiclesFromCourierID(courierID);
 	}
 	
+	public List<Vehicle> getVehicles() {
+		return vehicles;
+	}
+	
 	public void addVehicle(Vehicle vehicle) {
 		vehicles.add(vehicle);
 	}

@@ -28,7 +28,7 @@ public class VehicleTest {
 		assertTrue(vehicleModel.getMake() == "Toyota");
 		assertTrue(vehicleModel.getModel() == "Prius");
 		assertTrue(vehicleModel.getType() == VehicleType.CAR);
-		assertTrue(vehicleModel.isActive() == 0);
+		assertTrue(vehicleModel.getActive() == 0);
 	}
 	
 	@Test
@@ -55,6 +55,6 @@ public class VehicleTest {
 		assertTrue(vehicleModel.getType() == VehicleType.PICKUP);
 		
 		vehicleModel.setActive(1);
-		assertTrue(vehicleModel.isActive() == 1);
+		assertTrue(vehicleModel.getActive() == 1);
 	}
 }

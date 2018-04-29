@@ -46,7 +46,7 @@ public class Vehicle implements DataController{
 			setMake(hold.getMake());//Make
 			setModel(hold.getModel());//Model
 			setYear(hold.getYear());//Year
-			setActive(hold.isActive());//Active
+			setActive(hold.getActive());//Active
 		} else {
 			throw new NullPointerException();
 		}
@@ -128,7 +128,7 @@ public class Vehicle implements DataController{
 		type = VehicleType.valueOf(vehicle);
 	}
 	
-	public Integer isActive() {
+	public Integer getActive() {
 		return active;
 	}
 

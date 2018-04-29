@@ -1,25 +1,48 @@
 package edu.ycp.cs320.acksio.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.ycp.cs320.acksio.model.Courier;
 import edu.ycp.cs320.acksio.model.UserAccount;
 
 public class CourierServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private UserAccount user;
+	private Courier courier;
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		System.out.println("Courier Servlet: doGet");	
+		System.out.println("Courier Servlet: doGet");
 		
-		// call JSP to generate empty form
-		req.getRequestDispatcher("/_view/courier.jsp").forward(req, resp);
+		/*
+		int[] testints = {0,12,15,16,14};
+		req.setAttribute("vehicleLoopSize", 5);
+		req.setAttribute("loop", testints);
+		*/
+		
+		user = (UserAccount)req.getSession(true).getAttribute("valid_model");
+		
+		if(user != null) {
+			courier = new Courier();
+			courier.populate(user.getUserId());
+			
+			courier.setVehicles();
+			
+			req.setAttribute("loop", courier.getVehicles());
+			
+			// call JSP to generate empty form
+			req.getRequestDispatcher("/_view/courier.jsp").forward(req, resp);
+		} else {
+			resp.sendRedirect("login");
+		}
 	}
 	
 	@Override
