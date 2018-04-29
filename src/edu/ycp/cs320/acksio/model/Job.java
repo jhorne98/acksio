@@ -13,22 +13,22 @@ public class Job implements DataController{
 	private int jobID;
 	private String destinationAddress;
 	private VehicleType vehicleType;
-	private Boolean tsaVerified;
+	private Integer tsaVerified;
 	private String recipientName;
 	private long recipientPhone;
 	private double distanceMi;
 	private double payForJob;
-	private Boolean courierPaid;
+	private Integer courierPaid;
 	private int pickUpTime;
 	private int dropOffTime;
 	private int actualTime;
-	private Boolean signed; 
+	private Integer signed; 
 	private String id;
-	private Boolean approved;
+	private Integer approved;
 	private double destLat;
 	private double destLong;
 	
-	public Job(String destinationAddress, VehicleType vehicleType, boolean tsaVerified, 
+	public Job(String destinationAddress, VehicleType vehicleType, Integer tsaVerified, 
 				String recipientName, long recipientPhone, double distanceMi, 
 				double pay, 
 				int pickUpTime, int dropOffTime) {
@@ -41,7 +41,7 @@ public class Job implements DataController{
 		this.setPayForJob(pay);
 		this.pickUpTime=pickUpTime;
 		this.dropOffTime=dropOffTime;
-		approved=false;
+		approved=0;
 	}
 	
 	public Job() {
@@ -60,6 +60,7 @@ public class Job implements DataController{
 		this.vehicleType = vehicle; 
 	}
 	public void setVehicleType (String vehicle) {
+		/*
 		if(vehicle.equals(VehicleType.BICYCLE.toString())) {
 			vehicleType = VehicleType.BICYCLE;
 		} else if(vehicle.equals(VehicleType.MOTORCYCLE.toString())) {
@@ -79,8 +80,13 @@ public class Job implements DataController{
 		} else {
 			vehicleType = null;
 		}
+		*/
+		
+		vehicle = vehicle.toUpperCase();
+		
+		vehicleType = VehicleType.valueOf(vehicle);
 	}
-	public void setTsaVerified (Boolean tsa) {
+	public void setTsaVerified (Integer tsa) {
 		this.tsaVerified = tsa; 
 	}
 	public void setRecipientName (String name) {
@@ -92,7 +98,7 @@ public class Job implements DataController{
 	public void setDistanceMi (double distanceMi) {
 		this.distanceMi = distanceMi;
 	}
-	public void setCourierPaid  (Boolean paid) {
+	public void setCourierPaid  (Integer paid) {
 		this.courierPaid = paid;
 	}
 	public void setPickUpTime (int time) {
@@ -104,7 +110,7 @@ public class Job implements DataController{
 	public void setActualTime (int time) {
 		this.actualTime = time; 
 	}
-	public void signed (Boolean signed) {
+	public void signed (Integer signed) {
 		this.signed = signed; 
 	}
 	public String getDeststinationAddress () {
@@ -113,7 +119,7 @@ public class Job implements DataController{
 	public VehicleType getVehicleType () {
 		return vehicleType; 
 	}
-	public Boolean getTsaVerified () {
+	public Integer getTsaVerified () {
 		return tsaVerified; 
 	}
 	public String getRecipientName () {
@@ -125,7 +131,7 @@ public class Job implements DataController{
 	public double getDistanceMi () {
 		return distanceMi;
 	}
-	public Boolean getCourierPaid  () {
+	public Integer getCourierPaid  () {
 		return courierPaid;
 	}
 	public int getPickUpTime () {
@@ -137,11 +143,11 @@ public class Job implements DataController{
 	public int getActualTime () {
 		return actualTime; 
 	}
-	public Boolean getSigned () {
+	public Integer getSigned () {
 		return signed; 
 	}
 	
-	public void setSigned(boolean signed) {
+	public void setSigned(Integer signed) {
 		this.signed = signed;
 	}
 	
@@ -152,12 +158,16 @@ public class Job implements DataController{
 		this.id = id;
 	}
 	
-	public boolean getApproved() {
+	public Integer getApproved() {
 		return approved;
 	}
 	
-	public void setApproved(boolean approved) {
+	public void setApproved(Integer approved) {
 		this.approved = approved;
+	}
+	
+	public boolean isApproved() {
+		return approved != 0;
 	}
 
 	public int getJobID() {

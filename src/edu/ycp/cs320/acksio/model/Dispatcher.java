@@ -13,13 +13,18 @@ public class Dispatcher extends UserAccount{
 	private Boolean tsaCert;
 	private Job testJob; //will go to database when implemented 
 	private String address;
-	private int phone;
+	private String phone;
 	private List<Job> jobs;
 	private List<Courier> couriers;
 	
-	public Dispatcher(VehicleType vehicleType, Boolean tsaCert, String address, int phone) {
+	public Dispatcher(VehicleType vehicleType, Boolean tsaCert, String address, String phone) {
 		this.vehicleType = vehicleType;
 		this.tsaCert = tsaCert;
+		this.address = address;
+		this.phone = phone;
+	}
+	
+	public Dispatcher(String address, String phone) {
 		this.address = address;
 		this.phone = phone;
 	}
@@ -33,24 +38,46 @@ public class Dispatcher extends UserAccount{
 		populate(id);
 	}
 
-	public Dispatcher(boolean tsaCert, String address, String name, int phone) {
+	public Dispatcher(boolean tsaCert, String address, String name, String phone) {
 		this.tsaCert = tsaCert;
 		this.address = address;
 		setName(name);
 		this.phone = phone;
 	}
-
-	public VehicleType getVehicleType() {
-		return vehicleType;
-	}
 	public void Queue() {
 		//TODO: Implement
-		Job testJob = new Job("118 oak drive", vehicleType.CAR, true, "Don Hake", 7175555555L, 64.9, 53.7, 1430, 1730);
+		//Job testJob = new Job("118 oak drive", vehicleType.CAR, true, "Don Hake", 7175555555L, 64.9, 53.7, 53.7, 1430, 1730);
+	}
+	
+	public void payCourier() {
+		for(Courier courier : couriers) {
+			payCourier(courier); 
+		}
+	}
+	
+	public void payCourier(Courier courier) {
+		for(Job job : courier.getJobs()) {
+			payCourier(courier, job);
+		}
+	}
+	
+	public boolean payCourier(Courier courier, Job job) {
+		if(job.isApproved()) {
+			courier.payAmount(job.getPayForJob());
+			job.setCourierPaid(1);
+			return true;
+		}
+		return false;
 	}
   
 	public Boolean getTsaCert() {
 		return tsaCert;
 	}
+
+	public VehicleType getVehicleType() {
+		return vehicleType;
+	}
+	
 	
 	public Job getTestJob() {
 		return testJob;
@@ -68,11 +95,11 @@ public class Dispatcher extends UserAccount{
 		this.address = address;
 	}
 
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	
@@ -101,6 +128,14 @@ public class Dispatcher extends UserAccount{
 		DerbyDatabase db = new DerbyDatabase();
 		couriers = db.couriersFromDispatcherID(dispatcherID);
 	}
+
+	public int getDispatcherID() {
+		return dispatcherID;
+	}
+
+	public void setDispatcherID(int dispatcherID) {
+		this.dispatcherID = dispatcherID;
+	}
 	
 	@Override
 	public void populate(int id) {
@@ -115,7 +150,7 @@ public class Dispatcher extends UserAccount{
 			setEmail(hold.getEmail());
 			setUsername(hold.getUsername());
 			setPassword(hold.getPassword());
-			setAccountType();
+			setAccountType(hold.getAccountType());
 			setJobs();
 			setCouriers();
 		} else {
@@ -149,13 +184,4 @@ public class Dispatcher extends UserAccount{
 		if(!db.update(this)) 
 			db.insert(this);
 	}
-
-	public int getDispatcherID() {
-		return dispatcherID;
-	}
-
-	public void setDispatcherID(int dispatcherID) {
-		this.dispatcherID = dispatcherID;
-	}
-
 }

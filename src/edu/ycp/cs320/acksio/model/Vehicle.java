@@ -13,7 +13,7 @@ public class Vehicle implements DataController{
 	private String make;
 	private String model;
 	private VehicleType type;
-	private boolean active;
+	private Integer active;
 	
 	//CONSTRUCTORS
 	public Vehicle() {
@@ -49,7 +49,7 @@ public class Vehicle implements DataController{
 		if(!db.update(this)) 
 			db.insert(this);
 	}
-
+	
 	//SETTERS AND GETTERS
 	public String getLicensePlate() {
 		return licensePlate;
@@ -120,11 +120,11 @@ public class Vehicle implements DataController{
 		type = VehicleType.valueOf(vehicle);
 	}
 	
-	public boolean isActive() {
+	public Integer isActive() {
 		return active;
 	}
 
-	public void setActive(boolean active) {
+	public void setActive(Integer active) {
 		this.active = active;
 	}
 

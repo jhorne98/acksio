@@ -30,9 +30,7 @@ public class InitialData {
 				//System.out.println("User... " + userId);
 				user.setUserId(userId++);				
 				user.setUsername(i.next());
-				//System.out.println("User... " + user.getUsername());
 				user.setPassword(i.next());
-				//System.out.println("User... " + user.getPassword());
 				user.setEmail(i.next());
 				user.setName(i.next());
 				//System.out.println(i.hasNext());
@@ -40,7 +38,7 @@ public class InitialData {
 				//System.out.println(i.hasNext());
 				userList.add(user);
 				//Therefor, the data in the csv is presented as
-				//username|password|email|name|accountType
+				//username|password|email|name
 			}
 			return userList;
 		} finally {
@@ -66,7 +64,7 @@ public class InitialData {
 				user.setDispatcherID(dispatcherId++);
 				user.setUserId(Integer.parseInt(i.next()));
 				user.setAddress(i.next());
-				user.setPhone(Integer.parseInt(i.next()));
+				user.setPhone(i.next());
 				//Therefor, the data in the csv is presented as
 				//user_id|Address|Phone
 				
@@ -107,13 +105,13 @@ public class InitialData {
 				user.setCourierID(courierId++);
 				user.setUserId(Integer.parseInt(i.next()));
 				user.setDispatcherID(Integer.parseInt(i.next()));
-				user.setTsaVerified(Boolean.parseBoolean(i.next()));
+				user.setTsaVerified(Integer.parseInt(i.next()));
 				user.setLongitude(Double.parseDouble(i.next()));
 				user.setLatitude(Double.parseDouble(i.next()));
 				user.setBalance(Double.parseDouble(i.next()));
 				user.setPayEstimate(Double.parseDouble(i.next()));
 				user.setPayHistory(Double.parseDouble(i.next()));
-				user.setAvailability(Boolean.parseBoolean(i.next()));
+				user.setAvailability(Integer.parseInt(i.next()));
 				//Therefor, the data is presented in the csv as
 				//UserID|DispatcherID|TSA_Ver|Long|Lat|Balance|PayEstimate|PayHistory|Availability
 				
@@ -156,18 +154,19 @@ public class InitialData {
 				job.setDestLong(Double.parseDouble(i.next()));
 				job.setDestLat(Double.parseDouble(i.next()));
 				job.setVehicleType(i.next().toUpperCase());//VehicleType
-				job.setTsaVerified(Boolean.parseBoolean(i.next()));
+				job.setTsaVerified(Integer.parseInt(i.next()));
 				job.setRecipientName(i.next());
 				job.setRecipientPhone(Long.parseLong(i.next()));
 				job.setDistanceMi(Double.parseDouble(i.next())); //Distance
-				job.setCourierPaid(Boolean.parseBoolean(i.next())); //CourierPaid
+				job.setCourierPaid(Integer.parseInt(i.next())); //CourierPaid
 				job.setPickUpTime(Integer.parseInt(i.next())); //PickUpTime
 				job.setDropOffTime(Integer.parseInt(i.next())); //DropOffTime
 				job.setActualTime(Integer.parseInt(i.next())); //TimeForJob
-				job.setSigned(Boolean.parseBoolean(i.next())); //PackageSignedFor
-				job.setApproved(Boolean.parseBoolean(i.next())); //InvoiceApproved
+				job.setSigned(Integer.parseInt(i.next())); //PackageSignedFor
+				job.setApproved(Integer.parseInt(i.next())); //InvoiceApproved
+				job.setPayForJob(Double.parseDouble(i.next()));
 				//Therefor, the data is presented in the csv as
-				//CourierID|DispatcherID|Long|Lat|VehicleType|TSA_Ver|RecipientName|RecipientPhone|DistanceMi|CourierPaid|PickUpTime|DropOffTime|ActualTime|Signed|Approved
+				//CourierID|DispatcherID|Long|Lat|VehicleType|TSA_Ver|RecipientName|RecipientPhone|DistanceMi|CourierPaid|PickUpTime|DropOffTime|ActualTime|Signed|Approved|Payment
 				
 				jobList.add(job);
 			}
@@ -197,7 +196,7 @@ public class InitialData {
 				vehicle.setMake(i.next());//Make
 				vehicle.setModel(i.next());//Model
 				vehicle.setYear(Integer.parseInt(i.next()));
-				vehicle.setActive(Boolean.parseBoolean(i.next()));
+				vehicle.setActive(Integer.parseInt(i.next()));
 				//Therefor, the data is presented in the csv as
 				//CourierID|Type|Plate|Make|Model|Year|Active
 				
