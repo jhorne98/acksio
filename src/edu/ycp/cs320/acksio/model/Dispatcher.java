@@ -55,6 +55,18 @@ public class Dispatcher extends UserAccount{
 		}
 	}
 	
+	public boolean payCourier(int JobID) {
+		DerbyDatabase db = new DerbyDatabase();
+		Job job = db.jobFromID(JobID);
+		return payCourier(job);
+	}
+	
+	public boolean payCourier(Job job) {
+		DerbyDatabase db = new DerbyDatabase();
+		Courier courier = db.courierFromCourierID(job.getCourierID());
+		return payCourier(courier, job);
+	}
+	
 	public void payCourier(Courier courier) {
 		for(Job job : courier.getJobs()) {
 			payCourier(courier, job);

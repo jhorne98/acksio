@@ -932,8 +932,55 @@ public class DerbyDatabase implements IDatabase {
 					stmt = conn.prepareStatement("select "
 							+ "couriers.dispatcher_id, couriers.tsa_verified, couriers.long, couriers.lat, "
 							+ "couriers.balance, couriers.pay_estimate, couriers.pay_history, couriers.availability, "
-							+ "users.username, users.password, users.email, users.name, users.user_id from couriers, users "
+							+ "users.username, users.password, users.email, users.name, couriers.courier_id from couriers, users "
 							+ "where couriers.user_id = users.user_id and users.user_id = ?");
+					
+					stmt.setInt(1, id);
+					
+					resultSet = stmt.executeQuery();
+					
+					if(!resultSet.next())
+						return null;
+					
+					Courier courier = new Courier();
+					
+					courier.setUserId(id);
+					courier.setDispatcherID(resultSet.getInt(1));
+					courier.setTsaVerified(resultSet.getInt(2));
+					courier.setLongitude(resultSet.getDouble(3));
+					courier.setLatitude(resultSet.getDouble(4));
+					courier.setBalance(resultSet.getDouble(5));
+					courier.setPayEstimate(resultSet.getDouble(6));
+					courier.setPayHistory(resultSet.getDouble(7));
+					courier.setAvailability(resultSet.getInt(8));
+					courier.setUsername(resultSet.getString(9));
+					courier.setPassword(resultSet.getString(10));
+					courier.setEmail(resultSet.getString(11));
+					courier.setName(resultSet.getString(12));
+					courier.setCourierID(resultSet.getInt(13));
+					
+					return courier;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
+
+	public Courier courierFromCourierID(int id) {
+		return executeTransaction(new Transaction<Courier>() {
+			@Override
+			public Courier execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement("select "
+							+ "couriers.dispatcher_id, couriers.tsa_verified, couriers.long, couriers.lat, "
+							+ "couriers.balance, couriers.pay_estimate, couriers.pay_history, couriers.availability, "
+							+ "users.username, users.password, users.email, users.name, users.user_id from couriers, users "
+							+ "where couriers.user_id = users.user_id and couriers.courier_id = ?");
 					
 					stmt.setInt(1, id);
 					
@@ -967,7 +1014,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-
+	
 	/*
 	// populate a Courier object with fields from db
 	public Courier courierFromUsername(String username) {
