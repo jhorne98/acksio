@@ -96,7 +96,7 @@ public class SameDatabaseTest {
 		assertEquals(fvehicle.getModel(), dvehicle.getModel());
 		assertEquals(fvehicle.getType(), dvehicle.getType());
 		assertEquals(fvehicle.getYear(), dvehicle.getYear());
-		assertEquals(fvehicle.isActive(), dvehicle.isActive());
+		assertEquals(fvehicle.getActive(), dvehicle.getActive());
 	}
 
 	@Test

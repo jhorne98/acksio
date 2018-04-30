@@ -53,7 +53,15 @@
 					TSA Verfied:<br>
 					<!-- <input type="radio" name="tsaVerified" value="yes">Verified<br>
 					<input type="radio" name="tsaVerified" value="no">Not Verified<br><br>-->
-					
+					Currently
+					<c:choose>
+						<c:when test="${couriertsaverified==0}">
+							UNVERIFIED
+						</c:when>
+						<c:when test="${couriertsaverified==1}">
+							VERIFIED
+						</c:when>
+					</c:choose><br>
 					<select required name="tsaVerified">
 						<option value="none">Unchanged</option>
 						<option value="yes">Yes</option>

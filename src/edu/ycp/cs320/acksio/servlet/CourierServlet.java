@@ -36,6 +36,7 @@ public class CourierServlet extends HttpServlet {
 			
 			courier.setVehicles();
 			
+			// send all of the read in courier's vehicles to the jsp
 			req.setAttribute("loop", courier.getVehicles());
 			
 			// call JSP to generate empty form

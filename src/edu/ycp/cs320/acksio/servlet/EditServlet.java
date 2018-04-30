@@ -16,6 +16,7 @@ import edu.ycp.cs320.acksio.model.*;
 public class EditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserAccount editAccount;
+	private Courier courier;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -25,11 +26,15 @@ public class EditServlet extends HttpServlet {
 		
 		// take in logged in account from LoginServlet
 		editAccount = (UserAccount)req.getSession(true).getAttribute("valid_model");
-		
+
 		//System.out.println(editAccount.getValidity());
 		
 		// call JSP to generate empty form
 		if(editAccount != null) {
+			courier = new Courier();
+			courier.populate(editAccount.getUserId());
+			req.setAttribute("couriertsaverified", courier.isTsaVerified());
+			
 			req.setAttribute("accountType", editAccount.getAccountType());
 			
 			req.getRequestDispatcher("/_view/edit.jsp").forward(req, resp);
@@ -73,6 +78,9 @@ public class EditServlet extends HttpServlet {
 		}
 		*/
 
+		courier.populate(editAccount.getUserId());
+		req.setAttribute("couriertsaverified", courier.isTsaVerified());
+		
 		// Forward to view to render the result HTML document
 		req.setAttribute("accountType", editAccount.getAccountType());
 		req.getRequestDispatcher("/_view/edit.jsp").forward(req, resp);
