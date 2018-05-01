@@ -33,6 +33,18 @@
     <servlet-name>SignupServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.acksio.servlet.SignupServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>EditServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.acksio.servlet.EditServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>CourierServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.acksio.servlet.CourierServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>InsertVehicleServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.acksio.servlet.InsertVehicleServlet</servlet-class>
+  </servlet>
 
   <!-- Servlet mappings --><!--
   <servlet-mapping>
@@ -62,6 +74,18 @@
   <servlet-mapping>
     <servlet-name>SignupServlet</servlet-name>
     <url-pattern>/signup</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>EditServlet</servlet-name>
+  	<url-pattern>/edit</url-pattern> 
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>CourierServlet</servlet-name>
+  	<url-pattern>/courier</url-pattern> 
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>InsertVehicleServlet</servlet-name>
+  	<url-pattern>/insertvehicle</url-pattern> 
   </servlet-mapping>
   
 </web-app>

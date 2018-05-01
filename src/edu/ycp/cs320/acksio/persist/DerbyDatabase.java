@@ -493,7 +493,7 @@ public class DerbyDatabase implements IDatabase {
 						insertVehicle.setString(4, vehicle.getMake());
 						insertVehicle.setString(5, vehicle.getModel());
 						insertVehicle.setInt(6, vehicle.getYear());
-						insertVehicle.setInt(7, vehicle.isActive());
+						insertVehicle.setInt(7, vehicle.getActive());
 						insertVehicle.addBatch();
 					}
 					insertVehicle.executeBatch();
@@ -666,7 +666,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt.setString(4, vehicle.getMake());
 					stmt.setString(5, vehicle.getModel());
 					stmt.setInt(6, vehicle.getYear());
-					stmt.setString(7, vehicle.isActive().toString());
+					stmt.setString(7, vehicle.getActive().toString());
 					
 					return 0 != stmt.executeUpdate();
 				} finally {
@@ -856,7 +856,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt.setString(4, vehicle.getMake());
 					stmt.setString(5, vehicle.getModel());
 					stmt.setInt(6, vehicle.getYear());
-					stmt.setString(7, vehicle.isActive().toString());
+					stmt.setInt(7, vehicle.getActive());
 					stmt.setInt(8, vehicle.getVehicleID());
 					
 					return 0 != stmt.executeUpdate();
@@ -937,13 +937,17 @@ public class DerbyDatabase implements IDatabase {
 					
 					stmt.setInt(1, id);
 					
+					System.out.println("Attempting to fetch Courier with user_ID "+id);
+					
 					resultSet = stmt.executeQuery();
 					
-					if(!resultSet.next())
+					if(!resultSet.next()) {
+						System.out.println(!resultSet.next());
 						return null;
+					}
 					
 					Courier courier = new Courier();
-					
+					 
 					courier.setUserId(id);
 					courier.setDispatcherID(resultSet.getInt(1));
 					courier.setTsaVerified(resultSet.getInt(2));

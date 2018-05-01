@@ -114,10 +114,11 @@ public class Courier extends UserAccount{
 	}
 
 	@Override
-	public void save() {
+	public Boolean save() {
 		DerbyDatabase db = new DerbyDatabase();
 		if(!db.update(this)) 
-			db.insert(this);
+			return db.insert(this);
+		return true;
 	}
 	
 	//Adds a job to the Courier's list of jobs in model and database
@@ -271,6 +272,7 @@ public class Courier extends UserAccount{
 	}
 
 	//SETTERS AND GETTERS
+	
 	public List<Job> getJobs(){
 		return jobs;
 	}
@@ -287,6 +289,10 @@ public class Courier extends UserAccount{
 	public void setVehicles() {
 		DerbyDatabase db = new DerbyDatabase();
 		vehicles = db.vehiclesFromCourierID(courierID);
+	}
+	
+	public List<Vehicle> getVehicles() {
+		return vehicles;
 	}
 	
 	public void addVehicle(Vehicle vehicle) {

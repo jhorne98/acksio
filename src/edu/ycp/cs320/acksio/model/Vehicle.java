@@ -6,10 +6,10 @@ import edu.ycp.cs320.acksio.persist.DerbyDatabase;
 
 public class Vehicle implements DataController{
 	//ATTRIBUTES
-	private int courierID;
-	private int vehicleID;
+	private Integer vehicleID;
+	private Integer courierID;
 	private String licensePlate;
-	private int year;
+	private Integer year;
 	private String make;
 	private String model;
 	private VehicleType type;
@@ -18,6 +18,15 @@ public class Vehicle implements DataController{
 	//CONSTRUCTORS
 	public Vehicle() {
 		//Purposefully empty
+	}
+	
+	public Vehicle(Integer courierID, String licensePlate, Integer year, String make, String model, VehicleType type) {
+		this.courierID = courierID;
+		this.licensePlate = licensePlate;
+		this.year = year;
+		this.make = make;
+		this.model = model;
+		this.type = type;
 	}
 	
 	public Vehicle(int id) {
@@ -37,17 +46,18 @@ public class Vehicle implements DataController{
 			setMake(hold.getMake());//Make
 			setModel(hold.getModel());//Model
 			setYear(hold.getYear());//Year
-			setActive(hold.isActive());//Active
+			setActive(hold.getActive());//Active
 		} else {
 			throw new NullPointerException();
 		}
 	}
 
 	@Override
-	public void save() {
+	public Boolean save() {
 		DerbyDatabase db = new DerbyDatabase();
 		if(!db.update(this)) 
-			db.insert(this);
+			return db.insert(this);
+		return true;
 	}
 	
 	//SETTERS AND GETTERS
@@ -59,11 +69,11 @@ public class Vehicle implements DataController{
 		this.licensePlate = licensePlate;
 	}
 
-	public int getYear() {
+	public Integer getYear() {
 		return year;
 	}
 
-	public void setYear(int year) {
+	public void setYear(Integer year) {
 		this.year = year;
 	}
 
@@ -120,7 +130,7 @@ public class Vehicle implements DataController{
 		type = VehicleType.valueOf(vehicle);
 	}
 	
-	public Integer isActive() {
+	public Integer getActive() {
 		return active;
 	}
 
@@ -128,19 +138,19 @@ public class Vehicle implements DataController{
 		this.active = active;
 	}
 
-	public int getVehicleID() {
+	public Integer getVehicleID() {
 		return vehicleID;
 	}
 
-	public void setVehicleID(int vehicleID) {
+	public void setVehicleID(Integer vehicleID) {
 		this.vehicleID = vehicleID;
 	}
 
-	public int getCourierID() {
+	public Integer getCourierID() {
 		return courierID;
 	}
 
-	public void setCourierID(int courierID) {
+	public void setCourierID(Integer courierID) {
 		this.courierID = courierID;
 	}
 }

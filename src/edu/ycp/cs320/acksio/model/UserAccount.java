@@ -3,6 +3,7 @@ package edu.ycp.cs320.acksio.model;
 import edu.ycp.cs320.acksio.controller.DataController;
 //import edu.ycp.cs320.acksio.persist.DatabaseProvider;
 import edu.ycp.cs320.acksio.persist.*;
+import jbcrypt.org.mindrot.jbcrypt.*;
 //import java.sql.*;
 
 public class UserAccount implements DataController{
@@ -26,10 +27,11 @@ public class UserAccount implements DataController{
 		//save();
 	}
 	
-	public UserAccount(String username, String password, String email, String accountType) {
+	public UserAccount(String username, String password, String email, String name, String accountType) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.name = name;
 		this.accountType = accountType;
 		isValid = false;
 		//save();
@@ -92,14 +94,6 @@ public class UserAccount implements DataController{
 	public String getAccountType() {
 		return accountType;
 	}
-	
-	public void setAccountType() {
-		DerbyDatabase db = new DerbyDatabase();
-		if(db.dispatcherFromUsername(username) != null)
-			accountType = "dispatcher";
-		else
-			accountType = "courier";
-	}
 
 	public void setAccountType(String accountType) {
 		this.accountType = accountType;
@@ -140,10 +134,9 @@ public class UserAccount implements DataController{
 	}
 
 	@Override
-	public void save() {
+	public Boolean save() {
 		DerbyDatabase db = new DerbyDatabase();
-		if(!db.update(this)) 
-			db.insert(this);
+		return db.insert(this);
 	}
 	
 	// remove user from users table by user_id
@@ -168,6 +161,76 @@ public class UserAccount implements DataController{
 	}
 	*/
 	
+	// allows User to edit specific fields of UserAccount
+	public Boolean edit(UserAccount updated, String tsaVerifiedParam, Dispatcher updatedDispatcher) {
+		DerbyDatabase db = new DerbyDatabase();
+		//UserAccount editedUser = new UserAccount();
+		
+		// there's no good way to iterate through fields of a class, or so what StackOverflow tells me
+		// check if each field is non-empty using length
+		if(updated.getUsername().length() != 0) {
+			username = updated.getUsername();
+		}
+		
+		if(updated.getPassword().length() != 0) {
+			password = BCrypt.hashpw(updated.getPassword(), BCrypt.gensalt());			
+		}
+		
+		if(updated.getEmail().length() != 0) {
+			email = updated.getEmail();
+		}
+		
+		if(updated.getName().length() != 0) {
+			name = updated.getName();			
+		}
+		
+		if(accountType.equals("courier")) {
+			Courier updatedCourier = db.courierFromID(userId);
+			
+			//System.out.println(updatedCourier.isTsaVerified() + " " + updatedCourier.getBalance());
+			
+			// tsaVerified set to 0 before changes to user made: if users specifies, change here
+			if(tsaVerifiedParam.equals("yes")) {
+				updatedCourier.setTsaVerified(1);
+			} else if(tsaVerifiedParam.equals("no")) {
+				updatedCourier.setTsaVerified(0);
+			}
+			
+			// update courier with new tsaVerified info
+			db.update(updatedCourier);
+			//updatedCourier = db.courierFromID(userId);
+			//System.out.println(updatedCourier.isTsaVerified());
+		} else {
+			Dispatcher oldDispatcher = db.dispatcherFromID(userId);
+			//oldDispatcher.getPhone();
+			//System.out.println(oldDispatcher.getAddress());
+			//System.out.println(updatedDispatcher.getPhone());
+			
+			if(updatedDispatcher.getAddress().length() != 0) {
+				oldDispatcher.setAddress(updatedDispatcher.getAddress());
+			}
+			
+			//oldDispatcher.setPhone(updatedDispatcher.getPhone());
+			//System.out.println(updatedDispatcher.getPhone());
+			
+			
+			if(updatedDispatcher.getPhone().length() != 0) {
+				oldDispatcher.setPhone(updatedDispatcher.getPhone());
+			}
+			
+			db.update(oldDispatcher);
+		}
+		
+		// update() only edits four above
+		/*
+		userId = updated.getUserId();
+		isValid = updated.getValidity();
+		accountType = updated.getAccountType();
+		*/
+		
+		return db.update(this);
+	}
+	
 	// login() looks at users to determine if username exists and correct password has been input
 	public UserAccount login() {
 		DerbyDatabase db = new DerbyDatabase();
@@ -184,6 +247,9 @@ public class UserAccount implements DataController{
 	
 	public int signup() {
 		DerbyDatabase db = new DerbyDatabase();
+		
+		// implementation of jBCrypt to hash pw
+		//String hashedPass = BCrypt.hashpw(password, BCrypt.gensalt());
 		
 		int signupFlag = db.createAccount(username, password, email, accountType);
 		

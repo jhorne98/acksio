@@ -1,34 +1,56 @@
 package edu.ycp.cs320.acksio.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.ycp.cs320.acksio.model.Courier;
 import edu.ycp.cs320.acksio.model.UserAccount;
-
-//THIS SERVLET IS EMPTY SO THAT WE MAY USE IT TO 
 
 public class CourierServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private UserAccount user;
+	private Courier courier;
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		System.out.println("Empty Servlet: doGet");	
+		System.out.println("Courier Servlet: doGet");
 		
-		// call JSP to generate empty form
-		req.getRequestDispatcher("/_view/empty.jsp").forward(req, resp);
+		/*
+		int[] testints = {0,12,15,16,14};
+		req.setAttribute("vehicleLoopSize", 5);
+		req.setAttribute("loop", testints);
+		*/
+		
+		user = (UserAccount)req.getSession(true).getAttribute("valid_model");
+		
+		if(user != null) {
+			courier = new Courier();
+			courier.populate(user.getUserId());
+			
+			courier.setVehicles();
+			
+			// send all of the read in courier's vehicles to the jsp
+			req.setAttribute("loop", courier.getVehicles());
+			
+			// call JSP to generate empty form
+			req.getRequestDispatcher("/_view/courier.jsp").forward(req, resp);
+		} else {
+			resp.sendRedirect("login");
+		}
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) //TODO: Implement 
 			throws ServletException, IOException {
 		
-		System.out.println("Empty Servlet: doPost");
+		System.out.println("Courier Servlet: doPost");
 		
 		// holds the error message text, if there is any
 		String errorMessage = null;
@@ -42,7 +64,15 @@ public class CourierServlet extends HttpServlet {
 		// this adds the errorMessage text and the result to the response
 		req.setAttribute("errorMessage", errorMessage);
 		
+		if(req.getParameter("edit") != null) {
+			resp.sendRedirect("edit");
+		}
+		
+		if(req.getParameter("insertvehicle") != null) {
+			resp.sendRedirect("insertvehicle");
+		}
+		
 		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/empty.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/courier.jsp").forward(req, resp);
 	}
 }

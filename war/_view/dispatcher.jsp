@@ -25,6 +25,9 @@
 		</div>
 
 		<div id=main_body>
+		
+			Welcome to Acksio, ${model.name}. 
+			<br><br>
 				
 			Target Address: 
 				<input type="text" name="destinationAddress" value="${model.address}" method="post">
@@ -47,6 +50,13 @@
 				<input type="submit" name="submit" value="Create Job">
 				
 				<p>${model.vehicleType}</p>
+		</div>
+
+		<div id=main_body>
+			You are in charge of the following couriers: 
+			<br><br>
+			
+			
 		</div>
 
 		<!--

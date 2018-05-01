@@ -51,7 +51,7 @@ public class SignupServlet extends HttpServlet {
 		String errorMessage = null;
 		
 		// create the UserAccount model for form input
-		UserAccount model = new UserAccount(req.getParameter("username"), req.getParameter("password"), req.getParameter("email"), req.getParameter("accountType"));
+		UserAccount model = new UserAccount(req.getParameter("username"), req.getParameter("password"), req.getParameter("email"), "", req.getParameter("accountType"));
 		
 		//System.out.println(req.getParameter("accountType"));
 		
@@ -71,9 +71,7 @@ public class SignupServlet extends HttpServlet {
 				} else if(signupFlag == 1) {
 					errorMessage = "Username is already taken.";
 				} else if(signupFlag == 2) {
-					errorMessage = "Password is already taken.";
-				} else if(signupFlag == 3) {
-					errorMessage = "Email address is already taken.";
+					errorMessage = "Email is already taken.";
 				}
 			}
 			
