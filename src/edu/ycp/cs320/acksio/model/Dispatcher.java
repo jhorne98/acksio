@@ -68,13 +68,14 @@ public class Dispatcher extends UserAccount{
 	}
 	
 	public void payCourier(Courier courier) {
+		courier.setJobs();
 		for(Job job : courier.getJobs()) {
 			payCourier(courier, job);
 		}
 	}
 	
 	public boolean payCourier(Courier courier, Job job) {
-		if(job.isApproved()) {
+		if(job.isApproved() && !job.isCourierPaid()) {
 			courier.payAmount(job.getPayForJob());
 			job.setCourierPaid(1);
 			job.save();

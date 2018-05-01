@@ -70,10 +70,11 @@ public class DispatcherServlet extends HttpServlet {
 		}
 		
 		if(req.getParameter("examineCourier") != null) {
+			System.out.println("Courier examination not implemented");
 			resp.sendRedirect("specificCourier");
 		}
 		else if(req.getParameter("payCourier") != null) {
-			System.out.println("Courier payment not implemented");
+			//System.out.println("Courier payment not implemented");
 			System.out.println(req.getParameter("courierSelection"));
 			DerbyDatabase db = new DerbyDatabase();
 			model.payCourier(db.courierFromCourierID(Integer.parseInt(req.getParameter("courierSelection"))));
@@ -83,13 +84,15 @@ public class DispatcherServlet extends HttpServlet {
 			System.out.println(req.getParameter("jobSelection"));
 		}
 		else if(req.getParameter("payJob") != null) {
-			System.out.println("Job payment not implemented");
+			//System.out.println("Job payment not implemented");
 			System.out.println(req.getParameter("jobSelection"));
 			DerbyDatabase db = new DerbyDatabase();
 			model.payCourier(Integer.parseInt(req.getParameter("jobSelection")));
 		}
 		
 		// Add parameters as request attributes
+		model.setJobs();
+		model.setCouriers();
 		req.setAttribute("model", model);
 		req.setAttribute("courierList", model.getCouriers());
 		req.setAttribute("jobList", model.getJobs());

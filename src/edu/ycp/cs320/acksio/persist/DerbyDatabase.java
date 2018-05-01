@@ -712,7 +712,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt.setDouble(3, job.getDestLong());
 					stmt.setDouble(4, job.getDestLat());
 					stmt.setString(5, job.getVehicleType().toString());
-					stmt.setString(6, job.getTsaVerified().toString());
+					stmt.setInt(6, job.getTsaVerified());
 					stmt.setString(7, job.getRecipientName());
 					stmt.setLong(8, job.getRecipientPhone());
 					stmt.setInt(9, job.getDispatcherID());
