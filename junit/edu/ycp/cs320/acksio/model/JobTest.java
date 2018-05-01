@@ -8,64 +8,49 @@ import org.junit.Test;
 
 public class JobTest {
 	Job model;
-	Boolean[] bools;
-	int[] integers;
-	String[] strings;
+	
+	double epsilon;
 	
 	@Before
 	public void setUp() {
 		model = new Job();
-		bools = new Boolean[3];
-		for(int i = 0; i < bools.length; i++) {
-			bools[i] = true;
-		}
-		integers = new int[7];
-		for(int i = 0; i < integers.length; i++) {
-			integers[i] = i;
-		}
-		strings = new String[2];
-		strings[0] = "place";
-		strings[1] = "cah";
+		epsilon = 0.1;
 		
+		model.setActualTime(500);
+		model.setDistanceMi(5.0);
+		model.setDropOffTime(500);
+		model.setPayActualForJob(1.00);
+		model.setPayEstimateForJob(1.00);
+		model.setPickUpTime(500);
+		
+		model.setCourierPaid(0);
+		model.setTsaVerified(1);
+		
+		model.setDeststinationAddress("11313 Sample Ln.");
+		model.setVehicleType("Car");
 	}
 	
-	@Test 
-	public void testGets() {
-		assertEquals(model.getSigned(), null);
-		assertEquals(model.getCourierPaid(), null);
-		assertEquals(model.getTsaVerified(), null);
-		assertEquals(model.getDeststinationAddress(), null);
-		assertEquals(model.getVehicleType(), null);
-	}
-	
+	@Test
 	public void testSets() {
-		//INTS
-		model.setActualTime(integers[0]);
-		model.setDistanceMi(integers[1]);
-		model.setDropOffTime(integers[2]);
-		model.setPayActualForJob(integers[3]);
-		model.setPayEstimateForJob(integers[4]);
-		model.setPickUpTime(integers[5]);
 		//model.setRecipentPhone(integers[6]);
-		assertEquals(model.getActualTime(),integers[0]);
-		assertEquals(model.getDistanceMi(),integers[1]);
-		assertEquals(model.getDropOffTime(),integers[2]);
-		assertEquals(model.getPayActualForJob(),integers[3]);
-		assertEquals(model.getPayEstimateForJob(),integers[4]);
-		assertEquals(model.getPickUpTime(),integers[5]);
+		assertEquals(500, model.getActualTime());
+		assertEquals(5.0, model.getDistanceMi(), epsilon);
+		assertEquals(500, model.getDropOffTime());
+		assertEquals(1.00, model.getPayActualForJob(), epsilon);
+		assertEquals(1.00, model.getPayEstimateForJob(), epsilon);
+		assertEquals(500, model.getPickUpTime());
 		//assertEquals(model.getRecipentPhone(),integers[6]);
 		
 		//BOOLEANS
-		model.setCourierPaid(bools[0]);
-		model.setTsaVerified(bools[1]);
-		assertEquals(model.getCourierPaid(), bools[0]);
-		assertEquals(model.getTsaVerified(), bools[1]);
+		
+		assertEquals(0, (int)model.getCourierPaid());
+		assertEquals(1, (int)model.getTsaVerified());
 		
 		//STRINGS
-		model.setDeststinationAddress(strings[0]);
+		
 		//model.setVehicleType(strings[1]);
-		assertEquals(model.getDeststinationAddress(), strings[0]);
-		assertEquals(model.getVehicleType(), strings[1]);
+		assertEquals("11313 Sample Ln.", model.getDeststinationAddress());
+		assertEquals(VehicleType.CAR, model.getVehicleType());
 	}
 	
 	public void testSignOff() {

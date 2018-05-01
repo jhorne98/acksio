@@ -53,6 +53,10 @@ public class Courier extends UserAccount{
 		//Purposefully empty
 	}
 	
+	public Courier(Integer tsaVerified) {
+		this.tsaVerified = tsaVerified;
+	}
+	
 	public Courier(DatabaseProvider provider, int id) {
 		setCourierID(id);
 		populate(id);

@@ -100,11 +100,11 @@ public class Job implements DataController{
 	public void setDistanceMi (double distanceMi) {
 		this.distanceMi = distanceMi;
 	}
-	public void setPayEstimateForJob (int pay) {
-		this.payEstimateForJob = pay;
+	public void setPayEstimateForJob (double payEstimateForJob) {
+		this.payEstimateForJob = payEstimateForJob;
 	}
-	public void setPayActualForJob (int pay) {
-		this.payActualForJob = pay; 
+	public void setPayActualForJob (double payActualForJob) {
+		this.payActualForJob = payActualForJob; 
 	}
 	public void setCourierPaid  (Integer paid) {
 		this.courierPaid = paid;

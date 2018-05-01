@@ -574,7 +574,7 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							  "insert into couriers (user_id, dispatcher_id, TSA_verified, long, lat, balance, pay_estimate, pay_history, availability) "
+							  "insert into couriers (user_id, dispatcher_id, tsa_verified, long, lat, balance, pay_estimate, pay_history, availability) "
 							+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 					//UserID|DispatcherID|TSA_Ver|Long|Lat|Balance|PayEstimate|PayHistory|Availability
 					
@@ -586,7 +586,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt.setDouble(6, courier.getBalance());
 					stmt.setDouble(7, courier.getPayEstimate());
 					stmt.setDouble(8, courier.getPayHistory());
-					stmt.setString(9, courier.getAvailability().toString());
+					stmt.setInt(9, courier.getAvailability());
 					
 					return 0 != stmt.executeUpdate();
 				} finally {
