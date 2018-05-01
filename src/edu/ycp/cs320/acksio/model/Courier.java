@@ -23,6 +23,8 @@ public class Courier extends UserAccount{
 	private double balance;
 	private double latitude;
 	private double longitude;
+	private int unpaidJobs;
+	private int unapprovedJobs;
 	List<Vehicle> vehicles;
 	List<Job> jobs;
 
@@ -206,6 +208,7 @@ public class Courier extends UserAccount{
 	public void payAmount(double amount) {
 		balance -= amount;
 		payHistory += amount;
+		save();
 	}
 	
 	//Reset for payHistory and payEstimate from the database
@@ -423,6 +426,40 @@ public class Courier extends UserAccount{
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
+
+	public int getUnpaidJobs() {
+		return unpaidJobs;
+	}
+
+	public void setUnpaidJobs(int uppaidJobs) {
+		this.unpaidJobs = uppaidJobs;
+	}
+
+	public void setUnpaidJobs() {
+		unpaidJobs = 0;
+		for(Job job : jobs) {
+			if(job.isApproved() && !job.isCourierPaid())
+				unpaidJobs++;
+		}
+	}
+
+	public int getUnapprovedJobs() {
+		return unapprovedJobs;
+	}
+
+	public void setUnapprovedJobs(int unapprovedJobs) {
+		this.unapprovedJobs = unapprovedJobs;
+	}
+	
+	public void setUnapprovedJobs() {
+		unapprovedJobs = 0;
+		for(Job job : jobs) {
+			if(!job.isApproved())
+				unapprovedJobs ++;
+				
+		}
+	}
+
 
 	
 }

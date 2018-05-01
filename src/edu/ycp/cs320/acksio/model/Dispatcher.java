@@ -77,6 +77,7 @@ public class Dispatcher extends UserAccount{
 		if(job.isApproved()) {
 			courier.payAmount(job.getPayForJob());
 			job.setCourierPaid(1);
+			job.save();
 			return true;
 		}
 		return false;
@@ -139,6 +140,11 @@ public class Dispatcher extends UserAccount{
 	public void setCouriers() {
 		DerbyDatabase db = new DerbyDatabase();
 		couriers = db.couriersFromDispatcherID(dispatcherID);
+		for(Courier courier : couriers) {
+			courier.setJobs();
+			courier.setUnapprovedJobs();
+			courier.setUnpaidJobs();
+		}
 	}
 
 	public int getDispatcherID() {

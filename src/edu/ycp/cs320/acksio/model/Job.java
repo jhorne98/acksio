@@ -134,6 +134,9 @@ public class Job implements DataController{
 	public Integer getCourierPaid  () {
 		return courierPaid;
 	}
+	public Boolean isCourierPaid  () {
+		return courierPaid != 0;
+	}
 	public int getPickUpTime () {
 		return pickUpTime; 
 	}
@@ -158,12 +161,12 @@ public class Job implements DataController{
 		this.id = id;
 	}
 	
-	public Integer getApproved() {
-		return approved;
-	}
-	
 	public void setApproved(Integer approved) {
 		this.approved = approved;
+	}
+	
+	public Integer getApproved() {
+		return approved;
 	}
 	
 	public boolean isApproved() {
