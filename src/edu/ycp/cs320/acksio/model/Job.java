@@ -131,7 +131,7 @@ public class Job implements DataController{
 	public String getRecipientPhone () {
 		return recipientPhone;
 	}
-	public Courier setCourier(Courier currentCourier) {
+	public void setCourier(Courier currentCourier) {
 		this.currentCourier = currentCourier;
 	}
 	public double getDistanceMi () {
