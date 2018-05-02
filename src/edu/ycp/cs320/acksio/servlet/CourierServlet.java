@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ycp.cs320.acksio.model.Courier;
-import edu.ycp.cs320.acksio.model.UserAccount;
+import edu.ycp.cs320.acksio.model.*;
+import edu.ycp.cs320.acksio.persist.*;
 
 public class CourierServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -70,6 +70,12 @@ public class CourierServlet extends HttpServlet {
 		
 		if(req.getParameter("insertvehicle") != null) {
 			resp.sendRedirect("insertvehicle");
+		}
+		
+		if(req.getParameter("logout") != null) {
+			req.getSession().invalidate();
+			model.logout();
+			resp.sendRedirect("login");
 		}
 		
 		// Forward to view to render the result HTML document

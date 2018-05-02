@@ -46,6 +46,7 @@
 				<input type="radio" name="accountType" value="dispatcher"> Dispatcher<br><br>
 				
 				<input type="submit" name="submit" value="Create Account">
+				<input type="submit" name="login" value="Back to Login">
 			</form>
 		</div>
 

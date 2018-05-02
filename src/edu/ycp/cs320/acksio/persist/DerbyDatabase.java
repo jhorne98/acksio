@@ -306,7 +306,7 @@ public class DerbyDatabase implements IDatabase {
 						"	destination_lat float, " +
 						"	destination_long float, " +
 						"	vehicle_type varchar(40), " +
-						"	tsa_verified boolean, " +
+						"	tsa_verified integer, " +
 						"	recipient_name varchar(40), " +
 						"	recipient_phone bigint, " +
 						"	distance_mi float, " +
@@ -315,7 +315,8 @@ public class DerbyDatabase implements IDatabase {
 						"	dropoff_time integer, " +
 						"	actual_time integer, " +
 						"	signed integer, " +
-						"	invoice_approved integer " +
+						"	invoice_approved integer, " +
+						"	payment float"+
 						")"
 					);
 					createJobs.executeUpdate();
@@ -326,7 +327,7 @@ public class DerbyDatabase implements IDatabase {
 						"		generated always as identity (start with 1, increment by 1), " +
 						"	courier_id integer, " +
 						"	type varchar(40), " +
-						"	licence_plate varchar(40), " +
+						"	license_plate varchar(40), " +
 						"	make varchar(40), " +
 						"	model varchar(40), " +
 						"	model_year integer, " +
@@ -462,7 +463,7 @@ public class DerbyDatabase implements IDatabase {
 					}
 					insertCourier.executeBatch();
 					
-					insertJob = conn.prepareStatement("insert into jobs (courier_id, dispatcher_id, destination_lat, destination_long, vehicle_type, tsa_verified, recipient_name, recipient_phone, distance_mi, courier_paid, pickup_time, dropoff_time, actual_time, signed, invoice_approved) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					insertJob = conn.prepareStatement("insert into jobs (courier_id, dispatcher_id, destination_lat, destination_long, vehicle_type, tsa_verified, recipient_name, recipient_phone, distance_mi, courier_paid, pickup_time, dropoff_time, actual_time, signed, invoice_approved, payment) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 					for(Job job : jobList) {
 						insertJob.setInt(1, job.getCourierID());
 						insertJob.setInt(2, job.getDispatcherID());
@@ -479,11 +480,12 @@ public class DerbyDatabase implements IDatabase {
 						insertJob.setInt(13, job.getActualTime());
 						insertJob.setInt(14, job.getSigned());
 						insertJob.setInt(15, job.getApproved());
+						insertJob.setDouble(16, job.getPayForJob());
 						insertJob.addBatch();
 					}
 					insertJob.executeBatch();
 					
-					insertVehicle = conn.prepareStatement("insert into vehicles (courier_id, type, licence_plate, make, model, model_year, active) values (?, ?, ?, ?, ?, ?, ?)");
+					insertVehicle = conn.prepareStatement("insert into vehicles (courier_id, type, license_plate, make, model, model_year, active) values (?, ?, ?, ?, ?, ?, ?)");
 					for(Vehicle vehicle : vehicleList) {
 						insertVehicle.setInt(1, vehicle.getCourierID());
 						insertVehicle.setString(2, vehicle.getType().toString());
@@ -534,7 +536,7 @@ public class DerbyDatabase implements IDatabase {
 				try {
 					stmt = conn.prepareStatement(
 							  "insert into jobs (courier_id, dispatcher_id, destination_long, destination_lat, vehicle_type, TSA_verified, recipient_name, recipient_phone, distance_mi, courier_paid, pickup_time, dropoff_time, actual_time, signed, invoice_approved) "
-							+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+							+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 									// 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15
 					
 					//CourierID|DispatcherID|Long|Lat|VehicleType|TSA_Ver|RecipientName|
@@ -556,6 +558,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt.setInt(13, job.getActualTime());
 					stmt.setInt(14, job.getSigned());
 					stmt.setInt(15, job.getApproved());
+					stmt.setDouble(16, job.getPayForJob());
 					
 					return 0 != stmt.executeUpdate();
 				} finally {
@@ -655,7 +658,7 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							  "insert into vehicles (courier_id, type, licence_plate, make, model, model_year, active)"
+							  "insert into vehicles (courier_id, type, license_plate, make, model, model_year, active)"
 							+ "values (?, ?, ?, ?, ?, ?, ?)");
 					
 					stmt.setInt(1, vehicle.getCourierID());
@@ -698,7 +701,8 @@ public class DerbyDatabase implements IDatabase {
 							+ "dropoff_time = ?, "
 							+ "actual_time = ?, "
 							+ "signed = ?, "
-							+ "invoice_approved = ? "
+							+ "invoice_approved = ?, "
+							+ "payment = ? "
 							+ "where job_id = ?");
 					//CourierID|DispatcherID|Long|Lat|VehicleType|TSA_Ver|RecipientName|
 					//RecipientPhone|DistanceMi|CourierPaid|
@@ -719,7 +723,8 @@ public class DerbyDatabase implements IDatabase {
 					stmt.setInt(13, job.getActualTime());
 					stmt.setString(14, job.getSigned().toString());
 					stmt.setString(15, job.getApproved().toString());
-					stmt.setInt(16, job.getJobID());
+					stmt.setDouble(16, job.getPayForJob());
+					stmt.setInt(17, job.getJobID());
 					
 					return 0 != stmt.executeUpdate();
 				} finally {
@@ -839,7 +844,7 @@ public class DerbyDatabase implements IDatabase {
 							  "update vehicles "
 							+ "set courier_id = ?, "
 							+ "type = ?, "
-							+ "licence_plate = ?, "
+							+ "license_plate = ?, "
 							+ "make = ?, "
 							+ "model = ?, "
 							+ "model_year = ?, "
@@ -876,7 +881,7 @@ public class DerbyDatabase implements IDatabase {
 							  "select courier_id, dispatcher_id, destination_long, destination_lat, "
 							+ "vehicle_type, TSA_verified, "
 							+ "recipient_name, recipient_phone, distance_mi, courier_paid, "
-							+ "pickup_time, dropoff_time, actual_time, signed, invoice_approved "
+							+ "pickup_time, dropoff_time, actual_time, signed, invoice_approved, payment "
 							+ "from jobs "
 							+ "where job_id = ?");
 					
@@ -905,6 +910,7 @@ public class DerbyDatabase implements IDatabase {
 					job.setActualTime(resultSet.getInt(13));
 					job.setSigned(resultSet.getInt(14));
 					job.setApproved(resultSet.getInt(15));
+					job.setPayForJob(resultSet.getDouble(16));
 					
 					return job;
 				} finally {
@@ -927,8 +933,59 @@ public class DerbyDatabase implements IDatabase {
 					stmt = conn.prepareStatement("select "
 							+ "couriers.dispatcher_id, couriers.tsa_verified, couriers.long, couriers.lat, "
 							+ "couriers.balance, couriers.pay_estimate, couriers.pay_history, couriers.availability, "
-							+ "users.username, users.password, users.email, users.name, users.user_id from couriers, users "
+							+ "users.username, users.password, users.email, users.name, couriers.courier_id from couriers, users "
 							+ "where couriers.user_id = users.user_id and users.user_id = ?");
+					
+					stmt.setInt(1, id);
+					
+					System.out.println("Attempting to fetch Courier with user_ID "+id);
+					
+					resultSet = stmt.executeQuery();
+					
+					if(!resultSet.next()) {
+						System.out.println(!resultSet.next());
+						return null;
+					}
+					
+					Courier courier = new Courier();
+					 
+					courier.setUserId(id);
+					courier.setDispatcherID(resultSet.getInt(1));
+					courier.setTsaVerified(resultSet.getInt(2));
+					courier.setLongitude(resultSet.getDouble(3));
+					courier.setLatitude(resultSet.getDouble(4));
+					courier.setBalance(resultSet.getDouble(5));
+					courier.setPayEstimate(resultSet.getDouble(6));
+					courier.setPayHistory(resultSet.getDouble(7));
+					courier.setAvailability(resultSet.getInt(8));
+					courier.setUsername(resultSet.getString(9));
+					courier.setPassword(resultSet.getString(10));
+					courier.setEmail(resultSet.getString(11));
+					courier.setName(resultSet.getString(12));
+					courier.setCourierID(resultSet.getInt(13));
+					
+					return courier;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
+
+	public Courier courierFromCourierID(int id) {
+		return executeTransaction(new Transaction<Courier>() {
+			@Override
+			public Courier execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement("select "
+							+ "couriers.dispatcher_id, couriers.tsa_verified, couriers.long, couriers.lat, "
+							+ "couriers.balance, couriers.pay_estimate, couriers.pay_history, couriers.availability, "
+							+ "users.username, users.password, users.email, users.name, users.user_id from couriers, users "
+							+ "where couriers.user_id = users.user_id and couriers.courier_id = ?");
 					
 					stmt.setInt(1, id);
 					
@@ -962,7 +1019,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-
+	
 	/*
 	// populate a Courier object with fields from db
 	public Courier courierFromUsername(String username) {
@@ -1103,7 +1160,7 @@ public class DerbyDatabase implements IDatabase {
 				try {
 					stmt = conn.prepareStatement(
 							  "select "
-							+ "courier_id, type, licence_plate, make, model, model_year, active from vehicles "
+							+ "courier_id, type, license_plate, make, model, model_year, active from vehicles "
 							+ "where vehicle_id = ?");
 					
 					stmt.setInt(1, id);
@@ -1142,7 +1199,7 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							  "select vehicle_id, type, licence_plate, make, model, model_year, active from vehicles "
+							  "select vehicle_id, type, license_plate, make, model, model_year, active from vehicles "
 							+ "where courier_id = ?");
 					
 					stmt.setInt(1, id);
@@ -1189,7 +1246,7 @@ public class DerbyDatabase implements IDatabase {
 							+ "job_id, dispatcher_id, destination_long, destination_lat, "
 							+ "vehicle_type, TSA_verified, "
 							+ "recipient_name, recipient_phone, distance_mi, courier_paid, "
-							+ "pickup_time, dropoff_time, actual_time, signed, invoice_approved "
+							+ "pickup_time, dropoff_time, actual_time, signed, invoice_approved, payment "
 							+ "from jobs "
 							+ "where courier_id = ?");
 					
@@ -1217,6 +1274,7 @@ public class DerbyDatabase implements IDatabase {
 						job.setActualTime(resultSet.getInt(13));
 						job.setSigned(resultSet.getInt(14));
 						job.setApproved(resultSet.getInt(15));
+						job.setPayForJob(resultSet.getDouble(16));
 						job.setCourierID(id);
 						
 						jobs.add(job);
@@ -1245,7 +1303,7 @@ public class DerbyDatabase implements IDatabase {
 							+ "job_id, courier_id, destination_long, destination_lat, "
 							+ "vehicle_type, TSA_verified, "
 							+ "recipient_name, recipient_phone, distance_mi, courier_paid, "
-							+ "pickup_time, dropoff_time, actual_time, signed, invoice_approved "
+							+ "pickup_time, dropoff_time, actual_time, signed, invoice_approved, payment "
 							+ "from jobs "
 							+ "where dispatcher_id = ?");
 					
@@ -1273,6 +1331,7 @@ public class DerbyDatabase implements IDatabase {
 						job.setActualTime(resultSet.getInt(13));
 						job.setSigned(resultSet.getInt(14));
 						job.setApproved(resultSet.getInt(15));
+						job.setPayForJob(resultSet.getDouble(16));
 						job.setDispatcherID(id);
 						
 						jobs.add(job);

@@ -8,6 +8,5 @@ public enum VehicleType {
 	VAN,
 	PICKUP,
 	SPRINTER,
-	SEMI; //IDK what actually goes here.
-	//TODO: write this out
+	SEMI;
 }

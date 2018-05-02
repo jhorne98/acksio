@@ -19,8 +19,8 @@ public class JobTest {
 		model.setActualTime(500);
 		model.setDistanceMi(5.0);
 		model.setDropOffTime(500);
-		model.setPayActualForJob(1.00);
-		model.setPayEstimateForJob(1.00);
+		//model.setPayActualForJob(1.00);
+		//model.setPayEstimateForJob(1.00);
 		model.setPickUpTime(500);
 		
 		model.setCourierPaid(0);
@@ -36,8 +36,8 @@ public class JobTest {
 		assertEquals(500, model.getActualTime());
 		assertEquals(5.0, model.getDistanceMi(), epsilon);
 		assertEquals(500, model.getDropOffTime());
-		assertEquals(1.00, model.getPayActualForJob(), epsilon);
-		assertEquals(1.00, model.getPayEstimateForJob(), epsilon);
+		//assertEquals(1.00, model.getPayActualForJob(), epsilon);
+		//assertEquals(1.00, model.getPayEstimateForJob(), epsilon);
 		assertEquals(500, model.getPickUpTime());
 		//assertEquals(model.getRecipentPhone(),integers[6]);
 		

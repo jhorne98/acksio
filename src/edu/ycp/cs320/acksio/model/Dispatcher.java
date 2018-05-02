@@ -44,17 +44,54 @@ public class Dispatcher extends UserAccount{
 		setName(name);
 		this.phone = phone;
 	}
-
-	public VehicleType getVehicleType() {
-		return vehicleType;
-	}
 	public void Queue() {
 		//TODO: Implement
+		//Job testJob = new Job("118 oak drive", vehicleType.CAR, true, "Don Hake", 7175555555L, 64.9, 53.7, 53.7, 1430, 1730);
+		//Job testJob = new Job("118 oak drive", vehicleType.CAR, true, "Don Hake", 7175555555L, 64.9, 53.7, 53.7, 1430, 1730);
+	}
+	
+	public void payCourier() {
+		for(Courier courier : couriers) {
+			payCourier(courier); 
+		}
+	}
+	
+	public boolean payCourier(int JobID) {
+		DerbyDatabase db = new DerbyDatabase();
+		Job job = db.jobFromID(JobID);
+		return payCourier(job);
+	}
+	
+	public boolean payCourier(Job job) {
+		DerbyDatabase db = new DerbyDatabase();
+		Courier courier = db.courierFromCourierID(job.getCourierID());
+		return payCourier(courier, job);
+	}
+	
+	public void payCourier(Courier courier) {
+		courier.setJobs();
+		for(Job job : courier.getJobs()) {
+			payCourier(courier, job);
+		}
+	}
+	
+	public boolean payCourier(Courier courier, Job job) {
+		if(job.isApproved() && !job.isCourierPaid()) {
+			courier.payAmount(job.getPayForJob());
+			job.setCourierPaid(1);
+			job.save();
+			return true;
+		}
+		return false;
 		//Job testJob = new Job("118 oak drive", vehicleType.CAR, true, "Don Hake", 7175555555L, 64.9, 53.7, 53.7, 1430, 1730);
 	}
   
 	public Boolean getTsaCert() {
 		return tsaCert;
+	}
+
+	public VehicleType getVehicleType() {
+		return vehicleType;
 	}
 	
 	public Job getTestJob() {
@@ -105,6 +142,19 @@ public class Dispatcher extends UserAccount{
 	public void setCouriers() {
 		DerbyDatabase db = new DerbyDatabase();
 		couriers = db.couriersFromDispatcherID(dispatcherID);
+		for(Courier courier : couriers) {
+			courier.setJobs();
+			courier.setUnapprovedJobs();
+			courier.setUnpaidJobs();
+		}
+	}
+
+	public int getDispatcherID() {
+		return dispatcherID;
+	}
+
+	public void setDispatcherID(int dispatcherID) {
+		this.dispatcherID = dispatcherID;
 	}
 	
 	@Override
@@ -152,14 +202,6 @@ public class Dispatcher extends UserAccount{
 	public Boolean save() {
 		DerbyDatabase db = new DerbyDatabase();
 		return db.insert(this);
-	}
-
-	public int getDispatcherID() {
-		return dispatcherID;
-	}
-
-	public void setDispatcherID(int dispatcherID) {
-		this.dispatcherID = dispatcherID;
 	}
 
 }

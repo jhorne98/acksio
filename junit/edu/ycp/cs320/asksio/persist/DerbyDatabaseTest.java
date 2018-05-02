@@ -90,7 +90,7 @@ public class DerbyDatabaseTest {
 		
 		// TODO: fix for any row in vehicles: currently relies on initial db
 		// retrive inserted vehicle
-		vehicle = db.vehicleFromID(2);
+		vehicle = db.vehicleFromID(7);
 		
 		assertEquals(VehicleType.CAR, vehicle.getType());
 		assertEquals("R34DCK", vehicle.getLicensePlate());

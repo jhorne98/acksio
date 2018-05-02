@@ -82,6 +82,10 @@ public class SignupServlet extends HttpServlet {
 			// this adds the errorMessage text and the result to the response
 			req.setAttribute("errorMessage", errorMessage);
 			
+			if(req.getParameter("login") != null) {
+				resp.sendRedirect("login");
+			}
+			
 			// Forward to view to render the result HTML document
 			req.getRequestDispatcher("/_view/signup.jsp").forward(req, resp);
 		} catch(IOException e) {

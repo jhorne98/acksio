@@ -147,7 +147,7 @@ public class UserAccount implements DataController{
 	}
 	
 	public void logout() {
-		isValid = false; 
+		isValid = false;
 	}
 	
 	public boolean isLoggedIn() {
@@ -255,6 +255,26 @@ public class UserAccount implements DataController{
 		
 		if(signupFlag == 0) {
 			isValid = true;
+		}
+		
+		UserAccount insertedUser = db.userAccountFromUsername(username);
+		
+		if(accountType.equals("courier")) {
+			Courier insertCourier = new Courier(0);
+			insertCourier.setAvailability(0);
+			insertCourier.setUserId(insertedUser.getUserId());
+			// dispatcher set at 1 for the the moment
+			// TODO: dynamic dispatcer
+			insertCourier.setDispatcherID(1);
+			// available by default
+			insertCourier.setAvailability(1);
+			
+			db.insert(insertCourier);
+		} else {
+			Dispatcher insertDispatcher = new Dispatcher(VehicleType.CAR, false, "", "");
+			insertDispatcher.setUserId(insertedUser.getUserId());
+			
+			db.insert(insertDispatcher);
 		}
 		
 		return signupFlag;

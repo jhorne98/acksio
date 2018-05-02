@@ -33,12 +33,16 @@
 			<p>Your Vehicles</p>
 			<div id=vehicles>
 				<c:forEach var="vehicleloop" items="${loop}">
-					${vehicleloop.licensePlate}, ${vehicleloop.year}, ${vehicleloop.make}, ${vehicleloop.model}, ${vehicleloop.licensePlate}
+					${vehicleloop.licensePlate}, ${vehicleloop.year}, ${vehicleloop.make}, ${vehicleloop.model}
 					<c:if test="${vehicleloop.active == 1}">
 						ACTIVE
 					</c:if><br>
 				</c:forEach>
-			</div>
+			</div><br>
+			
+			<form action="${pageContext.servletContext.contextPath}/courier" method="post">
+				<input type="submit" name="logout" value="Log out">
+			</form>
 		</div>
 
 		<!--
