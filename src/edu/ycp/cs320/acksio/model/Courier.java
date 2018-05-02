@@ -22,6 +22,7 @@ public class Courier extends UserAccount{
 	private double balance;
 	private double latitude;
 	private double longitude;
+	public Job currentJob; 
 	List<Vehicle> vehicles;
 
 	/* 

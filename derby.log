@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Thu Apr 05 21:23:13 EDT 2018:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0162-988c-e6b8-0000081a9278 
-on database directory /home/joel/git/acksio/test.db with class loader sun.misc.Launcher$AppClassLoader@14ae5a5 
-Loaded from file:/home/joel/Documents/YCPS2So/CS320/CS320_Derby/lib/derby.jar
+Wed May 02 03:26:12 EDT 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0163-1fbe-8f13-0000074d5fe8 
+on database directory /home/andrew/git/acksio/test.db with class loader sun.misc.Launcher$AppClassLoader@14ae5a5 
+Loaded from file:/home/andrew/Documents/schoolWork/CS320_Spring2018/CS320_Derby/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_151-8u151-b12-0ubuntu0.16.04.2-b12
-user.dir=/home/joel/git/acksio
+java.runtime.version=1.8.0_162-8u162-b12-0ubuntu0.16.04.2-b12
+user.dir=/home/andrew/git/acksio
 os.name=Linux
 os.arch=amd64
-os.version=4.4.0-116-generic
+os.version=4.13.0-38-generic
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

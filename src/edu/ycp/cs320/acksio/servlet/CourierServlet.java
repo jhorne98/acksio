@@ -18,20 +18,22 @@ public class CourierServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		System.out.println("Empty Servlet: doGet");	
+		System.out.println("Courrier Servlet: doGet");	
 		
 		// call JSP to generate empty form
-		req.getRequestDispatcher("/_view/empty.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/courier.jsp").forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) //TODO: Implement 
 			throws ServletException, IOException {
 		
-		System.out.println("Empty Servlet: doPost");
+		System.out.println("Courier Servlet: doPost");
 		
 		// holds the error message text, if there is any
 		String errorMessage = null;
+		
+		
 		
 		UserAccount model = new UserAccount();
 		

@@ -19,15 +19,54 @@
 
 		<script type="text/javascript">
 
-		var xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-       // Typical action to be performed when the document is ready:
-       document.getElementById("demo").innerHTML = xhttp.responseText;
-    }
-};
-xhttp.open("GET", "filename", true);
-xhttp.send();
+
+
+
+		 	function getXmlHttpRequestObject2() {
+		  
+		    if (window.XMLHttpRequest) {
+		    return new XMLHttpRequest(); //To support the browsers IE7+, Firefox, Chrome, Opera, Safari
+		    }
+		    else if(window.ActiveXObject) {
+		    return new ActiveXObject("Microsoft.XMLHTTP"); // For the browsers IE6, IE5
+		    }
+		    else {
+		    alert("Error due to old verion of browser upgrade your browser");
+		    }
+		    }
+
+
+
+		    var rcvReq2 = getXmlHttpRequestObject2();
+		    
+
+
+
+		    function alterContent2() {
+		    if (rcvReq2.readyState == 4 || rcvReq2.readyState == 0) {
+
+
+		    rcvReq2.open("GET", 'dispatcher', true);
+		    rcvReq2.onreadystatechange = handleAlterContent2;
+		    rcvReq2.send(null);
+		    }
+		    }
+		    
+
+
+
+		    function handleAlterContent2() {
+		    if (rcvReq2.readyState == 4) {
+		   
+			var responseTextVar = rcvReq2.responseText;
+
+
+			var item=responseTextVar.split(',');
+			var lat =item[0];
+			var lng =item[1];
+		       
+
+
 
 		var directionDisplay;
 		var directionsService = new google.maps.DirectionsService();
@@ -35,7 +74,9 @@ xhttp.send();
 		
 		function initialize() {
 			directionsDisplay = new google.maps.DirectionsRenderer();
-			var York = new google.maps.LatLng(39.9626, -76.7277);
+			//var York = new google.maps.LatLng(39.9626, -76.7277);
+
+			var York = new google.maps.LatLng(lat, long); 			
 			var myOptions = {
 				zoom:12,
 				mapTypeId: google.maps.MapTypeId.ROADMAP,

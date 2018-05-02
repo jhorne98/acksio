@@ -1,6 +1,10 @@
 
 package edu.ycp.cs320.acksio.model;
 
+import java.util.ArrayList;
+
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+
 import edu.ycp.cs320.acksio.persist.DatabaseProvider;
 
 public class Dispatcher extends UserAccount{
@@ -14,6 +18,9 @@ public class Dispatcher extends UserAccount{
 	private double distance;
 	public String name; 
 	public double payment; 
+	private Courier courier; 
+	private ArrayList <Job> jobs;
+	private ArrayList <Courier> couriers;
 	
 /*
 	public Dispatcher() {
@@ -60,6 +67,7 @@ public class Dispatcher extends UserAccount{
 		newJob.setRecipientPhone(phone);
 		newJob.setDistanceMi(distance);
 		newJob.setPayEstimateForJob(payment);
+		newJob.setCourier(findCourier());
 		
 		
 		
@@ -124,6 +132,30 @@ public class Dispatcher extends UserAccount{
 	
 	public double getPayment() {
 		return payment;
+	}
+	
+	public ArrayList <Courier> getCouriers(){
+		return couriers;
+	}
+	
+	public void setCouriers(ArrayList<Courier> couriers) {
+		this.couriers = couriers;
+}
+	public Courier findCourier() {
+		for (int i = 0; i < couriers.size(); i++) {
+			Courier search = couriers.get(i);
+			double distance = search.getLatitude() + search.getLongitude();//Will change distance to match algorithm later
+			
+			if (search.getAvailability() == true && distance <= 20) { 
+				System.out.println("Dispatcher Model: Found courrier " + search.getName() + ".");
+				return search; 
+			}
+		}
+		
+		System.out.println("Dispatcher Model: No couriers avaliable.");
+		return null;
+		
+		
 	}
 	
 	@Override

@@ -41,6 +41,7 @@ public class DispatcherServlet extends HttpServlet {
 		}*/
 		
 		
+		
 		try {
 			System.out.println("TEST");
 			String address = req.getParameter("address");
@@ -59,9 +60,11 @@ public class DispatcherServlet extends HttpServlet {
 			System.out.println(payment);
 		
 			// check for errors in the form data before using is in a calculation
-			if (address == null || name == null || phone  == null /*|| distance  == null || payment  == null*/) {
-				errorMessage = "Please enter values";
+			System.out.println("TEST-=-=-");
+			if (address == null || name == null || phone  == null || distance  == null || payment  == null) {
 				System.out.println("ERROR");
+				errorMessage = "Please enter values";
+				
 			}
 			// otherwise, data is good, do the calculation
 			// must create the controller each time, since it doesn't persist between POSTs
@@ -77,29 +80,6 @@ public class DispatcherServlet extends HttpServlet {
 			errorMessage = "Invalid input";
 		}
 		
-		
-		//Dispatcher model = new Dispatcher(true, req.getParameter("address"), req.getParameter("name"), req.getParameter("phone"), getDoubleFromParameter(req.getParameter("distance")), getDoubleFromParameter(req.getParameter("payment")));
-		//System.out.println(model.getAddress());
-		/*model.setAddress(req.getParameter("address"));
-		System.out.println(model.getAddress());
-		model.setName(req.getParameter("name"));
-		model.setPhone(req.getParameter("phone"));
-		model.setDistance(getDoubleFromParameter(req.getParameter("distance")));
-		System.out.println("DIS = " + model.getDistance());
-		model.setPayment(getDoubleFromParameter(req.getParameter("payment")));*/
-		//Dispatcher model = new Dispatcher(true, req.getParameter("address"), req.getParameter("name"), req.getParameter("phone"));
-		
-				// Add parameters as request attributes
-		//req.setAttribute("model", model);
-		
-		/*model.setAddress(req.getParameter("address"));
-		System.out.println(model.getAddress());
-		model.setName(req.getParameter("name"));
-		model.setPhone(req.getParameter("phone"));
-		model.setDistance(getDoubleFromParameter(req.getParameter("distance")));
-		System.out.println("DIS = " + model.getDistance());
-		model.setPayment(getDoubleFromParameter(req.getParameter("payment")));
-		*/
 		// add result objects as attributes
 		// this adds the errorMessage text and the result to the response
 		req.setAttribute("errorMessage", errorMessage);

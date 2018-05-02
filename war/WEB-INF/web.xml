@@ -26,6 +26,10 @@
     <servlet-class>edu.ycp.cs320.acksio.servlet.DispatcherServlet</servlet-class>
   </servlet>
   <servlet>
+    <servlet-name>CourierServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.acksio.servlet.CourierServlet</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>LoginServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.acksio.servlet.LoginServlet</servlet-class>
   </servlet>
@@ -54,6 +58,10 @@
   <servlet-mapping>
     <servlet-name>DispatcherServlet</servlet-name>
     <url-pattern>/dispatcher</url-pattern>
+  </servlet-mapping>
+   <servlet-mapping>
+    <servlet-name>CourierServlet</servlet-name>
+    <url-pattern>/courier</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
