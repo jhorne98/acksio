@@ -27,6 +27,7 @@ public class Job implements DataController{
 	private Integer approved;
 	private double destLat;
 	private double destLong;
+	private Courier currentCourier;
 	
 	public Job(String destinationAddress, VehicleType vehicleType, Integer tsaVerified, 
 				String recipientName, long recipientPhone, double distanceMi, 
@@ -127,6 +128,9 @@ public class Job implements DataController{
 	}
 	public long getRecipientPhone () {
 		return recipientPhone;
+	}
+	public void setCourier(Courier currentCourier) {
+		this.currentCourier = currentCourier;
 	}
 	public double getDistanceMi () {
 		return distanceMi;

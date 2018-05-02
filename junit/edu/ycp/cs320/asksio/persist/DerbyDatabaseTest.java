@@ -31,7 +31,7 @@ public class DerbyDatabaseTest {
 		courier.setAvailability(1);
 		courier.setUserId(1);
 		
-		dispatcher = new Dispatcher(VehicleType.CAR, true, "11313 Sample Ln.", "7175555555");
+		dispatcher = new Dispatcher(VehicleType.CAR, true, "11313 Sample Ln.", "Dee", "7175555555", 0.0);
 		dispatcher.setUserId(1);
 		
 		vehicle = new Vehicle(1, "R34DCK", 2004, "Dodge", "Dakota", VehicleType.CAR);

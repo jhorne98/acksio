@@ -51,7 +51,7 @@ public class EditServlet extends HttpServlet {
 
 		// holds the error message text, if there is any
 		String errorMessage = null;
-		Dispatcher editDispatcher = new Dispatcher(req.getParameter("address"), req.getParameter("phone"));
+		Dispatcher editDispatcher = new Dispatcher(VehicleType.CAR, true, req.getParameter("address"), "", req.getParameter("phone"), 0.0);
 		System.out.println(req.getParameter("phone"));
 		
 		System.out.println("UserAccount to edit: " + editAccount.getUsername() + " " + editAccount.getName() + " " + editAccount.getPassword() + " " + editAccount.getEmail() + " " + editAccount.getAccountType());

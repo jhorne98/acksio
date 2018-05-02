@@ -271,7 +271,7 @@ public class UserAccount implements DataController{
 			
 			db.insert(insertCourier);
 		} else {
-			Dispatcher insertDispatcher = new Dispatcher(VehicleType.CAR, false, "", "");
+			Dispatcher insertDispatcher = new Dispatcher(false, "", "", "", 0.0, 0.0);
 			insertDispatcher.setUserId(insertedUser.getUserId());
 			
 			db.insert(insertDispatcher);

@@ -29,7 +29,7 @@ public class UserAccountTest {
 		model.setEmail("test@email.com");
 		model.setAccountType("courier");
 		
-		editedDispatcher = new Dispatcher("11313 Sample Road", "7177495979");
+		editedDispatcher = new Dispatcher(VehicleType.CAR, false, "11313 Sample Road", "Dee", "7177495979", 0.0);
 		editedCourier = new Courier(1);
 	}
 	
