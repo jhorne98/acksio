@@ -45,10 +45,20 @@ xhttp.send();
 			map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 			directionsDisplay.setMap(map);
 		}
+		function test(){
+			var number = 2;			
+			var test = document.getElementbyId("distance");
+			number = number + number;
+			return number; 
+		}
+
 		function calcRoute() {
 			var start = document.getElementById("start").value;
-			var end = document.getElementById("end").value; 
+			var end = document.getElementById("end").value;
+			var payCof = document.getElementById("payCof").value; 
+
 			var distanceInput = document.getElementById("distance");
+			var payment = document.getElementbyId("payment");
 
 			
 			
@@ -65,6 +75,9 @@ xhttp.send();
 					distanceInput.value = response.routes[0].legs[0].distance.value / 1000;
 				}
 			});
+
+
+			payment = payCof * distanceInput;
 		}
 		</script>
 	</head>
@@ -74,8 +87,6 @@ xhttp.send();
 			<div class="error">${errorMessage}</div>
 		</c:if>
 		
-		<form action="${pageContext.servletContext.contextPath}/dispatcher" method="post">
-
 		<div id=header>
 
 			<!-- testing functionality of topbar, adjust for neatness later-->
@@ -88,13 +99,13 @@ xhttp.send();
 			<!-- for generic HTML -->
 
 			Target Address: 
-				<input type="text" name="address" value="${model.address}" method="post">
+				<input type="text" name="destinationAddress" value="${model.address}" method="post">
 				<br><br>
 				
-				Recipient Name: <input type = "text" name="name" value="${model.name}" method="post">
+				Recipient Name: <input type = "text" name="recipientName" value="${model.name}" method="post">
 				<br><br>
 				
-				Recipient Phone #: <input type = "text" name="phone" value="${model.phone}" method="post">
+				Recipient Phone #: <input type = "text" name="recipientPhone" value="${model.phone}" method="post">
 				<br><br>
 				
 				Vehicle Type<br>
@@ -105,12 +116,13 @@ xhttp.send();
 
 				<input type="checkbox" name="tsaCertified" value="${model.tsaCert}"> TSA certified driver needed<br><br>
 
-				
-
 				<!--- <input type=" ---->
 				
 				<!-- for google maps functions --->				
 
+				<label for="payCof">Payment Coefficient (cost/mile) : </label>
+				<input type "text" name="payCof" id="payCof" />
+				<br><br>
 
 				<label for="start">Pickup Address : </label>
 				<input type="text" name="start" id="start" />
@@ -136,6 +148,5 @@ xhttp.send();
 				<p>${model.vehicleType}</p>
 		</div>
 		<div id="map_canvas"></div>
-		</form>
 	</body>
 </html>

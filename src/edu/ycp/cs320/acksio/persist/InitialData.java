@@ -57,7 +57,7 @@ public class InitialData {
 				user.setDispatcherID(dispatcherId++);
 				user.setUserId(Integer.parseInt(i.next()));
 				user.setAddress(i.next());
-				user.setPhone(Integer.parseInt(i.next()));
+				user.setPhone(i.next());
 				
 				int userID = 0;
 				while(userList.get(userID).getUserId() != user.getUserId() && userID < userList.size()) {
@@ -144,7 +144,7 @@ public class InitialData {
 				job.setVehicleType(i.next());//VehicleType
 				job.setTsaVerified(Boolean.parseBoolean(i.next()));
 				job.setRecipientName(i.next());
-				job.setRecipientPhone(Long.parseLong(i.next()));
+				job.setRecipientPhone(i.next());
 				job.setDistanceMi(Double.parseDouble(i.next())); //Distance
 				job.setCourierPaid(Boolean.parseBoolean(i.next())); //CourierPaid
 				job.setPickUpTime(Integer.parseInt(i.next())); //PickUpTime
