@@ -57,11 +57,12 @@ public class Courier extends UserAccount{
 		this.tsaVerified = tsaVerified;
 	}
 	
+	/*
 	public Courier(DatabaseProvider provider, int id) {
 		setCourierID(id);
 		populate(id);
 	}
-
+	*/
 		
 	//METHODS
 	@Override

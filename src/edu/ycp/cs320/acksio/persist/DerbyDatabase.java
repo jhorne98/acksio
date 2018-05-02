@@ -629,13 +629,14 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							  "insert into users (username, password, email, name) "
-							+ "values (?, ?, ?, ?)");
+							  "insert into users (username, password, email, name, accountType) "
+							+ "values (?, ?, ?, ?, ?)");
 					
 					stmt.setString(1, user.getUsername());
 					stmt.setString(2, user.getPassword());
 					stmt.setString(3, user.getEmail());
 					stmt.setString(4, user.getName());
+					stmt.setString(5, user.getAccountType());
 					
 					return 0 != stmt.executeUpdate();
 				} finally {
@@ -1114,7 +1115,7 @@ public class DerbyDatabase implements IDatabase {
 					
 					Vehicle vehicle = new Vehicle();
 					vehicle.setCourierID(resultSet.getInt(1));
-					vehicle.setType(resultSet.getString(2));
+					vehicle.setType(VehicleType.valueOf(resultSet.getString(2)));
 					vehicle.setLicensePlate(resultSet.getString(3));
 					vehicle.setMake(resultSet.getString(4));
 					vehicle.setModel(resultSet.getString(5));
@@ -1154,7 +1155,7 @@ public class DerbyDatabase implements IDatabase {
 						Vehicle vehicle = new Vehicle();
 						
 						vehicle.setVehicleID(resultSet.getInt(1));
-						vehicle.setType(resultSet.getString(2));
+						vehicle.setType(VehicleType.valueOf(resultSet.getString(2)));
 						vehicle.setLicensePlate(resultSet.getString(3));
 						vehicle.setMake(resultSet.getString(4));
 						vehicle.setModel(resultSet.getString(5));
