@@ -116,13 +116,13 @@
 			<div class="error">${errorMessage}</div>
 		</c:if>
 		
-		<form action="${pageContext.servletContext.contextPath}/dispatcher" method="post">
-
 		<div id=header>
 
 			<!-- testing functionality of topbar, adjust for neatness later-->
 			<h2>ACKSIO</h2>
 		</div>
+
+		<form action="${pageContext.servletContext.contextPath}/dispatcher" method="post">
 
 		<div id=main_body>
 		
@@ -236,7 +236,11 @@
 
 				
 				<p>${model.vehicleType}</p>
+				
+				<input type="submit" name="edit" value="Edit Information">
 		</div>
+		
+		
 		<div id="map_canvas"></div>
 		</form>
 	</body>

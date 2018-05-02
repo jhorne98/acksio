@@ -128,7 +128,7 @@ public class UserAccountTest {
 		editedCourier.setUserId(model.getUserId());
 		editedCourier.setAvailability(0);
 		editedCourier.setTsaVerified(1);
-		db.insert(editedCourier);
+		//db.insert(editedCourier);
 		
 		// place the added courier row into model 
 		editedCourier = db.courierFromUsername("john");
@@ -159,10 +159,12 @@ public class UserAccountTest {
 		assertEquals("11313 Sample Road", editedDispatcher.getAddress());
 		assertEquals("7177495979", editedDispatcher.getPhone());
 		
+		
 		// UserAccount and Courier models remove themselves from the db
 		model.remove(model.getUserId());
-		editedCourier.remove(editedCourier.getCourierID());
-		editedDispatcher.remove(editedDispatcher.getDispatcherID());
+		//db.remove(editedCourier, editedCourier.getCourierID());
+		db.remove("courier", editedCourier.getCourierID());
+		db.remove("dispatcher", editedDispatcher.getDispatcherID());
 	}
 	
 	/*

@@ -144,6 +144,10 @@ public class DispatcherServlet extends HttpServlet {
 		// this adds the errorMessage text and the result to the response
 		req.setAttribute("errorMessage", errorMessage);
 		
+		if(req.getParameter("edit") != null) {
+			resp.sendRedirect("edit");
+		}
+		
 		if(req.getParameter("logout") != null) {
 			req.getSession().invalidate();
 			model.logout();

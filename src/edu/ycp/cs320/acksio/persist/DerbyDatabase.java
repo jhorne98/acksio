@@ -45,7 +45,7 @@ public class DerbyDatabase implements IDatabase {
 		
 	}
 	
-	public Integer removeEntry(String table, int id) {
+	public Integer remove(String table, int id) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {

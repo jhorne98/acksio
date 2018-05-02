@@ -31,9 +31,11 @@ public class EditServlet extends HttpServlet {
 		
 		// call JSP to generate empty form
 		if(editAccount != null) {
-			courier = new Courier();
-			courier.populate(editAccount.getUserId());
-			req.setAttribute("couriertsaverified", courier.isTsaVerified());
+			if(editAccount.getAccountType().equals("courier")) {
+				courier = new Courier();
+				courier.populate(editAccount.getUserId());
+				req.setAttribute("couriertsaverified", courier.isTsaVerified());
+			}
 			
 			req.setAttribute("accountType", editAccount.getAccountType());
 			
@@ -78,8 +80,10 @@ public class EditServlet extends HttpServlet {
 		}
 		*/
 
-		courier.populate(editAccount.getUserId());
-		req.setAttribute("couriertsaverified", courier.isTsaVerified());
+		if(editAccount.getAccountType().equals("courier")) {
+			courier.populate(editAccount.getUserId());
+			req.setAttribute("couriertsaverified", courier.isTsaVerified());
+		}
 		
 		// Forward to view to render the result HTML document
 		req.setAttribute("accountType", editAccount.getAccountType());

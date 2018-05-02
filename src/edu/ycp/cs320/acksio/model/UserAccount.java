@@ -143,7 +143,7 @@ public class UserAccount implements DataController{
 	public int remove(int id) {
 		DerbyDatabase db = new DerbyDatabase();
 		
-		return db.removeEntry("user", id);
+		return db.remove("user", id);
 	}
 	
 	public void logout() {
@@ -261,7 +261,6 @@ public class UserAccount implements DataController{
 		
 		if(accountType.equals("courier")) {
 			Courier insertCourier = new Courier(0);
-			insertCourier.setAvailability(0);
 			insertCourier.setUserId(insertedUser.getUserId());
 			// dispatcher set at 1 for the the moment
 			// TODO: dynamic dispatcer
