@@ -36,28 +36,32 @@ public class DispatcherServlet extends HttpServlet {
 		
 		String[] typeValues = req.getParameterValues("vehicleType");
 		
-		for(int i = 0; i < typeValues.length; i++) {
+		/*for(int i = 0; i < typeValues.length; i++) {
 			System.out.println(typeValues[i]);
-		}
+		}*/
 		
 		
 		try {
 			System.out.println("TEST");
 			String address = req.getParameter("address");
-			System.out.println(address);
+			System.out.println(address);  
 			String name = req.getParameter("name");
 			System.out.println(name);
 			String phone = req.getParameter("phone");
 			System.out.println(phone);
+			String start = req.getParameter("start");
+			System.out.println(start);
+			String end = req.getParameter("end");
+			System.out.println(end);
 			Double distance = getDoubleFromParameter("distance");
-			System.out.println("MEMES ");
 			System.out.println(distance);
 			Double payment = getDoubleFromParameter("payment");
-			
-
+			System.out.println(payment);
+		
 			// check for errors in the form data before using is in a calculation
-			if (address == null || name == null || phone  == null || distance  == null || payment  == null) {
+			if (address == null || name == null || phone  == null /*|| distance  == null || payment  == null*/) {
 				errorMessage = "Please enter values";
+				System.out.println("ERROR");
 			}
 			// otherwise, data is good, do the calculation
 			// must create the controller each time, since it doesn't persist between POSTs
@@ -66,11 +70,13 @@ public class DispatcherServlet extends HttpServlet {
 			else {
 			Dispatcher model = new Dispatcher();
 			model.Queue(address, name, phone, distance, payment);
-		
+			System.out.println("Created Job!");
+
 			}
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid input";
 		}
+		
 		
 		//Dispatcher model = new Dispatcher(true, req.getParameter("address"), req.getParameter("name"), req.getParameter("phone"), getDoubleFromParameter(req.getParameter("distance")), getDoubleFromParameter(req.getParameter("payment")));
 		//System.out.println(model.getAddress());

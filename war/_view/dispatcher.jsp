@@ -127,6 +127,8 @@ xhttp.send();
 				<p><label for="payment">Payment Estimate : </label>
 				<input type="text" name="payment" id="payment" readonly="true" value = "${model.payment}"/></p>
 
+				
+
 				<input type="submit" value="Create Job">
 
 
