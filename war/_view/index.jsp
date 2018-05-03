@@ -22,5 +22,21 @@
 		</form>
 	</div>
 	
+	<div class="black_info">
+	
+	</div>
+	
+	<div class="blue_info">
+	
+	</div>
+	
+	<div class="white_info">
+	
+	</div>
+	
+	<div class="purple_info">
+	
+	</div>
+	
 	</body>
 </html>
