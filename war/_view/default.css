@@ -1,4 +1,5 @@
 /* ACKSIO Dispatch queue page generic style*/
+<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
 
 @page {
 	size: auto;
@@ -29,4 +30,11 @@ body {
 	float: left;
 	margin: 10px;
 	border: 2px;
+}
+
+#header h3{
+	text-align: center;
+	color: red;
+	font-size: 16px;
+	font-family: Lobster;
 }
