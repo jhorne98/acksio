@@ -12,17 +12,15 @@
 	</head>
 	
 	<body>
+	<div class="top">
+		<div class="index_title">
+			<h3>Acksio</h3>
+		</div>
 	
-	<div class="index_title">
-		<h3>Acksio</h3>
-	</div>
-	
-		<form class="login_button" action="${pageContext.servletContext.contextPath}/index" method="post">
-			<input type="Submit" name="login" value="Log In">
-			<input type="Submit" name="dispatcher" value="Dispatcher">
-			<input type="Submit" name="courier" value="Courier">
-			<input type="Submit" name="createJob" value="Create Job">
+		<form class="centered shadow" action="${pageContext.servletContext.contextPath}/index" method="post" style="width: 221px; height: 35px">
+			<input class="login_button" type="Submit" name="login" value="Log In">
 		</form>
+	</div>
 	
 	</body>
 </html>

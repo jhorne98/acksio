@@ -46,4 +46,26 @@ body {
 
 .login_button{
 	text-align: center;
+	background-color: #4CAF50;
+    color: white;
+    width: 300px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-shadow: 2px 2px 8px black;
+}
+
+.centered{
+	margin: auto;
+    width: 50%;
+}
+
+.shadow{
+	box-shadow: 2px 2px 8px black;
+}
+
+.top{
+	height: 200px;
+	width: auto;
 }
