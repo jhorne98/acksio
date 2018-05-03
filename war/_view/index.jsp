@@ -22,21 +22,36 @@
 		</form>
 	</div>
 	
-	<div class="black_info">
-	
-	</div>
-	
-	<div class="blue_info">
-	
-	</div>
-	
-	<div class="white_info">
-	
-	</div>
-	
-	<div class="purple_info">
-	
-	</div>
+	<div class="row">
+    <div class="col-xs-6 black_info">
+      <div class="well">
+        <img class="info_left" src="images/nav.jpg"></img>
+        <p class="info_right">Test paragraph</p>
+      </div>
+    </div>
+    
+    <div class="col-xs-6 blue_info">
+      <div class="well">
+        <p class="info_left">Test paragraph</p>
+         <img class="info_right" src="images/nav.jpg"></img>
+      </div>
+    </div>
+    
+    <div class="col-xs-6 purple_info">
+      <div class="well">
+        <img class="info_left" src="images/nav.jpg"></img>
+        <p class="info_right">Test paragraph</p>
+      </div>
+    </div>
+    
+    <div class="col-xs-6 white_info">
+      <div class="well">
+        <p class="info_left">Test paragraph</p>
+         <img class="info_right" src="images/nav.jpg"></img>
+      </div>
+    </div>
+    
+  </div>
 	
 	</body>
 </html>

@@ -36,6 +36,11 @@ body {
 	border: 2px;
 }
 
+#img{
+	 width: 100%;
+    height: auto;
+}
+
 .index_title{
 	text-align: center;
 	color: red;
@@ -91,7 +96,21 @@ body {
 }
 
 .purple_info{
-	background-color: #b300b3;
+	background-color: #8000ff;
 	height: 400px;
 	width: auto;
+}
+
+.info_left{
+	width: 100px;
+	height: auto;
+	margin:40px;
+	float: left;
+}
+
+.info_right{
+	width: 100px;
+	height: auto;
+	margin:40px;
+	float: right;
 }
