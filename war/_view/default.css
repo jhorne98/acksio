@@ -1,13 +1,17 @@
 /* ACKSIO Dispatch queue page generic style*/
-<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
 
 @page {
 	size: auto;
 }
 
+@font-face {
+    font-family: "Lobster";
+    src: url(https://fonts.googleapis.com/css?family=Lobster) format("truetype");
+}
+
 body {
 	margin: 0;
-	background-color: #d8d8f3;
+	background-image: url("images/background.png")
 }
 
 #header {
@@ -32,9 +36,14 @@ body {
 	border: 2px;
 }
 
-#header h3{
+.index_title{
 	text-align: center;
 	color: red;
-	font-size: 16px;
-	font-family: Lobster;
+	font-size: 64px;
+	font-family: "Lobster";
+	text-shadow: 2px 2px 8px black;
+}
+
+.login_button{
+	text-align: center;
 }
