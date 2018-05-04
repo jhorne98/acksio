@@ -16,8 +16,6 @@
 	<body>
 		
 		<div id=header>
-
-			<!-- testing functionality of topbar, adjust for neatness later-->
 			<h2>ACKSIO</h2>
 		</div>
 
@@ -25,7 +23,7 @@
 
 		<div id=content>
 			<c:if test="${! empty errorMessage}">
-				<div class="error">${errorMessage}</div>
+				<div class="error">${errorMessage}</div><br>
 			</c:if>
 
 			<form action="${pageContext.servletContext.contextPath}/login" method="post">
@@ -38,8 +36,8 @@
 				<input type="password" name="password" value="${model.password}">
 				<br><br>
 				
-				<input type="submit" name="submit" value="Log in">
-				<input type="submit" name="signup" value="Sign up">
+				<input class=button type="submit" name="submit" value="Log in">
+				<input class=button type="submit" name="signup" value="Sign up">
 			</form>
 		</div>
 

@@ -19,7 +19,7 @@
 			<h2>ACKSIO</h2>
 			
 			<form action="${pageContext.servletContext.contextPath}/courier" method="post">
-				<input type="submit" name="logout" value="Log out">
+				<input class=logout_button type="submit" name="logout" value="Log out">
 			</form>
 		</div>
 		
@@ -31,11 +31,11 @@
 			<p>Welcome, ${name}</p>
 		
 			<form action="${pageContext.servletContext.contextPath}/courier" method="post">
-				<input type="submit" name="edit" value="Edit Information"><br><br>
-				<input type="submit" name="insertvehicle" value="Add a Vehicle"><br>
+				<input class=button type="submit" name="edit" value="Edit Information"><br><br>
+				<input class=button type="submit" name="insertvehicle" value="Add a Vehicle"><br>
 			</form>
 			
-			<p>Your Vehicles</p>
+			<br><hr><p>Your Vehicles</p>
 		
 			<c:forEach var="vehicleloop" items="${loop}">
 				${vehicleloop.licensePlate}, ${vehicleloop.year}, ${vehicleloop.make}, ${vehicleloop.model}

@@ -6,7 +6,8 @@
 
 body {
 	margin: 0;
-	background-color: #d8d8f3;
+	background-color: #eeeeec;
+	font-family: "Trebuchet MS";
 }
 
 #header {
@@ -19,7 +20,7 @@ body {
 
 #header h2 {
 	float: left;
-	font-size: 25px;
+	font-size: 30px;
 	margin: 10px; 
 	color: #ffffff;
 	font-family: "Trebuchet MS", "Lucida Sans";
@@ -27,11 +28,44 @@ body {
 
 #header form {
 	float: right; 
-	padding-right: 5px
+	margin: 10px;
 }
 
 #content{
 	float: left;
 	margin: 10px;
 	border: 2px;
+}
+
+.error {
+	color: red;
+}
+
+.button {
+	background-color: #69859d;
+	color: white;
+	border-radius: 2px;
+	padding: 5px;
+	border: none;
+}
+
+.button:hover {
+	background-color: #262020;
+}
+
+.logout_button {
+	background-color: #ee0b0b;
+	color: white;
+	font-size: 13px;
+	border-radius: 2px;
+	border-color: #ff3123;
+	padding: 5px;
+}
+
+.logout_button:hover {
+	background-color: #a40404;
+}
+
+.logout_button:active {
+	border-radius: 6px;
 }

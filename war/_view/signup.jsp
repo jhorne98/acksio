@@ -16,8 +16,6 @@
 	<body>
 		
 		<div id=header>
-
-			<!-- testing functionality of topbar, adjust for neatness later-->
 			<h2>ACKSIO</h2>
 		</div>
 
@@ -45,8 +43,8 @@
 				<input type="radio" name="accountType" value="courier"> Courier<br>
 				<input type="radio" name="accountType" value="dispatcher"> Dispatcher<br><br>
 				
-				<input type="submit" name="submit" value="Create Account">
-				<input type="submit" name="login" value="Back to Login">
+				<input class=button type="submit" name="submit" value="Create Account">
+				<input class=button type="submit" name="login" value="Back to Login">
 			</form>
 		</div>
 

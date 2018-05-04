@@ -117,12 +117,10 @@
 		</c:if>
 		
 		<div id=header>
-
-			<!-- testing functionality of topbar, adjust for neatness later-->
 			<h2>ACKSIO</h2>
 			
 			<form action="${pageContext.servletContext.contextPath}/courier" method="post">
-				<input type="submit" name="logout" value="Log out">
+				<input class=logout_button type="submit" name="logout" value="Log out">
 			</form>
 		</div>
 
