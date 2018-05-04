@@ -26,7 +26,10 @@
     <div class="col-xs-6 black_info">
       <div class="well">
         <img class="info_left" src="images/nav.jpg"></img>
-        <p class="info_right">Test paragraph</p>
+        <p class="info_right">Acksio is an automated courier dispatch service. Using real time location
+        tracking, your clients will always get the closest available driver, delivering 
+        a superior customer experience. With Acksio, dispatchers can be assured that 
+        the right driver is always on the job. </p>
       </div>
     </div>
     
