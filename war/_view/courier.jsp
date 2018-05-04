@@ -37,11 +37,14 @@
 			
 			<br><hr><p>Your Vehicles</p>
 		
-			<c:forEach var="vehicleloop" items="${loop}">
-				${vehicleloop.licensePlate}, ${vehicleloop.year}, ${vehicleloop.make}, ${vehicleloop.model}
-				<c:if test="${vehicleloop.active == 1}">
-					ACTIVE
-				</c:if><br>
+			<c:forEach var="vehicleloop" items="${loop}" varStatus="loop">
+				${vehicleloop.licensePlate}, ${vehicleloop.year}, ${vehicleloop.make}, ${vehicleloop.model}, ${vehicleloop.type},
+				<c:if test="${vehicleloop.active == 0}">
+					NOT 
+				</c:if>ACTIVE
+				<form action="${pageContext.servletContext.contextPath}/courier" method="post">
+					<input class=button type="submit" name="delete${loop.index}" value="Delete Vehicle">
+				</form><br>
 			</c:forEach>
 			
 		</div>

@@ -123,7 +123,11 @@ public class Courier extends UserAccount{
 	@Override
 	public Boolean save() {
 		DerbyDatabase db = new DerbyDatabase();
-		return db.insert(this);
+		if (db.update(this)) {
+			return db.insert(this);
+		} else {
+			return false;
+		}
 	}
 	
 	//Adds a job to the Courier's list of jobs in model and database
@@ -303,6 +307,11 @@ public class Courier extends UserAccount{
 	
 	public void addVehicle(Vehicle vehicle) {
 		vehicles.add(vehicle);
+	}
+	
+	public void removeVehicle(Vehicle vehicle) {
+		DerbyDatabase db = new DerbyDatabase();
+		db.remove(vehicle, 0);
 	}
 	
 	public void updateLocation(double latitude, double longitude) {

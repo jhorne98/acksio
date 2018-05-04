@@ -105,7 +105,7 @@ public class DerbyDatabaseTest {
 		// retrive inserted vehicle
 		List<Vehicle> dbVehicles = db.vehiclesFromCourierID(courier.getCourierID());
 		
-		vehicle = dbVehicles.get()
+		vehicle = dbVehicles.get(1);
 		assertEquals(VehicleType.CAR, vehicle.getType());
 		assertEquals("R34DCK", vehicle.getLicensePlate());
 		assertEquals(2004, (int)vehicle.getYear());

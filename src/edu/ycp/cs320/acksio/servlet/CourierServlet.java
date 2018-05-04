@@ -54,6 +54,8 @@ public class CourierServlet extends HttpServlet {
 		
 		System.out.println("Courier Servlet: doPost");
 		
+		req.setAttribute("name", user.getName());
+		
 		// holds the error message text, if there is any
 		String errorMessage = null;
 		
@@ -79,6 +81,20 @@ public class CourierServlet extends HttpServlet {
 			model.logout();
 			resp.sendRedirect("login");
 		}
+		
+		// check if user has selected vehicle for removal
+		for(int i = 0; i < courier.getVehicles().size(); i++) {
+			String param = "delete" + Integer.toString(i);
+			
+			if(req.getParameter(param) != null) {
+				courier.removeVehicle(courier.getVehicles().get(i));
+				
+				courier.setVehicles();
+			}
+		}
+		
+		// send all of the read in courier's vehicles to the jsp
+		req.setAttribute("loop", courier.getVehicles());
 		
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/courier.jsp").forward(req, resp);
