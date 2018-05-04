@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<title>Index</title>
-		<link rel="stylesheet" type="text/css" href="default.css"/>
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_view/default.css"/>
 		<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
 	</head>
 	
