@@ -84,7 +84,7 @@ public class CourierServlet extends HttpServlet {
 		
 		// check if user has selected vehicle for removal
 		for(int i = 0; i < courier.getVehicles().size(); i++) {
-			String param = "delete" + Integer.toString(i);
+			String param = "delete" + i;
 			
 			if(req.getParameter(param) != null) {
 				courier.removeVehicle(courier.getVehicles().get(i));
