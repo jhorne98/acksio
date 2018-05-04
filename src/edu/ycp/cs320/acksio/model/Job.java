@@ -30,8 +30,7 @@ public class Job implements DataController{
 	private Courier currentCourier;
 	
 	public Job(String destinationAddress, VehicleType vehicleType, Integer tsaVerified, 
-				String recipientName, long recipientPhone, double distanceMi, 
-				double pay, 
+				String recipientName, long recipientPhone, double distanceMi, double pay, 
 				int pickUpTime, int dropOffTime) {
 		this.destinationAddress=destinationAddress;
 		this.vehicleType=vehicleType;
@@ -44,6 +43,23 @@ public class Job implements DataController{
 		this.dropOffTime=dropOffTime;
 		approved=0;
 	}
+	
+	public Job(int courierID, int dispatcherID, String destinationAddress, VehicleType vehicleType, Integer tsaVerified, 
+			String recipientName, long recipientPhone, double distanceMi, double pay, 
+			int pickUpTime, int dropOffTime) {
+	this.destinationAddress=destinationAddress;
+	this.vehicleType=vehicleType;
+	this.tsaVerified=tsaVerified;
+	this.recipientName=recipientName;
+	this.recipientPhone=recipientPhone;
+	this.distanceMi=distanceMi;
+	this.setPayForJob(pay);
+	this.pickUpTime=pickUpTime;
+	this.dropOffTime=dropOffTime;
+	this.courierID = courierID;
+	this.dispatcherID = dispatcherID;
+	approved=0;
+}
 	
 	public Job() {
 		//Purposefully empty

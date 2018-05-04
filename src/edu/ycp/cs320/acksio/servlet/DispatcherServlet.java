@@ -132,7 +132,7 @@ public class DispatcherServlet extends HttpServlet {
 			// thus, always call a controller method to operate on the data
 			else {
 				Dispatcher dispatcherModel = new Dispatcher();
-				dispatcherModel.Queue(address, name, phone, distance, payment);
+				dispatcherModel.queue(address, name, phone, distance, payment);
 				System.out.println("Created Job!");
 
 			}

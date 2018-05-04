@@ -21,11 +21,12 @@
 			<h2>ACKSIO</h2>
 		</div>
 
-		<c:if test="${! empty errorMessage}">
-			<div class="error">${errorMessage}</div>
-		</c:if>
+		
 
-		<div id=main_body>
+		<div id=content>
+			<c:if test="${! empty errorMessage}">
+				<div class="error">${errorMessage}</div>
+			</c:if>
 
 			<form action="${pageContext.servletContext.contextPath}/login" method="post">
 

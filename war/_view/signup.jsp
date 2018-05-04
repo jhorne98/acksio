@@ -25,7 +25,7 @@
 			<div class="error">${errorMessage}</div>
 		</c:if>
 
-		<div id=main_body>
+		<div id=content>
 
 			<form action="${pageContext.servletContext.contextPath}/signup" method="post">
 

@@ -31,6 +31,8 @@ public class CourierServlet extends HttpServlet {
 		user = (UserAccount)req.getSession(true).getAttribute("valid_model");
 		
 		if(user != null) {
+			req.setAttribute("name", user.getName());
+			
 			courier = new Courier();
 			courier.populate(user.getUserId());
 			

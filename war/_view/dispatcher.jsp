@@ -120,11 +120,15 @@
 
 			<!-- testing functionality of topbar, adjust for neatness later-->
 			<h2>ACKSIO</h2>
+			
+			<form action="${pageContext.servletContext.contextPath}/courier" method="post">
+				<input type="submit" name="logout" value="Log out">
+			</form>
 		</div>
 
 		<form action="${pageContext.servletContext.contextPath}/dispatcher" method="post">
 
-		<div id=main_body>
+		<div id=content>
 		
 			Welcome to Acksio, ${model.name}. 
 			<br><br>

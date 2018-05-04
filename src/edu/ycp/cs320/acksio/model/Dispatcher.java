@@ -50,7 +50,7 @@ public class Dispatcher extends UserAccount{
 		this.payment = payment; 
 	}
 	
-	public void Queue(String address, String name, String phone, double distance, double payment) {
+	public void queue(String address, String name, String phone, double distance, double payment) {
 		//TODO: Implement fully
 		//Job testJob = new Job("118 oak drive", vehicleType.CAR, true, "Don Hake", 7175555555L, 64.9, 53.7, 53.7, 1430, 1730);
 		//Job testJob = new Job("118 oak drive", vehicleType.CAR, true, "Don Hake", 7175555555L, 64.9, 53.7, 53.7, 1430, 1730);

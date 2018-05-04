@@ -85,6 +85,16 @@ public class EditServlet extends HttpServlet {
 			req.setAttribute("couriertsaverified", courier.isTsaVerified());
 		}
 		
+		if(req.getParameter("logout") != null) {
+			req.getSession().invalidate();
+			courier.logout();
+			resp.sendRedirect("login");
+		}
+		
+		if(req.getParameter("back") != null) {
+			resp.sendRedirect(editAccount.getAccountType());
+		}
+		
 		// Forward to view to render the result HTML document
 		req.setAttribute("accountType", editAccount.getAccountType());
 		req.getRequestDispatcher("/_view/edit.jsp").forward(req, resp);

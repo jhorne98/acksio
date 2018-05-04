@@ -535,7 +535,7 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							  "insert into jobs (courier_id, dispatcher_id, destination_long, destination_lat, vehicle_type, TSA_verified, recipient_name, recipient_phone, distance_mi, courier_paid, pickup_time, dropoff_time, actual_time, signed, invoice_approved) "
+							  "insert into jobs (courier_id, dispatcher_id, destination_long, destination_lat, vehicle_type, TSA_verified, recipient_name, recipient_phone, distance_mi, courier_paid, pickup_time, dropoff_time, actual_time, signed, invoice_approved, payment) "
 							+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 									// 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15
 					

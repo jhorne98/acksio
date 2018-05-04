@@ -43,18 +43,30 @@ public class InsertVehicleServlet extends HttpServlet {
 		// holds the error message text, if there is any
 		String errorMessage = null;
 		
-		//System.out.println(getIntFromParameter(req.getParameter("year")));
-		Vehicle insertVehicle = new Vehicle(courier.getCourierID(), req.getParameter("licenseplate"), getIntFromParameter(req.getParameter("year")), req.getParameter("make"), req.getParameter("model"), VehicleType.valueOf(req.getParameter("type")));
-		insertVehicle.setActive(0);
-		
-		// the save method calls a derby update, which loads the Vehicle into the vehicles table
-		if(insertVehicle.save()) {
-			System.out.println(courier.getCourierID() + " " + req.getParameter("licenseplate") + " " + getIntFromParameter(req.getParameter("year")) + " " + req.getParameter("make") + " " + req.getParameter("model") + " " + VehicleType.valueOf(req.getParameter("type")));
-			req.setAttribute("successfulinsert", "Successful Insert!");
+		if(req.getParameter("submit") != null) {
+			//System.out.println(getIntFromParameter(req.getParameter("year")));
+			Vehicle insertVehicle = new Vehicle(courier.getCourierID(), req.getParameter("licenseplate"), getIntFromParameter(req.getParameter("year")), req.getParameter("make"), req.getParameter("model"), VehicleType.valueOf(req.getParameter("type")));
+			insertVehicle.setActive(0);
+			
+			// the save method calls a derby update, which loads the Vehicle into the vehicles table
+			if(insertVehicle.save()) {
+				System.out.println(courier.getCourierID() + " " + req.getParameter("licenseplate") + " " + getIntFromParameter(req.getParameter("year")) + " " + req.getParameter("make") + " " + req.getParameter("model") + " " + VehicleType.valueOf(req.getParameter("type")));
+				req.setAttribute("successfulinsert", "Successful Insert!");
+			}
+			// add result objects as attributes
+			// this adds the errorMessage text and the result to the response
+			req.setAttribute("errorMessage", errorMessage);
 		}
-		// add result objects as attributes
-		// this adds the errorMessage text and the result to the response
-		req.setAttribute("errorMessage", errorMessage);
+		
+		if(req.getParameter("logout") != null) {
+			req.getSession().invalidate();
+			courier.logout();
+			resp.sendRedirect("login");
+		}
+		
+		if(req.getParameter("back") != null) {
+			resp.sendRedirect("courier");
+		}
 		
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/insertvehicle.jsp").forward(req, resp);

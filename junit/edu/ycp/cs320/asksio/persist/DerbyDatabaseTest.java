@@ -2,11 +2,13 @@ package edu.ycp.cs320.asksio.persist;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import edu.ycp.cs320.acksio.model.*;
-import edu.ycp.cs320.acksio.persist.DerbyDatabase;
+import edu.ycp.cs320.acksio.persist.*;
 import jbcrypt.org.mindrot.jbcrypt.*;
 
 public class DerbyDatabaseTest {
@@ -38,6 +40,8 @@ public class DerbyDatabaseTest {
 		//vehicle.setVehicleID(1);
 		vehicle.setCourierID(1);
 		vehicle.setActive(1);
+		
+		
 	}
 	
 	@Test
@@ -85,26 +89,56 @@ public class DerbyDatabaseTest {
 	
 	@Test
 	public void testInsertRemoveVehicle() {
+		user.setPassword("password");
+		user.signup();
+		user = db.userAccountFromUsername("joe");
+		
+		// insert courier into db
+		//assertTrue(db.insert(courier));
+		//courier = db.courierFromUsername();
+		
 		// insert vehicle into db
-		assertTrue(db.insert(vehicle));
+		courier = db.courierFromUsername("joe");
+		vehicle.setCourierID(courier.getCourierID());
+		db.insert(vehicle);
 		
-		// TODO: fix for any row in vehicles: currently relies on initial db
 		// retrive inserted vehicle
-		vehicle = db.vehicleFromID(7);
+		List<Vehicle> dbVehicles = db.vehiclesFromCourierID(courier.getCourierID());
 		
+		vehicle = dbVehicles.get()
 		assertEquals(VehicleType.CAR, vehicle.getType());
 		assertEquals("R34DCK", vehicle.getLicensePlate());
 		assertEquals(2004, (int)vehicle.getYear());
 		assertEquals("Dodge", vehicle.getMake());
 		assertEquals("Dakota", vehicle.getModel());
-		assertEquals(1, (int)vehicle.getCourierID());
+		assertEquals(courier.getCourierID(), (int)vehicle.getCourierID());
 		
 		// remove vehicle from db
-		assertTrue(db.remove(vehicle, vehicle.getVehicleID()));
+		//assertTrue(db.remove(vehicle, vehicle.getVehicleID()));
+		assertTrue(db.remove(courier, courier.getCourierID()));
+		assertTrue(db.remove(user, user.getUserId()));
 	}
 	
 	@Test
 	public void testInsertRemoveJob() {
+		user.setPassword("password");
+		user.setAccountType("dispatcher");
+		user.signup();
+		user = db.userAccountFromUsername("joe");
 		
+		dispatcher = db.dispatcherFromUsername("joe");
+		
+		job = new Job(1, dispatcher.getDispatcherID(), "11313 Sample Ln.", VehicleType.CAR, 0, "Dan", 6, 0.0, 0.0, 4, 4);
+		job.setCourierPaid(1);
+		job.setSigned(1);
+		
+		// insert job into db
+		assertTrue(db.insert(job));
+		
+		List<Job> dbJobs = db.jobsFromDispatcherID(dispatcher.getDispatcherID());
+		job = dbJobs.get(0);
+		
+		//db.jobsFromDispatcherID();
+		assertTrue(db.remove(job, job.getJobID()));
 	}
 }

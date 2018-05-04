@@ -19,6 +19,10 @@
 
 			<!-- testing functionality of topbar, adjust for neatness later-->
 			<h2>ACKSIO</h2>
+			
+			<form action="${pageContext.servletContext.contextPath}/courier" method="post">
+				<input type="submit" name="logout" value="Log out">
+			</form>
 		</div>
 
 		<c:if test="${! empty successfulUpdate}">
@@ -29,7 +33,7 @@
 			<div class="error">${errorMessage}</div>
 		</c:if>
 
-		<div id=main_body>
+		<div id=content>
 
 			<c:if test="${! empty successfulinsert}">
 				<div class="error">${successfulinsert}</div>
@@ -66,6 +70,7 @@
 				</select><br><br>
 				
 				<input type="submit" name="submit" value="Insert new Vehicle">
+				<input type="submit" name="back" value="Back">
 			</form>
 
 		</div>

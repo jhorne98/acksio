@@ -14,35 +14,36 @@
 	</head>
 
 	<body>
+		<div id=header>
+		
+			<h2>ACKSIO</h2>
+			
+			<form action="${pageContext.servletContext.contextPath}/courier" method="post">
+				<input type="submit" name="logout" value="Log out">
+			</form>
+		</div>
+		
 		<c:if test="${! empty errorMessage}">
 			<div class="error">${errorMessage}</div>
 		</c:if>
+
+		<div id=content>
+			<p>Welcome, ${name}</p>
 		
-		<div id=header>
-
-			<!-- testing functionality of topbar, adjust for neatness later-->
-			<h2>ACKSIO</h2>
-		</div>
-
-		<div id=main_body>
 			<form action="${pageContext.servletContext.contextPath}/courier" method="post">
 				<input type="submit" name="edit" value="Edit Information"><br><br>
 				<input type="submit" name="insertvehicle" value="Add a Vehicle"><br>
 			</form>
 			
 			<p>Your Vehicles</p>
-			<div id=vehicles>
-				<c:forEach var="vehicleloop" items="${loop}">
-					${vehicleloop.licensePlate}, ${vehicleloop.year}, ${vehicleloop.make}, ${vehicleloop.model}
-					<c:if test="${vehicleloop.active == 1}">
-						ACTIVE
-					</c:if><br>
-				</c:forEach>
-			</div><br>
+		
+			<c:forEach var="vehicleloop" items="${loop}">
+				${vehicleloop.licensePlate}, ${vehicleloop.year}, ${vehicleloop.make}, ${vehicleloop.model}
+				<c:if test="${vehicleloop.active == 1}">
+					ACTIVE
+				</c:if><br>
+			</c:forEach>
 			
-			<form action="${pageContext.servletContext.contextPath}/courier" method="post">
-				<input type="submit" name="logout" value="Log out">
-			</form>
 		</div>
 
 		<!--
