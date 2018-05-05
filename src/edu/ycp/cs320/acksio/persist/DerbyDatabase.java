@@ -1525,7 +1525,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	@Override
-	public Boolean remove(Job job, int id) {
+	public Boolean remove(Job job) {
 		return executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
@@ -1543,7 +1543,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	@Override
-	public Boolean remove(Courier courier, int id) {
+	public Boolean remove(Courier courier) {
 		return executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
@@ -1561,7 +1561,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	@Override
-	public Boolean remove(Dispatcher dispatcher, int id) {
+	public Boolean remove(Dispatcher dispatcher) {
 		return executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
@@ -1579,7 +1579,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	@Override
-	public Boolean remove(UserAccount user, int id) {
+	public Boolean remove(UserAccount user) {
 		return executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
@@ -1597,7 +1597,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	@Override
-	public Boolean remove(Vehicle vehicle, int id) {
+	public Boolean remove(Vehicle vehicle) {
 		return executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {

@@ -318,7 +318,7 @@ public class Courier extends UserAccount{
 	
 	public void removeVehicle(Vehicle vehicle) {
 		DerbyDatabase db = new DerbyDatabase();
-		db.remove(vehicle, 0);
+		db.remove(vehicle);
 	}
 	
 	public void updateLocation(double latitude, double longitude) {

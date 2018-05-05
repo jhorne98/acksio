@@ -61,7 +61,7 @@ public class DerbyDatabaseTest {
 		assertEquals("courier", user.getAccountType());
 		
 		// remove user from db
-		assertTrue(db.remove(user, user.getUserId()));
+		assertTrue(db.remove(user));
 	}
 	
 	@Test
@@ -73,7 +73,7 @@ public class DerbyDatabaseTest {
 		dispatcher = db.dispatcherFromID(dispatcher.getUserId());
 		
 		// remove dispatcher from db
-		assertTrue(db.remove(dispatcher, dispatcher.getUserId()));
+		assertTrue(db.remove(dispatcher));
 	}
 	
 	@Test
@@ -85,7 +85,7 @@ public class DerbyDatabaseTest {
 		courier = db.courierFromID(courier.getUserId());
 		
 		// remove courier from db
-		assertTrue(db.remove(courier, courier.getUserId()));
+		assertTrue(db.remove(courier));
 	}
 	
 	@Test
@@ -122,9 +122,9 @@ public class DerbyDatabaseTest {
 		assertEquals(courier.getCourierID(), (int)vehicle.getCourierID());
 		
 		// remove vehicle from db
-		assertTrue(db.remove(vehicle, dbVehicles.get(0).getVehicleID()));
-		assertTrue(db.remove(courier, courier.getCourierID()));
-		assertTrue(db.remove(user, user.getUserId()));
+		assertTrue(db.remove(vehicle));
+		assertTrue(db.remove(courier));
+		assertTrue(db.remove(user));
 	}
 	
 	@Test
@@ -147,8 +147,8 @@ public class DerbyDatabaseTest {
 		job = dbJobs.get(0);
 		
 		//db.jobsFromDispatcherID();
-		assertTrue(db.remove(user, user.getUserId()));
-		assertTrue(db.remove(dispatcher, dispatcher.getDispatcherID()));
-		assertTrue(db.remove(job, job.getJobID()));
+		assertTrue(db.remove(user));
+		assertTrue(db.remove(dispatcher));
+		assertTrue(db.remove(job));
 	}
 }
