@@ -27,45 +27,108 @@ public class Courier extends UserAccount{
 	private int unapprovedJobs;
 	List<Vehicle> vehicles;
 	List<Job> jobs;
-
-	/* 
-	public Courier(int driverNumber, String name, boolean availability, 
-					int licenseID, String licenseExp, boolean insured, 
-					int[] insuranceCoverage, boolean tsaVerified, double payHistory, 
-					double payEstimate, double balance, ArrayList<VehicleType> vehicles,
-					double latitude, double longitude) {
-	
-		this.driverNumber=driverNumber;
-		this.setName(name);
-		this.setAvailability(availability);
-		this.licenseID=licenseID;
-		this.insured=insured;
-		this.insuranceCoverage=insuranceCoverage;
-		this.tsaVerified=tsaVerified;
-		this.payHistory=payHistory;
-		this.payEstimate=payEstimate;
-		this.balance=balance;
-		this.vehicles=vehicles;
-		this.latitude=latitude;
-		this.longitude=longitude;
-	}
-	*/
 	
 	public Courier() {
 		//Purposefully empty
 	}
 	
+	//Full Constructor with all fields from UserAccount and Courier, lacks unpaidJob and unapprovedJobs, but those are set using the DB
+	public Courier(int userId, String username, String password, String email, String name, String accountType, 
+			int courierID, int dispatcherID, int availability, int licenseID, String licenseExpiration, int insured, 
+			int insuranceExpiration, int[] insuranceCoverage, int tsaVerified, double payHistory, double payEstimate, double balance, 
+			double latitude, double longitude, List<Vehicle> vehicles, List<Job> jobs) {
+		
+		setUserId(userId);
+		setName(name);
+		setEmail(email);
+		setUsername(username);
+		setPassword(password);
+		setAccountType(accountType);
+		setValidity(false);
+		this.courierID = courierID;
+		this.dispatcherID = dispatcherID;
+		this.availability = availability;
+		this.licenseID = licenseID;
+		this.licenseExpiration = licenseExpiration;
+		this.insured = insured;
+		this.insuranceExpiration = insuranceExpiration;
+		this.insuranceCoverage = insuranceCoverage;
+		this.tsaVerified = tsaVerified;
+		this.payHistory = payHistory;
+		this.payEstimate = payEstimate;
+		this.balance = balance;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.vehicles = vehicles;
+		this.jobs = jobs;
+		
+	}
+	
+	//Full Constructor with all fields from Courier, lacks unpaidJob and unapprovedJobs, but those are set using the DB
+	public Courier(int courierID, int dispatcherID, int availability, int licenseID, String licenseExpiration, int insured, 
+			int insuranceExpiration, int[] insuranceCoverage, int tsaVerified, double payHistory, double payEstimate, double balance, 
+			double latitude, double longitude, List<Vehicle> vehicles, List<Job> jobs) {
+		
+		this.courierID = courierID;
+		this.dispatcherID = dispatcherID;
+		this.availability = availability;
+		this.licenseID = licenseID;
+		this.licenseExpiration = licenseExpiration;
+		this.insured = insured;
+		this.insuranceExpiration = insuranceExpiration;
+		this.insuranceCoverage = insuranceCoverage;
+		this.tsaVerified = tsaVerified;
+		this.payHistory = payHistory;
+		this.payEstimate = payEstimate;
+		this.balance = balance;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.vehicles = vehicles;
+		this.jobs = jobs;
+		
+	}
+	
+	//Full Constructor with all fields from Courier, does not lack unpaidJob and unapprovedJobs
+	public Courier(int courierID, int dispatcherID, int availability, int licenseID, String licenseExpiration, int insured, 
+			int insuranceExpiration, int[] insuranceCoverage, int tsaVerified, double payHistory, double payEstimate, double balance, 
+			double latitude, double longitude, int unpaidJobs, int unapprovedJobs, List<Vehicle> vehicles, List<Job> jobs) {
+		
+		this.courierID = courierID;
+		this.dispatcherID = dispatcherID;
+		this.availability = availability;
+		this.licenseID = licenseID;
+		this.licenseExpiration = licenseExpiration;
+		this.insured = insured;
+		this.insuranceExpiration = insuranceExpiration;
+		this.insuranceCoverage = insuranceCoverage;
+		this.tsaVerified = tsaVerified;
+		this.payHistory = payHistory;
+		this.payEstimate = payEstimate;
+		this.balance = balance;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.unpaidJobs = unpaidJobs;
+		this.unapprovedJobs = unapprovedJobs;
+		this.vehicles = vehicles;
+		this.jobs = jobs;
+		
+	}
+	
+	//Int based Courier Constructor
 	public Courier(Integer tsaVerified) {
 		this.tsaVerified = tsaVerified;
 	}
 	
-	/*
-	public Courier(DatabaseProvider provider, int id) {
-		setCourierID(id);
+	//Int based Courier Constructor that pulls from the database based on the courier's USER ID (NOT COURIER ID)
+	public Courier(int id, boolean database) {
 		populate(id);
 	}
-	*/
 		
+	//String based Constructor that pulls from the database based on the courier's username
+	public Courier(String username) {
+		populate(username);
+	}
+
 	//METHODS
 	@Override
 	public void populate(int id) {

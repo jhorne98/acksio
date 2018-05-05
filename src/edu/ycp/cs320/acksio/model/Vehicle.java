@@ -58,6 +58,26 @@ public class Vehicle implements DataController{
 		return db.insert(this);
 	}
 	
+	public boolean equals(Vehicle other) {
+		if(other.getVehicleID() != vehicleID)
+			return false;
+		else if(other.getCourierID() != courierID)
+			return false;
+		else if(!other.getMake().equals(make))
+			return false;
+		else if(!other.getModel().equals(model))
+			return false;
+		else if(other.getYear() != year)
+			return false;
+		else if(other.getActive() != active)
+			return false;
+		else if(other.getType().toString().equals(type.toString()))
+			return false;
+		else if(other.getLicensePlate().equals(licensePlate))
+			return false;			
+		return true;
+	}
+	
 	//SETTERS AND GETTERS
 	public String getLicensePlate() {
 		return licensePlate;

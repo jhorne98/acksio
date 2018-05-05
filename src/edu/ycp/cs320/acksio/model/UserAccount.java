@@ -27,6 +27,17 @@ public class UserAccount implements DataController{
 		//save();
 	}
 	
+	public UserAccount(int userId, String username, String password, String email, String name, String accountType) {
+		this.userId = userId;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.name = name;
+		this.accountType = accountType;
+		isValid = false;
+		//save();
+	}
+	
 	public UserAccount(String username, String password, String email, String name, String accountType) {
 		this.username = username;
 		this.password = password;
