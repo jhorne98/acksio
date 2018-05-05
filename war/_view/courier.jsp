@@ -35,6 +35,15 @@
 				<input class=button type="submit" name="insertvehicle" value="Add a Vehicle"><br>
 			</form>
 			
+			<p>You are currently:
+			<c:if test="${available == 0}">
+				NOT
+			</c:if>AVAILABLE</p>
+			
+			<form action="${pageContext.servletContext.contextPath}/courier" method="post">
+				<input class=button type="submit" name="availablebutton" value="${availablestring}"><br>
+			</form>
+			
 			<br><hr><p>Your Vehicles</p>
 		
 			<c:forEach var="vehicleloop" items="${loop}" varStatus="loop">
@@ -43,6 +52,7 @@
 					NOT 
 				</c:if>ACTIVE
 				<form action="${pageContext.servletContext.contextPath}/courier" method="post">
+					<input class=button type="submit" name="toggle${loop.index}" value="Toggle Active">
 					<input class=button type="submit" name="delete${loop.index}" value="Delete Vehicle">
 				</form><br>
 			</c:forEach>

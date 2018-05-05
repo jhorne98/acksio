@@ -40,6 +40,13 @@ public class CourierServlet extends HttpServlet {
 			
 			// send all of the read in courier's vehicles to the jsp
 			req.setAttribute("loop", courier.getVehicles());
+			req.setAttribute("available", courier.getAvailability());
+			
+			if(courier.getAvailability() == 0) {
+				req.setAttribute("availablestring", "Become Available");
+			} else {
+				req.setAttribute("availablestring", "Become Unavailable");
+			}
 			
 			// call JSP to generate empty form
 			req.getRequestDispatcher("/_view/courier.jsp").forward(req, resp);
@@ -54,6 +61,7 @@ public class CourierServlet extends HttpServlet {
 		
 		System.out.println("Courier Servlet: doPost");
 		
+		// set the name on post for display
 		req.setAttribute("name", user.getName());
 		
 		// holds the error message text, if there is any
@@ -84,17 +92,52 @@ public class CourierServlet extends HttpServlet {
 		
 		// check if user has selected vehicle for removal
 		for(int i = 0; i < courier.getVehicles().size(); i++) {
-			String param = "delete" + i;
+			String deleteParam = "delete" + i;
+			String toggleParam = "toggle" + i;
 			
-			if(req.getParameter(param) != null) {
+			if(req.getParameter(deleteParam) != null) {
 				courier.removeVehicle(courier.getVehicles().get(i));
 				
-				courier.setVehicles();
+				
 			}
+			
+			if(req.getParameter(toggleParam) != null) {
+				if(courier.getVehicles().get(i).getActive() == 0) {
+					courier.getVehicles().get(i).setActive(1);
+				} else {
+					courier.getVehicles().get(i).setActive(0);
+				}
+				
+				System.out.println(courier.getVehicles().get(i).getActive());
+				//courier.setVehicles();
+				
+				courier.updateVehicles();
+			}
+			
+			courier.setVehicles();
 		}
+		
+		if(req.getParameter("availablebutton") != null) {
+			if(courier.getAvailability() == 0) {
+				courier.setAvailability(1);
+			} else {
+				courier.setAvailability(0);
+			}
+			
+			courier.save();
+		}
+		
+		//courier.populate(user.getUsername());
 		
 		// send all of the read in courier's vehicles to the jsp
 		req.setAttribute("loop", courier.getVehicles());
+		req.setAttribute("available", courier.getAvailability());
+		
+		if(courier.getAvailability() == 0) {
+			req.setAttribute("availablestring", "Become Available");
+		} else {
+			req.setAttribute("availablestring", "Become Unavailable");
+		}
 		
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/courier.jsp").forward(req, resp);

@@ -123,7 +123,7 @@ public class Courier extends UserAccount{
 	@Override
 	public Boolean save() {
 		DerbyDatabase db = new DerbyDatabase();
-		if (db.update(this)) {
+		if (!db.update(this)) {
 			return db.insert(this);
 		} else {
 			return false;
@@ -299,6 +299,13 @@ public class Courier extends UserAccount{
 	public void setVehicles() {
 		DerbyDatabase db = new DerbyDatabase();
 		vehicles = db.vehiclesFromCourierID(courierID);
+	}
+	
+	public void updateVehicles() {
+		DerbyDatabase db = new DerbyDatabase();
+		for(Vehicle vehicle: vehicles) {
+			db.update(vehicle);
+		}
 	}
 	
 	public List<Vehicle> getVehicles() {

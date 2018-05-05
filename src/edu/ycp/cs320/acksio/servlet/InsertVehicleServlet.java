@@ -46,7 +46,7 @@ public class InsertVehicleServlet extends HttpServlet {
 		if(req.getParameter("submit") != null) {
 			//System.out.println(getIntFromParameter(req.getParameter("year")));
 			Vehicle insertVehicle = new Vehicle(courier.getCourierID(), req.getParameter("licenseplate"), getIntFromParameter(req.getParameter("year")), req.getParameter("make"), req.getParameter("model"), VehicleType.valueOf(req.getParameter("type")));
-			insertVehicle.setActive(0);
+			insertVehicle.setActive(1);
 			
 			// the save method calls a derby update, which loads the Vehicle into the vehicles table
 			if(insertVehicle.save()) {
