@@ -42,6 +42,10 @@
   	<servlet-class>edu.ycp.cs320.acksio.servlet.CourierServlet</servlet-class>
   </servlet>
   <servlet>
+  	<servlet-name>CreateJobServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.acksio.servlet.CreateJobServlet</servlet-class>
+  </servlet>
+  <servlet>
   	<servlet-name>InsertVehicleServlet</servlet-name>
   	<servlet-class>edu.ycp.cs320.acksio.servlet.InsertVehicleServlet</servlet-class>
   </servlet>
@@ -78,6 +82,10 @@
   <servlet-mapping>
     <servlet-name>SignupServlet</servlet-name>
     <url-pattern>/signup</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>CreateJobServlet</servlet-name>
+  	<url-pattern>/createJob</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>EditServlet</servlet-name>

@@ -51,6 +51,9 @@ public class CourierServlet extends HttpServlet {
 			// call JSP to generate empty form
 			req.getRequestDispatcher("/_view/courier.jsp").forward(req, resp);
 		} else {
+			req.setAttribute("username", "");
+			req.setAttribute("password", "");
+			
 			resp.sendRedirect("login");
 		}
 	}

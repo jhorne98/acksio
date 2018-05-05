@@ -35,16 +35,20 @@
 				<input class=button type="submit" name="insertvehicle" value="Add a Vehicle"><br>
 			</form>
 			
-			<p>You are currently:
-			<c:if test="${available == 0}">
-				NOT
-			</c:if>AVAILABLE</p>
+			<br>You are currently:
+			<div id=avail>
+				<c:if test="${available == 0}">
+					NOT
+				</c:if>AVAILABLE
+			</div><br>
 			
 			<form action="${pageContext.servletContext.contextPath}/courier" method="post">
 				<input class=button type="submit" name="availablebutton" value="${availablestring}"><br>
 			</form>
-			
-			<br><hr><p>Your Vehicles</p>
+		</div>
+		
+		<div id=couriervehicles>
+			<p>Your Vehicles</p>
 		
 			<c:forEach var="vehicleloop" items="${loop}" varStatus="loop">
 				${vehicleloop.licensePlate}, ${vehicleloop.year}, ${vehicleloop.make}, ${vehicleloop.model}, ${vehicleloop.type},

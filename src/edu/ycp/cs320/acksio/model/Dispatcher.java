@@ -50,6 +50,10 @@ public class Dispatcher extends UserAccount{
 		this.payment = payment; 
 	}
 	
+	public Dispatcher(String username) {
+		populate(username);
+	}
+
 	public void queue(String address, String name, String phone, double distance, double payment) {
 		//TODO: Implement fully
 		//Job testJob = new Job("118 oak drive", vehicleType.CAR, true, "Don Hake", 7175555555L, 64.9, 53.7, 53.7, 1430, 1730);
@@ -226,6 +230,27 @@ public class Dispatcher extends UserAccount{
 		DerbyDatabase db = new DerbyDatabase();
 		Dispatcher hold = db.dispatcherFromID(id);
 		if(hold != null) {
+			setDispatcherID(hold.getDispatcherID());
+			setUserId(hold.getUserId());
+			setAddress(hold.getAddress());
+			setPhone(hold.getPhone());
+			setName(hold.getName());
+			setEmail(hold.getEmail());
+			setUsername(hold.getUsername());
+			setPassword(hold.getPassword());
+			setAccountType(hold.getAccountType());
+			setJobs();
+			setCouriers();
+		} else {
+			throw new NullPointerException();
+		}
+	}
+	
+	public void populate(String username) {
+		DerbyDatabase db = new DerbyDatabase();
+		Dispatcher hold = db.dispatcherFromUsername(username);
+		if(hold != null) {
+			setDispatcherID(hold.getDispatcherID());
 			setUserId(hold.getUserId());
 			setAddress(hold.getAddress());
 			setPhone(hold.getPhone());

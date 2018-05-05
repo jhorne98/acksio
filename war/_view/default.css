@@ -37,6 +37,24 @@ body {
 	border: 2px;
 }
 
+#map-canvas{
+	width: 500px;
+	height: 500px;
+}
+
+#map {
+	height: 1000px;
+	width: 100%;
+}
+
+#avail {
+	color: red;
+}
+
+#couriervehicles {
+	float: right;
+}
+
 .error {
 	color: red;
 }
@@ -47,6 +65,7 @@ body {
 	border-radius: 2px;
 	padding: 5px;
 	border: none;
+	margin: 2px;
 }
 
 .button:hover {

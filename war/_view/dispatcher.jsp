@@ -119,100 +119,81 @@
 		<div id=header>
 			<h2>ACKSIO</h2>
 			
-			<form action="${pageContext.servletContext.contextPath}/courier" method="post">
+			<form action="${pageContext.servletContext.contextPath}/dispatcher" method="post">
 				<input class=logout_button type="submit" name="logout" value="Log out">
 			</form>
 		</div>
 
-		<form action="${pageContext.servletContext.contextPath}/dispatcher" method="post">
-
 		<div id=content>
-		
-			Welcome to Acksio, ${model.name}. 
+			Welcome to Acksio, ${name}. 
 			<br><br>
-				
-
-			<!-- for generic HTML -->
-
-			Target Address: 
-				<input type="text" name="address" value="${model.address}" method="post">
-				<br><br>
-				
-				Recipient Name: <input type = "text" name="name" value="${model.name}" method="post">
-				<br><br>
-				
-				Recipient Phone #: <input type = "text" name="phone" value="${model.phone}" method="post">
-				<br><br>
-				
-				Vehicle Type<br>
-				<select name="vehicleType">
-					<option value="car">Class C Automobile</option>
-				</select>
-				<br><br>
-
-				<input type="checkbox" name="tsaCertified" value="${model.tsaCert}"> TSA certified driver needed<br><br>
-
-				
-				<p>${model.vehicleType}</p>
-		</div>
-
-		<div id=main_body>
-			You are in charge of the following couriers: 
-			<br>
 			
-			<div id=vehicles>
-				<c:forEach var="loopCourier" items="${courierList}">
-					${loopCourier.name}, who is courier number: ${loopCourier.courierID}
-					<br>
-					Amount due: ${loopCourier.balance} across ${loopCourier.unpaidJobs} unpaid jobs with ${loopCourier.unapprovedJobs} jobs still to be approved.
-					<br>
-				</c:forEach>
-			</div>
-			<br>
-			Select a courier: <br>
-			<select name="courierSelection">
-				<c:forEach var="loopCourier" items="${courierList}">
-					<option>${loopCourier.courierID}</option>
-				</c:forEach>
-			</select>
-			<br>
-			Select an action:
-			<input type="submit" name="examineCourier" value="Examine Courier">
-			<input type="submit" name="payCourier" value="Pay Courier">
-		</div>
-		<div id=main_body>
-			You queued the following jobs: 
-			<br>
-			<div id=vehicles>
-				<c:forEach var="loopJob" items="${jobList}">
-					Job #${loopJob.jobID}, invoice is 
-					<c:if test="${loopJob.approved}">
-						approved, 
-						courierPaid = ${loopJob.courierPaid}
-					</c:if>
-					<c:if test="${!loopJob.approved}">
-						unapproved
-					</c:if>
-					<br>
-				</c:forEach>
-			</div>
-			<br>
-			Select a job: <br>
-			<select name="jobSelection">
-				<c:forEach var="loopJob" items="${jobList}">
-					<option>${loopJob.jobID}</option>
-				</c:forEach>
-			</select>
-			<br>
-			Select an action:
-			<input type="submit" name="examineJob" value="Examine Job">
-			<input type="submit" name="payJob" value="Pay Job">
-		</div>
-		<div>
-				<!--- <input type=" ---->
+			<div id=courierinfo>
+				You are in charge of the following couriers: 
+				<br>
 				
-				<!-- for google maps functions --->				
+				<div id=courierinfo>
+					<c:forEach var="loopCourier" items="${courierList}">
+						${loopCourier.courierID}, ${loopCourier.name}
+						<br>
+						Amount due: ${loopCourier.balance} across ${loopCourier.unpaidJobs} unpaid jobs with ${loopCourier.unapprovedJobs} jobs still to be approved.
+						<br><br>
+					</c:forEach>
+				</div>
+				Select a courier: <br>
+				<select name="courierSelection">
+					<c:forEach var="loopCourier" items="${courierList}">
+						<option>${loopCourier.courierID}</option>
+					</c:forEach>
+				</select>
+				<br>
+				Select an action:
+				<input class=button type="submit" name="examineCourier" value="Examine Courier">
+				<input class=button type="submit" name="payCourier" value="Pay Courier">
+				<hr>
+			</div>
+			
+			<div id=jobinfo>
+				You queued the following jobs: 
+				<br>
+				<div id=vehicles>
+					<c:forEach var="loopJob" items="${jobList}" varStatus="jobs">
+						Job #${loopJob.jobID}, invoice is 
+						<c:if test="${loopJob.approved}">
+							approved, 
+							courierPaid = ${loopJob.courierPaid}
+						</c:if>
+						<c:if test="${!loopJob.approved}">
+							unapproved
+						</c:if>
+						<br><br>
+					</c:forEach>
+				</div>
+				Select a job: <br>
+				<select name="jobSelection">
+					<c:forEach var="loopJob" items="${jobList}" varStatus="jobs">
+						<option>${loopJob.jobID}</option>
+					</c:forEach>
+				</select>
+				<br>
+				Select an action:
+				<input class=button type="submit" name="examineJob" value="Examine Job">
+				<input class=button type="submit" name="payJob" value="Pay Job">
+				<br><hr>
+			</div>
+			
+			<form action="${pageContext.servletContext.contextPath}/dispatcher" method="post">
+				<input class=button type="submit" name="createJob" value="Create Job"><br><br>
+				<input class=button type="submit" name="edit" value="Edit Information">
+			</form>
+		</div>
 
+		
+		
+		
+		<!-- moved all of create job function to separate jsp -->
+		<!-- <div>
+				
 
 				<label for="start">Pickup Address : </label>
 				<input type="text" name="start" id="start" />
@@ -234,7 +215,6 @@
 				<input type="submit" value="Create Job">
 
 
-				<!--- <input type="submit" name="submit" value="Create Job"> --->
 
 				
 				<p>${model.vehicleType}</p>
@@ -244,6 +224,6 @@
 		
 		
 		<div id="map_canvas"></div>
-		</form>
+		-->
 	</body>
 </html>
