@@ -40,13 +40,14 @@ public class DerbyDatabaseTest {
 		//vehicle.setVehicleID(1);
 		vehicle.setCourierID(1);
 		vehicle.setActive(1);
-		
-		
 	}
 	
 	@Test
 	public void testInsertRemoveUser() {
 		// insert user into db
+		user.setUsername("joe");
+		user.setName("Joe");
+		user.setAccountType("courier");
 		assertTrue(db.insert(user));
 		
 		// retrieve inserted user
@@ -89,9 +90,11 @@ public class DerbyDatabaseTest {
 	
 	@Test
 	public void testInsertRemoveVehicle() {
-		user.setPassword("password");
-		user.signup();
+		db.insert(user);
 		user = db.userAccountFromUsername("joe");
+		
+		courier.setUserId(user.getUserId());
+		db.insert(courier);
 		
 		// insert courier into db
 		//assertTrue(db.insert(courier));
@@ -105,7 +108,12 @@ public class DerbyDatabaseTest {
 		// retrive inserted vehicle
 		List<Vehicle> dbVehicles = db.vehiclesFromCourierID(courier.getCourierID());
 		
-		vehicle = dbVehicles.get(1);
+		
+		for(Vehicle vehicle: dbVehicles) {
+			System.out.println(vehicle.getVehicleID());
+		}
+		
+		vehicle = dbVehicles.get(0);
 		assertEquals(VehicleType.CAR, vehicle.getType());
 		assertEquals("R34DCK", vehicle.getLicensePlate());
 		assertEquals(2004, (int)vehicle.getYear());
@@ -114,7 +122,7 @@ public class DerbyDatabaseTest {
 		assertEquals(courier.getCourierID(), (int)vehicle.getCourierID());
 		
 		// remove vehicle from db
-		//assertTrue(db.remove(vehicle, vehicle.getVehicleID()));
+		assertTrue(db.remove(vehicle, dbVehicles.get(0).getVehicleID()));
 		assertTrue(db.remove(courier, courier.getCourierID()));
 		assertTrue(db.remove(user, user.getUserId()));
 	}
@@ -139,6 +147,8 @@ public class DerbyDatabaseTest {
 		job = dbJobs.get(0);
 		
 		//db.jobsFromDispatcherID();
+		assertTrue(db.remove(user, user.getUserId()));
+		assertTrue(db.remove(dispatcher, dispatcher.getDispatcherID()));
 		assertTrue(db.remove(job, job.getJobID()));
 	}
 }
