@@ -26,8 +26,9 @@ public class IndexServlet extends HttpServlet {
 		System.out.println("Index Servlet: doPost");
 		
 		if(req.getParameter("login") != null){
-			resp.sendRedirect("/acksio/login");
+			resp.sendRedirect("login");
 		}
+		/*
 		else if(req.getParameter("dispatcher") != null){
 			resp.sendRedirect("/acksio/dispatcher");
 		} 
@@ -36,7 +37,7 @@ public class IndexServlet extends HttpServlet {
 		}
 		else if(req.getParameter("createJob") != null){
 			resp.sendRedirect("/acksio/createJob");
-		}
+		}*/
 		
 		req.getRequestDispatcher("/_view/index.jsp").forward(req, resp);
 	}

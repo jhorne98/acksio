@@ -4,6 +4,11 @@
 	size: auto;
 }
 
+@font-face {
+    font-family: "Lobster";
+    src: url(https://fonts.googleapis.com/css?family=Lobster) format("truetype");
+}
+
 body {
 	margin: 0;
 	background-color: #eeeeec;
@@ -37,6 +42,7 @@ body {
 	border: 2px;
 }
 
+/* map style */
 #map-canvas{
 	width: 500px;
 	height: 500px;
@@ -87,4 +93,93 @@ body {
 
 .logout_button:active {
 	border-radius: 6px;
+}
+
+#img{
+	width: 100%;
+    height: auto;
+}
+
+/* index page style */
+.index_title{
+	text-align: center;
+	color: red;
+	font-size: 64px;
+	font-family: "Lobster";
+	text-shadow: 2px 2px 8px black;
+	padding: 25px;
+}
+
+.login_button {
+	text-align: center;
+	background-color: #4CAF50;
+    color: white;
+    width: 300px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.login_button:hover {
+	background-color: #349f2b;
+}
+
+.centered{
+	margin: auto;
+    width: 50%;
+}
+
+.shadow{
+	box-shadow: 2px 2px 8px black;
+}
+
+.top{
+	height: 430px;
+	width: auto;
+	background-image: url("images/background.png");
+}
+
+.black_info{
+	background-color: #004d4d; 
+	height: 400px;
+	width: auto;
+}
+
+.blue_info{
+	background-color: darkcyan;
+	height: 400px;
+	width: auto;
+}
+
+.white_info{
+	background-color: #660066;
+	height: 400px;
+	width: auto;
+}
+
+.purple_info{
+	background-color: #8000ff;
+	height: 400px;
+	width: auto;
+}
+
+.info_left{
+	width: 400px;
+	height: auto;
+	margin:40px;
+	float: left;
+}
+
+.info_right{
+	text-align: justify;
+    text-justify: inter-word;
+	font-size: 30px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: white;
+	width: 500px;
+	height: auto;
+	margin:40px;
+	float: right;
+	text-shadow: 2px 2px 8px black;
 }
