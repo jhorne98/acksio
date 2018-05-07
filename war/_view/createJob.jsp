@@ -48,7 +48,14 @@
 				
 	Vehicle Type<br>
 	<select name="vehicleType">
-		<option value="car">Class C Automobile</option>
+		<option value="BICYCLE">Bicycle</option>
+		<option value="MOTORCYCLE">Motorcycle</option>
+		<option value="CAR">Car</option>
+		<option value="SUV">SUV</option>
+		<option value="VAN">Van</option>
+		<option value="PICKUP">Pickup Truck</option>
+		<option value="SPRINTER">Sprinter</option>
+		<option value="SEMI">Semi Truck</option>
 	</select>
 	<br><br>
 

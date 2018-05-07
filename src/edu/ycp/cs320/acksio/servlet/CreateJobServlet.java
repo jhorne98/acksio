@@ -64,6 +64,22 @@ public class CreateJobServlet extends HttpServlet {
 			String address = req.getParameter("address");
 			System.out.println(address);
 			Double payCof = getDoubleFromParameter(req.getParameter("payCof"));
+			VehicleType vehicle = VehicleType.valueOf(req.getParameter("vehicleType"));
+			System.out.println(vehicle);
+			//Boolean tsaCertified = Boolean.valueOf((boolean) req.getAttribute("tsaCertified"));
+			
+			//gets tsaCertified
+			int tsa;
+			if (req.getAttribute("tsaCertified") == null) {
+				tsa = 0;
+				System.out.println("false");
+			}
+			else {
+				tsa = 1; 
+				System.out.println("true");
+			}
+			
+			//System.out.println(tsaCertified);
 			Double distance = getDoubleFromParameter(req.getParameter("distance"));
 			System.out.println(distance);
 			//Double payment = getDoubleFromParameter(req.getParameter("payment"));
@@ -85,7 +101,7 @@ public class CreateJobServlet extends HttpServlet {
 			// thus, always call a controller method to operate on the data
 			else {
 				Dispatcher dispatcherModel = new Dispatcher();
-				dispatcherModel.queue(address, name, phone, distance, payment);
+				dispatcherModel.queue(address, name, phone, distance, payment, vehicle, tsa);
 				System.out.println("Created Job!");
 
 			}

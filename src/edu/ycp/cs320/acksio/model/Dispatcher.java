@@ -54,16 +54,34 @@ public class Dispatcher extends UserAccount{
 		populate(username);
 	}
 
-	public void queue(String address, String name, String phone, double distance, double payment) {
+	public void queue(String address, String name, String phone, double distance, double payment, VehicleType vehicle, int tsaCertified) {
 		//TODO: Implement fully
 		//Job testJob = new Job("118 oak drive", vehicleType.CAR, true, "Don Hake", 7175555555L, 64.9, 53.7, 53.7, 1430, 1730);
 		//Job testJob = new Job("118 oak drive", vehicleType.CAR, true, "Don Hake", 7175555555L, 64.9, 53.7, 53.7, 1430, 1730);
 		Job newJob = new Job();
+		DerbyDatabase db = new DerbyDatabase();
+		newJob.setDispatcherID(dispatcherID);
 		newJob.setDeststinationAddress(address);
 		newJob.setRecipientName(name);
 		newJob.setRecipientPhone(Long.parseLong(phone));
 		newJob.setDistanceMi(distance);
 		newJob.setPayForJob(payment);
+		newJob.setVehicleType(vehicle);
+		newJob.setTsaVerified(tsaCertified);
+		//Everything under is unimplemented parts of the Job class, so they are all fixed. 
+		newJob.setApproved(0); 
+		newJob.setDestLat(0);
+		newJob.setDestLong(0);
+		newJob.setActualTime(0);
+		newJob.setCourierPaid(0);
+		newJob.setSigned(0);
+		newJob.setCourierID(0); //Will be set once a courier accepts a job
+		Courier tempCourier = new Courier(); 
+		newJob.setCourier(tempCourier); //Will be set once a courier accepts a job
+		
+		//creates new job
+		db.insert(newJob);
+		
 		//newJob.setCourier(findCourier());
 		
 		
