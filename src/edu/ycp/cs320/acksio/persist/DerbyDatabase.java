@@ -551,7 +551,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt.setInt(6, job.getTsaVerified());
 					stmt.setString(7, job.getRecipientName());
 					stmt.setLong(8, job.getRecipientPhone());
-					stmt.setInt(9, job.getDispatcherID());
+					stmt.setDouble(9, job.getDistanceMi());
 					stmt.setInt(10, job.getCourierPaid());
 					stmt.setInt(11, job.getPickUpTime());
 					stmt.setInt(12, job.getDropOffTime());
@@ -564,8 +564,10 @@ public class DerbyDatabase implements IDatabase {
 				} finally {
 					DBUtil.closeQuietly(stmt);
 				}
+				
 			}
 		});
+
 	}
 
 	@Override

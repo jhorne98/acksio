@@ -65,6 +65,7 @@ public class Dispatcher extends UserAccount{
 		newJob.setRecipientName(name);
 		newJob.setRecipientPhone(Long.parseLong(phone));
 		newJob.setDistanceMi(distance);
+		System.out.println(distance);
 		newJob.setPayForJob(payment);
 		newJob.setVehicleType(vehicle);
 		newJob.setTsaVerified(tsaCertified);
@@ -81,6 +82,7 @@ public class Dispatcher extends UserAccount{
 		
 		//creates new job
 		db.insert(newJob);
+		System.out.println("CONFIRMED");
 		
 		//newJob.setCourier(findCourier());
 		
