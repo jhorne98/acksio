@@ -938,7 +938,7 @@ public class DerbyDatabase implements IDatabase {
 					
 					stmt.setInt(1, id);
 					
-					System.out.println("Attempting to fetch Courier with user_ID "+id);
+					//System.out.println("Attempting to fetch Courier with user_ID "+id);
 					
 					resultSet = stmt.executeQuery();
 					

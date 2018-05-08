@@ -166,7 +166,7 @@ public class FakeDatabase implements IDatabase{
 	@Override
 	public Dispatcher dispatcherFromID(int id) {
 		for(int i = 0; i < dispatcherList.size(); i++) {
-			if(dispatcherList.get(i).getDispatcherID() == id)
+			if(dispatcherList.get(i).getUserId() == id)
 				return dispatcherList.get(i);
 		}
 		return null;
