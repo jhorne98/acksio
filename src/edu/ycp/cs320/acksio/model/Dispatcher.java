@@ -80,9 +80,10 @@ public class Dispatcher extends UserAccount{
 		Courier tempCourier = new Courier(); 
 		newJob.setCourier(tempCourier); //Will be set once a courier accepts a job
 		
+		System.out.println("Dispatcher: CREATED JOB!");
 		//creates new job
 		db.insert(newJob);
-		System.out.println("CONFIRMED");
+		System.out.println("Dispatcher: ADDED TO DATABASE!");
 		
 		//newJob.setCourier(findCourier());
 		

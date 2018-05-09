@@ -56,16 +56,16 @@ public class CreateJobServlet extends HttpServlet {
 		
 		try {
 			String name = req.getParameter("name");
-			System.out.println(name);
+			System.out.println("Dispatcher Servlet:" + name);
 			String phone = req.getParameter("phone");
-			System.out.println(phone);
+			System.out.println("Dispatcher Servlet:" + phone);
 			String start = req.getParameter("start");
-			System.out.println(start);
+			System.out.println("Dispatcher Servlet:"+ start);
 			String address = req.getParameter("address");
-			System.out.println(address);
+			System.out.println("Dispatcher Servlet:" + address);
 			Double payCof = getDoubleFromParameter(req.getParameter("payCof"));
 			VehicleType vehicle = VehicleType.valueOf(req.getParameter("vehicleType"));
-			System.out.println(vehicle);
+			System.out.println("Dispatcher Servlet:"+ vehicle);
 			//Boolean tsaCertified = Boolean.valueOf((boolean) req.getAttribute("tsaCertified"));
 			
 			//gets tsaCertified
@@ -102,7 +102,8 @@ public class CreateJobServlet extends HttpServlet {
 			else {
 				Dispatcher dispatcherModel = new Dispatcher();
 				dispatcherModel.queue(address, name, phone, distance, payment, vehicle, tsa);
-				System.out.println("Created Job!");
+				errorMessage = "Created Job";
+				//System.out.println("Created Job!");
 
 			}
 		} catch (NumberFormatException e) {

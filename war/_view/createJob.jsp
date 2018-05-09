@@ -74,11 +74,11 @@
 
 	
 
-	<input type="submit" value="Create Job">
+	<input class=button type="submit" value="Create Job">
 
 	</form>
 	
-	<button id="get">Calculate Route</button>	
+	<button class=button id="get">Calculate Route</button>	
 
 	<script>
 		var directionsDisplay = new google.maps.DirectionsRenderer();
