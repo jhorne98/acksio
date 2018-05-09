@@ -188,42 +188,4 @@
 			</form>
 		</div>
 
-		
-		
-		
-		<!-- moved all of create job function to separate jsp -->
-		<!-- <div>
-				
-
-				<label for="start">Pickup Address : </label>
-				<input type="text" name="start" id="start" />
-				
-				<label for="end">Delivery Location : </label>
-				<input type="text" name="end" id="end" />
-				
-				<input type="submit" value="Calculate Route" onclick="calcRoute()" />
-
-				
-				<p><label for="distance">Distance Estimate: </label>
-				<input type="text" name="distance" id="distance" readonly="true" value = "${model.distance}"/></p>
-
-				<p><label for="payment">Payment Estimate : </label>
-				<input type="text" name="payment" id="payment" readonly="true" value = "${model.payment}"/></p>
-
-				
-
-				<input type="submit" value="Create Job">
-
-
-
-				
-				<p>${model.vehicleType}</p>
-				
-				<input type="submit" name="edit" value="Edit Information">
-		</div>
-		
-		
-		<div id="map_canvas"></div>
-		-->
-	</body>
 </html>
