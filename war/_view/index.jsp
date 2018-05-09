@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<title>Index</title>
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_view/default.css" title="default"/>
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_view/default.css"/>
 		<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
 	</head>
 	
@@ -34,24 +34,15 @@
     </div>
     
     <div class="col-xs-6 blue_info">
-      <div class="well">
-        <p class="info_left">Test paragraph</p>
-         <img class="info_right" src="${pageContext.servletContext.contextPath}/_view/images/nav.jpg"></img>
-      </div>
+      
     </div>
     
     <div class="col-xs-6 purple_info">
-      <div class="well">
-        <img class="info_left" src="${pageContext.servletContext.contextPath}/_view/images/nav.jpg"></img>
-        <p class="info_right">Test paragraph</p>
-      </div>
+      
     </div>
     
     <div class="col-xs-6 white_info">
-      <div class="well">
-        <p class="info_left">Test paragraph</p>
-         <img class="info_right" src="${pageContext.servletContext.contextPath}/_view/images/nav.jpg"></img>
-      </div>
+      
     </div>
     
   </div>
