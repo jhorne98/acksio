@@ -140,16 +140,18 @@
 						<br><br>
 					</c:forEach>
 				</div>
-				Select a courier: <br>
-				<select name="courierSelection">
-					<c:forEach var="loopCourier" items="${courierList}">
-						<option>${loopCourier.courierID}</option>
-					</c:forEach>
-				</select>
-				<br>
-				Select an action:
-				<input class=button type="submit" name="examineCourier" value="Examine Courier">
-				<input class=button type="submit" name="payCourier" value="Pay Courier">
+				<form action="${pageContext.servletContext.contextPath}/dispatcher" method="post">
+					Select a courier: <br>
+					<select name="courierSelection">
+						<c:forEach var="loopCourier" items="${courierList}">
+							<option>${loopCourier.courierID}</option>
+						</c:forEach>
+					</select>
+					<br>
+					Select an action:
+					<input class=button type="submit" name="examineCourier" value="Examine Courier">
+					<input class=button type="submit" name="payCourier" value="Pay Courier">
+				</form>
 				<hr>
 			</div>
 			
@@ -169,16 +171,18 @@
 						<br><br>
 					</c:forEach>
 				</div>
-				Select a job: <br>
-				<select name="jobSelection">
-					<c:forEach var="loopJob" items="${jobList}" varStatus="jobs">
-						<option>${loopJob.jobID}</option>
-					</c:forEach>
-				</select>
-				<br>
-				Select an action:
-				<input class=button type="submit" name="examineJob" value="Examine Job">
-				<input class=button type="submit" name="payJob" value="Pay Job">
+				<form action="${pageContext.servletContext.contextPath}/dispatcher" method="post">
+					Select a job: <br>
+					<select name="jobSelection">
+						<c:forEach var="loopJob" items="${jobList}" varStatus="jobs">
+							<option>${loopJob.jobID}</option>
+						</c:forEach>
+					</select>
+					<br>
+					Select an action:
+					<input class=button type="submit" name="examineJob" value="Examine Job">
+					<input class=button type="submit" name="payJob" value="Pay Job">
+				</form>
 				<br><hr>
 			</div>
 			

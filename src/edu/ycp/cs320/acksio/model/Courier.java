@@ -189,7 +189,7 @@ public class Courier extends UserAccount{
 		if (!db.update(this)) {
 			return db.insert(this);
 		} else {
-			return false;
+			return true;
 		}
 	}
 	

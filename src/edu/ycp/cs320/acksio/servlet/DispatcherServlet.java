@@ -99,6 +99,7 @@ public class DispatcherServlet extends HttpServlet {
 		else if(req.getParameter("payCourier") != null) {
 			//System.out.println("Courier payment not implemented");
 			System.out.println(req.getParameter("courierSelection"));
+			System.out.println("payCourier button pressed!");
 			DerbyDatabase db = new DerbyDatabase();
 			model.payCourier(db.courierFromCourierID(getIntFromParameter(req.getParameter("courierSelection"))));
 		}
@@ -111,6 +112,7 @@ public class DispatcherServlet extends HttpServlet {
 		else if(req.getParameter("payJob") != null) {
 			//System.out.println("Job payment not implemented");
 			System.out.println(req.getParameter("jobSelection"));
+			System.out.println("payJob button pressed!");
 			DerbyDatabase db = new DerbyDatabase();
 			model.payCourier(getIntFromParameter(req.getParameter("jobSelection")));
 		}

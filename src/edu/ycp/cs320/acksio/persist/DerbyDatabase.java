@@ -1616,6 +1616,13 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	private void resetDatabase() {
+		DerbyDatabase db = new DerbyDatabase();
+		db.removeTables();
+		db.createTables();
+		db.loadInitialData();
+	}
+	
 	// The main method creates the database tables and loads the initial data.
 	public static void main(String[] args) throws IOException {
 		Scanner keyboard = new Scanner(System.in);
@@ -1639,6 +1646,10 @@ public class DerbyDatabase implements IDatabase {
 			db.removeTables();
 			
 			System.out.println("Success!");
+		} else if(dbChoice == 3) {
+			System.out.println("Resetting DB");
+			db.resetDatabase();
+			System.out.println("That's a secret");
 		}
 		
 		keyboard.close();
