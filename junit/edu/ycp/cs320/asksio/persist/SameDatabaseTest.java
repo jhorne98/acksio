@@ -72,8 +72,8 @@ public class SameDatabaseTest {
 
 	@Test
 	public void testDispatcherFetch() {
-		fdispatcher = fdb.dispatcherFromID(1);
-		ddispatcher = ddb.dispatcherFromID(1);
+		fdispatcher = fdb.dispatcherFromID(3);
+		ddispatcher = ddb.dispatcherFromID(3);
 		
 		assertEquals(fdispatcher.getUserId(), ddispatcher.getUserId());
 		assertEquals(fdispatcher.getName(), ddispatcher.getName());

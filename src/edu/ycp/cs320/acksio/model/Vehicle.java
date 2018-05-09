@@ -55,7 +55,11 @@ public class Vehicle implements DataController{
 	@Override
 	public Boolean save() {
 		DerbyDatabase db = new DerbyDatabase();
+		//if (!db.update(this)) {
 		return db.insert(this);
+		//} else {
+		//	return true;
+		//}
 	}
 	
 	//SETTERS AND GETTERS
