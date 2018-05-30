@@ -1,5 +1,7 @@
+/*Created by Joel Horne (jhorne@ycp.edu), Alaska Kiley (dkiley@ycp.edu), and Andrew Georgiou (ageorgiou@ycp.edu)
+ at York College of Pennsylvania for CS320.103: Software Engineering
+*/
 package edu.ycp.cs320.acksio.model;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,6 @@ import edu.ycp.cs320.acksio.persist.DerbyDatabase;
 //import javafx.util.Pair;
 
 public class Courier extends UserAccount{
-	
 	private int courierID;
 	private int dispatcherID;
 	private Integer availability;

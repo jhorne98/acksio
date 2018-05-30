@@ -1,4 +1,6 @@
-
+/*Created by Joel Horne (jhorne@ycp.edu), Alaska Kiley (dkiley@ycp.edu), and Andrew Georgiou (ageorgiou@ycp.edu)
+ at York College of Pennsylvania for CS320.103: Software Engineering
+*/
 package edu.ycp.cs320.acksio.model;
 
 import java.util.ArrayList;
@@ -34,7 +36,9 @@ public class Dispatcher extends UserAccount{
 	
 	public Dispatcher() {
 		//Purposefully empty
-	}
+	}/*Created by Joel Horne (jhorne@ycp.edu), Alaska Kiley (dkiley@ycp.edu), and Andrew Georgiou (ageorgiou@ycp.edu)
+	 at York College of Pennsylvania for CS320.101: Software Engineering
+	*/
 	
 	public Dispatcher(DatabaseProvider provider, int id) {
 		setDispatcherID(id);
